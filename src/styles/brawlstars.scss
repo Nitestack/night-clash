@@ -1,0 +1,100 @@
+/*Brawl Stars Map*/
+.map {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    transform: skew(-5deg);
+    display: inline-block;
+    background-color: black;
+    border: 2px black solid;
+    height: 140px;
+    width: 240px;
+    padding: 0;
+}
+
+.map .timer {
+    text-align: right;
+    color: #7382a2;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+
+.map .description {
+    border-bottom: 2px solid #0a0a0a;
+    border-radius: 0;
+    display: flex !important;
+}
+
+.map .description {
+    vertical-align: middle;
+    height: 45px;
+}
+
+.map .description .titles {
+    padding-left: 0.5rem !important;
+    padding: 8px;
+}
+
+.map .description .titles .game-mode {
+    color: white;
+    text-shadow: 1px 1.5px 0 #000;
+    -webkit-text-stroke: 0;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+.map .description .titles .map-name {
+    font-size: 14px;
+    text-align: left;
+    -webkit-text-stroke: 0;
+}
+
+.map .background-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 58px;
+}
+
+/*Map Colors*/
+.map .description.brawl-ball {
+    background-color: var(--bs-brawl-ball);
+}
+.map .description.gem-grab {
+    background-color: var(--bs-gem-grab);
+}
+.map .description.duo-showdown,
+.map .description.solo-showdown {
+    background-color: var(--bs-showdown);
+}
+.map .description.showdown-plus {
+    background: var(--bs-showdown-plus);
+}
+.map .description.knockout {
+    background-color: var(--bs-knockout);
+}
+.map .description.hot-zone {
+    background-color: var(--bs-hot-zone);
+}
+.map .description.basket-brawl {
+    background-color: var(--bs-basket-brawl);
+}
+.map .description.bounty {
+    background-color: var(--bs-bounty);
+}
+.map .description.siege {
+    background-color: var(--bs-siege);
+}
+.map .description.heist {
+    background-color: var(--bs-heist);
+}
+.map .description.big-game,
+.map .description.boss-fight,
+.map .description.robo-rumble {
+    background-color: var(--bs-boss-robo-big);
+}
+.map .description.super-city-rampage {
+    background-color: var(--bs-super-city-rampage);
+}
+.map .description.duels {
+    background: var(--bs-duels);
+}

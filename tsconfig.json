@@ -1,5 +1,19 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@constants/*": ["src/constants/*"],
+      "@modules/*": ["src/modules/*"],
+      "@database/*": ["src/configuration/Database/*"],
+      "@models/*": ["src/configuration/Database/Models/*"],
+      "@util/*": ["src/configuration/Util/*"],
+      "@interfaces/*": ["src/configuration/Interfaces/*"],
+      "@public/*": ["public/*"],
+      "@audio/*": ["public/Audio/*"],
+      "@images/*": ["public/Images/*"]
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

@@ -1,0 +1,400 @@
+/* Variables */
+:root {
+    /*Brawl Stars*/
+    --bs-basket-brawl: #238bfe;
+    --bs-super-city-rampage: #db19a0;
+    --bs-boss-robo-big: #dc2422;
+    --bs-gem-grab: #9b3df3;
+    --bs-brawl-ball: #8ca0df;
+    --bs-heist: #d55cd3;
+    --bs-hot-zone: #e33c50;
+    --bs-siege: #f04f32;
+    --bs-bounty: #01cfff;
+    --bs-knockout: #f7831c;
+    --bs-showdown-plus: linear-gradient(#f2cc2a, #e29312);
+    --bs-showdown: #81d621;
+    --bs-duels: linear-gradient(to left, #37abff 50%, #ff1e0a 51%);
+}
+
+/*Body*/
+body {
+    @apply bg-lightmodebackground 
+    dark:bg-darkmodebackground 
+    text-lightmodetext 
+    dark:text-darkmodetext bg-cover flex-col;
+    text-shadow: 0px 1px black;
+}
+
+/*Fonts*/
+.coc {
+    font-family: "Supercell-Magic";
+}
+.coc-description {
+    font-family: "CCBackBeat";
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+}
+.cr-description {
+    font-family: "Clash Text";
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+}
+.bs {
+    font-family: "Lilita One", cursive;
+}
+h1.bs {
+    font-size: 60px;
+}
+h3.bs {
+    font-size: 35px;
+}
+p.bs {
+    font-size: 20px;
+    -webkit-text-stroke: 0;
+}
+.bb {
+    font-family: "BadaBoom BB";
+}
+p.bb {
+    font-size: 24px;
+}
+
+/*Clash Royale*/
+@media only screen and (min-width: 900px) {
+    .card-collection {
+        width: 10vw;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .card-collection {
+        width: 13.33vw;
+    }
+}
+.card-collection {
+    width: 20vw;
+    margin-top: 0.6em;
+}
+.cr-card-container {
+    position: relative;
+    min-height: 6vw;
+}
+.cr-card {
+    display: block;
+    width: 100%;
+}
+@media only screen and (min-width: 900px) {
+    .card-level {
+        font-size: 1.25vw;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .card-level {
+        font-size: 1.66vw;
+    }
+}
+.card-level {
+    position: absolute;
+    font-size: 1.7vw;
+    line-height: 1.6em;
+    text-align: center;
+    font-weight: bold;
+    bottom: 0.9em;
+    left: 0.8em;
+    right: 0.85em;
+    border-radius: 0 0 0.5em 0.5em;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 1px black, -1px 0 1px black, 1px 0 1px black;
+    white-space: nowrap;
+    font-family: "Supercell-Magic";
+}
+.card-level.cr-text-common {
+    background: rgba(0, 0, 0, 0.5);
+}
+.card-level.cr-text-rare {
+    background: rgba(255, 143, 0, 0.5);
+}
+.card-level.cr-text-epic {
+    background: rgba(218, 0, 255, 0.5);
+}
+.card-level.cr-text-legendary {
+    background: rgba(0, 253, 255, 0.5);
+    bottom: 1.6em;
+    left: 1.1em;
+    right: 1.1em;
+    line-height: 1.4em;
+}
+
+.cr-text-legendary {
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0, #d68ab0),
+        color-stop(0.25, #d8ce5d),
+        color-stop(0.5, #6bd85d),
+        color-stop(0.75, #5db9d8),
+        color-stop(1, #d85dcb)
+    );
+    background-image: -webkit-linear-gradient(
+        left,
+        #d68ab0 0%,
+        #d8ce5d 25%,
+        #6bd85d 50%,
+        #5db9d8 75%,
+        #d85dcb 100%
+    );
+    background-size: 1000% 1000%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: Text-Legendary 6s infinite;
+    color: #33cccc;
+    white-space: nowrap;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+.cr-text-epic {
+    color: #fe99fe;
+    white-space: nowrap;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+.cr-text-rare {
+    color: #ffcd6a;
+    white-space: nowrap;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+.cr-text-common {
+    color: #97ccfe;
+    white-space: nowrap;
+    text-shadow: none;
+    -webkit-text-stroke: 0;
+}
+
+.cr-unit-icon-level {
+    background-color: #262625;
+    bottom: 3px;
+    left: 2.5px;
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
+    text-align: center;
+    position: absolute;
+    font-weight: bold;
+}
+
+@keyframes Text-Legendary {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+img.cr-card-image.notfound {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    cursor: pointer;
+}
+
+/*Clash of Clans*/
+.achievement {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eeefed;
+    border-radius: 5px;
+    height: 60px;
+    background: -webkit-linear-gradient(
+        top,
+        rgba(194, 198, 201, 0.8) 0%,
+        rgba(176, 181, 187, 0.8) 49%,
+        rgba(161, 168, 176, 0.8) 50%,
+        rgba(157, 165, 176, 0.8) 100%
+    );
+}
+
+.xp-cr {
+    background-image: url("/Images/Clash Royale/xp.png");
+    height: 38px;
+    width: 38px;
+    padding-top: 9px;
+}
+.xp-cr-max {
+    background-image: url("/Images/Clash Royale/xp.png");
+    height: 38px;
+    width: 38px;
+    padding-top: 9px;
+}
+
+.builder-button,
+.lab-button {
+    border: 1px black solid;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2.813rem;
+    width: 2.813rem;
+    height: 2.813rem;
+}
+
+.builder-button {
+    background-image: url("/Images/Clash of Clans/Upgrade.png");
+}
+
+.lab-button {
+    background-image: url("/Images/Clash of Clans/Research.png");
+}
+
+.unit-icon {
+    margin: 0 2px 2px 0;
+    width: 65px;
+    height: 65px;
+    border: 2px solid #2b2d36;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-color: #767e9a;
+    position: relative;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.unit-icon.locked {
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.unit-icon-level {
+    color: #ffffff;
+    background-color: #262625;
+    bottom: 3px;
+    left: 2.5px;
+    border-radius: 4px;
+    border: 1px solid #23242d;
+    width: 22px;
+    height: 22px;
+    font-size: 13px;
+    text-align: center;
+    position: absolute;
+    box-shadow: 1px 1px 1px white;
+}
+
+.unit-icon-level.max {
+    background-color: #ffbf5e;
+    font-weight: bold;
+    border: 1px solid #f9ba57;
+    box-shadow: 1px 1px 1px #edd66d;
+}
+
+.unit-icon-level.maxTH {
+    background-color: #2abae7;
+    font-weight: bold;
+    border: 1px solid #1c96ad;
+    box-shadow: 1px 1px 1px #88d3ff;
+}
+
+/* SLIDER */
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 20%;
+    background-color: #71ba30;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: 12px;
+    box-shadow: 0px 1px 10px 1px #40712a;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider {
+    margin-top: 20px;
+}
+
+.slider-image {
+    max-width: 100%;
+    vertical-align: center;
+    display: inline-block;
+    height: 55px;
+}
+
+/*PROGRESS*/
+.prg-bar,
+.prg-bar-null {
+    position: relative;
+    width: 250px;
+    float: left;
+    height: 30px;
+    background: linear-gradient(
+        to bottom,
+        rgba(53, 59, 73, 1) 0%,
+        rgba(70, 79, 96, 1) 49%,
+        rgba(66, 170, 4, 1) 50%,
+        rgba(59, 62, 77, 1) 50%,
+        rgba(60, 63, 83, 1) 100%
+    );
+    color: white;
+    border-radius: 3px;
+    border: 1px solid #3c3f50;
+}
+
+.prg-bar::before,
+.prg-bar-null::before {
+    content: attr(data-content);
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 100%;
+    width: calc(var(--width, 0) * 1%);
+    padding: 1em;
+    border-radius: 3px;
+}
+
+.prg-bar::before {
+    background: linear-gradient(to bottom,#8Ad93A 0%,#90D737 49%#42AA04 50%#38A901 50%,#38A901 100%);
+}
+
+/*Bootstrap Overrides*/
+$font-family-sans-serif: "Supercell-Magic";
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap"; /*Comment the modules don't needed in the bootstrap.scss file*/
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";

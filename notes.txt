@@ -1,0 +1,30 @@
+Everytime updating React
+- Go to node_modules/@types/react/index.d.ts and go to `HTMLAttributes` and add this line of code: "align?: "left" | "right" | "center" | "justify" | undefined;"
+---------------------------------
+Register.tsx - Password requirements
+
+Register.tsx and Login.tsx Error Handling 
+
+
+Edit Structures - already levels displayed by second time or third time ..
+
+Edit stats by season boost
+
+brawl stars stats
+
+clash royale/clashofclans/brawlstars clan stats
+
+
+web manifest
+
+windows tiles
+
+google analytics
+
+open graph protocol
+
+twitter
+
+terms of service
+
+privacy
