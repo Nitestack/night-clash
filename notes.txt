@@ -1,5 +1,5 @@
 Everytime updating React
-- Go to node_modules/@types/react/index.d.ts and go to `HTMLAttributes` and add this line of code: "align?: "left" | "right" | "center" | "justify" | undefined;"
+- Go to node_modules/@types/react/index.d.ts and go to `HTMLAttributes` and add this line of code: "align?: "left" | "right" | "center" | "justify" | "char" | undefined;"
 ---------------------------------
 Register.tsx - Password requirements
 

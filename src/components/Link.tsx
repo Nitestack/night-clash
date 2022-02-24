@@ -6,7 +6,7 @@ import Motion, { MotionProps } from "@components/Motion";
 const Link: FC<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
 & MotionProps & { href?: string }> = (props) => {
     return ( 
-        <Motion>
+        <Motion {...props}>
             <NextLink href={props.href || "/"}>
                 <a {...omit("href", props)} style={props.style ? props.style : { textDecoration: "none" }}/>
             </NextLink>

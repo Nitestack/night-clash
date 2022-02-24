@@ -369,7 +369,7 @@ export const home: Array<Base> = [new HomeDefense({
         upgradeDuration: "5d"
     }]
 }), new HomeDefense({
-    name: "Hidden Tesla",
+    name:"Hidden Tesla",
     levels: [{
         costs: 300000,
         upgradeDuration: "2h"
@@ -2554,7 +2554,7 @@ export const home: Array<Base> = [new HomeDefense({
         upgradeDuration: "18d"
     }]
 }), new HomeOffense({
-    name: "Dragon Rider",
+    name: "Dragoer",
     type: "troop",
     costType: "elixir",
     levels: [{
@@ -2605,7 +2605,7 @@ export const home: Array<Base> = [new HomeDefense({
         upgradeDuration: "16d 12h"
     }]
 }), new HomeOffense({
-    name: "Hog Rider",
+    name: "Hoer",
     type: "darkTroop",
     costType: "darkElixir",
     levels: [{

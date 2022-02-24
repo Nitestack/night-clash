@@ -1,16 +1,16 @@
 import Util from "@util/index";
 import { NextPageWithConfiguration } from "@util/types";
 
-const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
+const BBUpgradeTrackerPage: NextPageWithConfiguration = () => {
     return (
         <div className="mx-auto container flex justify-center items-center py-12 px-4 sm:px-6 2xl:px-0">
             <div className="flex flex-col lg:flex-row justify-center items-center space-y-6 lg:space-y-0">
                 <div className="w-80 sm:w-auto flex flex-col justify-start items-start">
                     <div>
-                        <p className="text-3xl xl:text-4xl font-semibold leading-9 text-lightmodeprimary dark:text-darkmodeprimary">Keep your village on track</p>
+                        <p className="text-3xl xl:text-4xl font-semibold leading-9 text-lightmodeprimary dark:text-darkmodeprimary">Keep your island on track</p>
                     </div>
                     <div className="mt-4 lg:w-4/5 xl:w-3/5">
-                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your village. You'll see, when your next builder or the laboratory is available and what is left to upgrade for your Town Hall and Builder Hall level. Schedule your builders and your laboratory and get notified whether an upgrade has finished!</p>
+                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your island. You'll see, when your builder(s) or the armory is available and what is left to upgrade for your Headquarters level. Schedule your builder(s) and your armory and get notified whether an upgrade has finished!</p>
                         <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext mt-6">In order to get started you must have a {Util.Constants.websiteApplicationName} account to save the village!</p>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
         </div>
     );
 };
-CoCUpgradeTrackerPage.title = "Upgrade Tracker - Clash of Clans";
-CoCUpgradeTrackerPage.description = "Use the upgrade tracker to keep track of your village, access additional stats and more..."
+BBUpgradeTrackerPage.title = "Upgrade Tracker - Boom Beach";
+BBUpgradeTrackerPage.description = "Use the upgrade tracker to keep track of your island, access additional stats and more..."
 
-export default CoCUpgradeTrackerPage;
+export default BBUpgradeTrackerPage;

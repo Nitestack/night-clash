@@ -1,9 +1,12 @@
-import Base, { Level } from "@database/Clash of Clans/Base";
-import { required, NewLevel } from "@database/Clash of Clans/Home/HomeOffense";
+import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
+import { required } from "@database/Clash of Clans/Home/HomeOffense";
 
 export default class BuilderTroop extends Base {
     constructor(infos: TroopInfo) {
-        const easyArray: Array<Level | NewLevel> = [];
+        const easyArray: Array<ClashOfClansLevel | ClashOfClansLevel & {
+            requiredLabLevel: number,
+            text: string
+        }> = [];
         for (let i = 0; i < infos.levels.length; i++) easyArray.push({
             costType: "builderElixir",
             //@ts-ignore
@@ -20,7 +23,8 @@ export default class BuilderTroop extends Base {
             name: infos.name,
             type: "troop",
             village: "builder",
-            levels: easyArray
+            levels: easyArray,
+            baseImageUrl: `Builder/Troops/${infos.name}`
         });
     };
 };
@@ -28,5 +32,8 @@ export default class BuilderTroop extends Base {
 interface TroopInfo {
     id?: string;
     name: string;
-    levels: Array<Level | NewLevel>;
+    levels: Array<ClashOfClansLevel | {
+        requiredLabLevel: number,
+        text: string
+    }>;
 };

@@ -80,7 +80,7 @@ const Footer: FC = () => {
                             <div className="w-full lg:w-1/2 px-6 flex flex-col justify-between">
                                 <div className="flex items-center mb-6">
                                     {socialNetworks.map((item, i) => 
-                                    <Link key={i} className="m-2 rounded-full p-2 bg-primary text-lightmodetext dark:text-darkmodetext focus:ring-2 focus:ring-primarycontrast" target="_blank" href={"/" + item.name.replace(/ /g, "").toLowerCase()}>
+                                    <Link rel="noreferrer" key={i} className="m-2 rounded-full p-2 bg-primary text-lightmodetext dark:text-darkmodetext focus:ring-2 focus:ring-primarycontrast" target="_blank" href={"/" + item.name.replace(/ /g, "").toLowerCase()}>
                                         <FontAwesomeIcon icon={item.icon}/>
                                     </Link>)}
                                 </div>
@@ -99,7 +99,7 @@ const Footer: FC = () => {
                 <p className="text-lightmodetext dark:text-darkmodetext" align="center"> This website is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for the operation or content of this site/application. Use of the trademarks and other intellectual property of Supercell is subject to Supercell&apos;s Fan Kit Agreement. </p>
                 <p className="text-lightmodetext dark:text-darkmodetext" align="center"> 
                 For more information about Supercell, please visit their website 
-                <Link disablemotion="true" className="text-primary" href="https://supercell.com/" target="_blank"> here </Link>
+                <Link rel="noreferrer" disablemotion="true" className="text-primary" href="https://supercell.com/" target="_blank"> here </Link>
                 .
                 </p>
             </div>

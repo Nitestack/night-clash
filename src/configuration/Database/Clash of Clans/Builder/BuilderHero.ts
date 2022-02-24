@@ -1,8 +1,8 @@
-import Base, { Level } from "@database/Clash of Clans/Base";
+import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
 
 export default class BuilderHero extends Base {
     constructor(infos: HeroInfo) {
-        const easyArray: Array<Level> = [];
+        const easyArray: Array<ClashOfClansLevel> = [];
         for (let i = 0; i < infos.levels.length; i++) easyArray.push({
             costType: "builderElixir",
             costs: infos.levels[i].costs,
@@ -13,7 +13,8 @@ export default class BuilderHero extends Base {
             name: infos.name,
             type: "hero",
             village: "builder",
-            levels: easyArray
+            levels: easyArray,
+            baseImageUrl: `Builder/Army/${infos.name}`
         });
     };
 };
@@ -21,5 +22,5 @@ export default class BuilderHero extends Base {
 interface HeroInfo {
     id?: string;
     name: string;
-    levels: Array<Level>;
+    levels: Array<ClashOfClansLevel>;
 };

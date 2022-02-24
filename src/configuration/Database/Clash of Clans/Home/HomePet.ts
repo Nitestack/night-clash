@@ -1,24 +1,30 @@
-import Base, { Level } from "@database/Clash of Clans/Base";
-import { required, NewLevel } from "@database/Clash of Clans/Home/HomeOffense";
+import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
+import { required } from "@database/Clash of Clans/Home/HomeOffense";
 
 export default class HomePet extends Base {
     constructor(infos: HeroInfo) {
-        const easyArray: Array<Level | NewLevel> = [];
+        const easyArray: Array<ClashOfClansLevel | ClashOfClansLevel & {
+            text: string,
+            requiredLabLevel: number
+        }> = [];
+        const basicImageUrl = `Home/Pets/${infos.name}`;
         for (let i = 0; i < infos.levels.length; i++) easyArray.push({
             costType: "darkElixir",
-           //@ts-ignore
-           costs: infos.levels[i].text ? 0 : infos.levels[i].costs,
-           //@ts-ignore
-           upgradeDuration: infos.levels[i].text ? "0s" : infos.levels[i].upgradeDuration,
-           //@ts-ignore
-           text: infos.levels[i].text ? required(infos.levels[i].text) : null
+            //@ts-ignore
+            costs: infos.levels[i].text ? 0 : infos.levels[i].costs,
+            //@ts-ignore
+            upgradeDuration: infos.levels[i].text ? "0s" : infos.levels[i].upgradeDuration,
+            //@ts-ignore
+            text: infos.levels[i].text ? required(infos.levels[i].text) : null,
+            imageUrl: `/Images/${basicImageUrl}.png`
         });
         super({
             id: infos.id,
             name: infos.name,
             type: "pet",
             village: "home",
-            levels: easyArray
+            levels: easyArray,
+            baseImageUrl: basicImageUrl
         });
     };
 };
@@ -26,5 +32,8 @@ export default class HomePet extends Base {
 interface HeroInfo {
     id?: string;
     name: string;
-    levels: Array<Level | NewLevel>;
+    levels: Array<ClashOfClansLevel & {
+        text: string,
+        requiredLabLevel: number
+    }>;
 };

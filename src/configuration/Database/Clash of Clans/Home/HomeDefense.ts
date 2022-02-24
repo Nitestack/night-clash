@@ -1,8 +1,8 @@
-import Base, { Level } from "@database/Clash of Clans/Base";
+import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
 
 export default class HomeDefense extends Base {
     constructor(infos: DefenseInfo) {
-        const easyArray: Array<Level> = [];
+        const easyArray: Array<ClashOfClansLevel> = [];
         for (let i = 0; i < infos.levels.length; i++) easyArray.push({
             costType: infos.name.toLowerCase() == "wall" && i >= 8 ? "goldAndElixir" : (infos.name == "Builder's Hut" && i == 0 ? "gem" : "gold"),
             costs: infos.levels[i].costs,
@@ -13,7 +13,8 @@ export default class HomeDefense extends Base {
             name: infos.name,
             type: infos.name == "Wall" ? "wall" : "defense",
             village: "home",
-            levels: easyArray
+            levels: easyArray,
+            baseImageUrl: `Home/Defenses/${infos.name}`
         });
     };
 };
@@ -21,5 +22,5 @@ export default class HomeDefense extends Base {
 interface DefenseInfo {
     id?: string;
     name: string;
-    levels: Array<Level>;
+    levels: Array<ClashOfClansLevel>;
 };

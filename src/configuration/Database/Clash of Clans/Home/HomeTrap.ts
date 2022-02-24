@@ -1,8 +1,8 @@
-import Base, { Level } from "@database/Clash of Clans/Base";
+import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
 
 export default class HomeTrap extends Base {
     constructor(infos: TrapInfo) {
-        const easyArray: Array<Level> = [];
+        const easyArray: Array<ClashOfClansLevel> = [];
         for (let i = 0; i < infos.levels.length; i++) easyArray.push({
             costType: "gold",
             costs: infos.levels[i].costs,
@@ -13,7 +13,8 @@ export default class HomeTrap extends Base {
             name: infos.name,
             type: "trap",
             village: "home",
-            levels: easyArray
+            levels: easyArray,
+            baseImageUrl: `Home/Traps/${infos.name}`
         });
     };
 };
@@ -21,5 +22,5 @@ export default class HomeTrap extends Base {
 interface TrapInfo {
     id?: string;
     name: string;
-    levels: Array<Level>;
+    levels: Array<ClashOfClansLevel>;
 };

@@ -5,9 +5,9 @@ export default class Base {
         this.name = infos.name;
         this.type = infos.type;
         this.village = infos.village;
-        const convertedLevels: Array<Level> = [];
+        const convertedLevels: Array<ClashOfClansConvertedLevel> = [];
         for (const level of infos.levels) convertedLevels.push({
-            ...level,
+            imageUrl: "/Images/Clash of Clans/" + infos.baseImageUrl + "/" + (infos.levels.indexOf(level) + 1) + ".png",
             convertedPrice: convertNumber(level.costs),
             upgradeDurationInSeconds: convertTime(level.upgradeDuration),
             calculateSeasonBoostCosts: (percentage: number) => {
@@ -30,7 +30,8 @@ export default class Base {
                     time = newArrayOfTime.join(" ");
                 };
                 return convertTime(time);
-            }
+            },
+            ...level
         });
         this.levels = convertedLevels;
         this.maxLevel = infos.levels.length;
@@ -39,29 +40,35 @@ export default class Base {
     public type: Type;
     public village: Village;
     public maxLevel: number;
-    public levels: Array<Level | Level & {
+    public levels: Array<ClashOfClansConvertedLevel | ClashOfClansConvertedLevel & {
         text: string;
         requiredLabLevel: number;
     }>;
 };
 
-export type Type = "defense" | "resource" | "army" | "trap" | "troop" | "spell" | "hero" | "pet" | "siegeMachine" | "darkTroop" | "wall";
-export type Village = "home" |  "builder";
+type Type = "defense" | "resource" | "army" | "trap" | "troop" | "spell" | "hero" | "pet" | "siegeMachine" | "darkTroop" | "wall";
+type Village = "home" |  "builder";
 
 interface BaseInfo {
     name: string;
     id?: string;
     village: Village;
     type: Type;
-    levels: Array<Level>;
+    levels: Array<ClashOfClansLevel>;
+    baseImageUrl: string;
 };
 
-export interface Level {
-    costType?: "gold" | "elixir" | "darkElixir" | "builderGold" | "builderElixir" | "goldAndElixir" | "builderGoldAndElixir" | "gem";
-    costs: number;
-    upgradeDuration: string;
+interface ClashOfClansConvertedLevel {
     convertedPrice?: string;
     upgradeDurationInSeconds?: number;
     calculateSeasonBoostCosts?: (percentage: number) => number;
     calculateSeasonBoostTimeInSeconds?: (percentage: number) => number;
+    imageUrl: string;
+};
+
+export interface ClashOfClansLevel {
+    costType?: "gold" | "elixir" | "darkElixir" | "builderGold" | "builderElixir" | "goldAndElixir" | "builderGoldAndElixir" | "gem";
+    costs: number;
+    upgradeDuration: string;
+    imageUrl?: string;
 };
