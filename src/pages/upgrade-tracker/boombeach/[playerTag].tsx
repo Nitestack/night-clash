@@ -1,12 +1,11 @@
 import { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import Layout from "@components/Layout";
+import { BoomBeachIsland } from "@models/boombeach";
 
-const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
-
-}> = ({ data }) => {
+const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, BoomBeachIsland> = ({ data }) => {
     return (
-        <Layout description={}>
+        <Layout description={data}>
 
         </Layout>
     );
