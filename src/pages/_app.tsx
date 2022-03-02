@@ -9,12 +9,13 @@ config.autoAddCss = false
 dom.watch();
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout";
-import { StrictMode, useEffect, useState, FC } from "react";
+import { StrictMode, useEffect, useState, FC, ReactNode } from "react";
 import {
     ComponentWithConfigurationProps,
     SessionObject,
     ComponentConfiguration,
     UserSession,
+    CustomComponentType
 } from "@util/types";
 import { useRouter } from "next/router";
 import { NextComponentType, NextPageContext } from "next";
@@ -30,8 +31,7 @@ const minAnimationTime = isDevelopment ? 0 : 1000;
 const queryClient = new QueryClient();
 
 const CustomProvider: FC<{
-    Component: NextComponentType<NextPageContext, any, {}> &
-        ComponentConfiguration;
+    Component: CustomComponentType;
     pageProps: any;
 }> = ({ Component, pageProps }) => {
     const [done, setDone] = useState(false);
@@ -40,29 +40,28 @@ const CustomProvider: FC<{
     const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
-    useEffect(
-        () => {
-            if ($.isEmptyObject(router.query) && Component.queryRequired) return;
-            if (
-                !Component.authenticationRequired &&
-                !Component.adminRoleRequired &&
-                !Component.noAuthenticationRequired &&
-                !Component.fetchData
-            ) return setDone(true);
-            if (status == "loading") return; // Do nothing while loading
-            if (Component.authenticationRequired) {
-                if (isUser) handleAuthentication(session);
-                else if (!isUser && !isDevelopment) signIn(); // If not authenticated, force log in
-            } else if (Component.adminRoleRequired) {
-                if (!isUser && !isDevelopment) signIn();
-                else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) router.push("/404");
-                else handleAuthentication();
-            } else if (Component.noAuthenticationRequired) {
-                // If authenticated, redirect to /account
-                if (isUser) router.push("/account");
-                else setDone(true);
-            };
-        }, Component.queryRequired ? [status, router.query] : [status]);
+    useEffect(() => {
+        if ($.isEmptyObject(router.query) && Component.queryRequired) return;
+        if (
+            !Component.authenticationRequired &&
+            !Component.adminRoleRequired &&
+            !Component.noAuthenticationRequired &&
+            !Component.fetchData
+        ) return setDone(true);
+        if (status == "loading") return; // Do nothing while loading
+        if (Component.authenticationRequired) {
+            if (isUser) handleAuthentication(session);
+            else if (!isUser && !isDevelopment) signIn(); // If not authenticated, force log in
+        } else if (Component.adminRoleRequired) {
+            if (!isUser && !isDevelopment) signIn();
+            else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) router.push("/404");
+            else handleAuthentication();
+        } else if (Component.noAuthenticationRequired) {
+            // If authenticated, redirect to /account
+            if (isUser) router.push("/account");
+            else setDone(true);
+        };
+    }, Component.queryRequired ? [status, router.query] : [status]);
     return done ? (
         Component.disableLayout ? (<Component {...pageProps} data={data} />) : (
             <Layout
@@ -73,9 +72,7 @@ const CustomProvider: FC<{
                 <Component {...pageProps} data={data} session={session} />
             </Layout>
         )
-    ) : (
-        <LoadingScreen />
-    );
+    ) : <LoadingScreen/>;
     function handleAuthentication(session?: UserSession) {
         if (Component.authenticationRequired && Component.afterAuthentication) {
             //@ts-ignore

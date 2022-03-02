@@ -9,6 +9,6 @@ const AboutPage: NextPageWithConfiguration<AboutPageProps> = () => {
     </>);
 };
 AboutPage.title = "About Me";
-AboutPage.description = "Introducing me and telling some things to you!"
+AboutPage.description = "Introducing me and telling some things to you!";
 
 export default AboutPage;

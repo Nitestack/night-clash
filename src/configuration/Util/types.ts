@@ -1,14 +1,12 @@
-import { NextPageContext } from "next";
-import { AppInitialProps } from "next/app";
-import { NextComponentType } from "next";
+import { NextPageContext, NextComponentType, NextPage } from "next";
+import { AppInitialProps, AppProps } from "next/app";
 import { Router } from "next/router";
 import { Session } from "next-auth";
 import { UserWithoutPassword } from "@models/user";
 import { LayoutProps } from "@components/Layout";
-import { AppProps } from "next/app";
-import { NextPage } from "next";
 import axios, { AxiosRequestConfig } from "axios";
 import { NextRouter } from "next/router";
+import { ReactNode } from "react";
 
 /**
  * A session with custom props
@@ -98,12 +96,14 @@ export interface ComponentConfiguration extends LayoutProps {
     queryRequired?: boolean;
 };
 
+export type CustomComponentType<InitialProps = {}, Props = {}, DataType = any> = NextComponentType<NextPageContext, InitialProps, Props & { data: DataType, session?: UserSession }> & ComponentConfiguration;
+
 /**
  * A component with configuration
  * 
  * Almost same as {@link NextPage}, so update if needed
  */
-export type NextPageWithConfiguration<Props = {}, InitialProps = Props, DataType = any> = NextComponentType<NextPageContext, InitialProps, Props & { data: DataType, session?: UserSession }> & ComponentConfiguration & {
+export type NextPageWithConfiguration<Props = {}, InitialProps = Props, DataType = any> = CustomComponentType<InitialProps, Props, DataType> & {
     getInitialProps?(context: NextPageContext): InitialProps | Promise<InitialProps>;
 };
 
@@ -111,7 +111,7 @@ export type NextPageWithConfiguration<Props = {}, InitialProps = Props, DataType
  * Almost same as {@link AppProps}, so update if needed
 */
 export type ComponentWithConfigurationProps<Props = {}> = AppInitialProps & {
-    Component: NextComponentType<NextPageContext, any, Props> & ComponentConfiguration,
+    Component: CustomComponentType<any, Props>,
     router: Router;
     __N_SSG?: boolean;
     __N_SSP?: boolean;

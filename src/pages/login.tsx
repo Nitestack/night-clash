@@ -5,7 +5,6 @@ import { NextPageWithConfiguration } from "@util/types";
 import { LockClosedIcon } from '@heroicons/react/solid';
 
 const LoginPage: NextPageWithConfiguration<{ csrfToken: string }> = ({ csrfToken }) => {
-    console.log(csrfToken)
     return (
         <div className="min-h-full flex items-center justify-center p-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">

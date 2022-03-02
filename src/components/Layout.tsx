@@ -23,13 +23,6 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <meta name="description" content={Util.Constants.websiteApplicationName + Util.Constants.websiteApplicationDescription}/>
                 <meta name="keywords" content="coc, cr, bs, bb, clash of clans, clash royale, brawl stars, boom beach, tracker, stats, nightclash, supercell web, night clash"/>
                 <meta name="author" content={Util.Constants.websiteApplicationName}/>
-                <link rel="shortcut icon" type="image/png" href="/Images/profile.png"/>
-                {/*LILITIA ONE FONT (FROM GOOGLE)*/}
-                <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
-                <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet"/>
-                {/*AUDIO*/}
-                <audio id="clickAudio" src="/Audio/click.mp3"/>
             </Head>
             <div>
                 <Navbar></Navbar>

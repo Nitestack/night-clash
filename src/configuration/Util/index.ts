@@ -37,6 +37,7 @@ export default class Util {
                     setShowErrorModal(true);
                 };
             },
+            method: "POST",
             ...settings
         });
     };
@@ -244,5 +245,12 @@ export default class Util {
         const newArray: Array<any> = [];
         for (const value of values) if (!newArray.includes(value)) newArray.push(value);
         return newArray;
+    };
+    /**
+     * Capitalizes the first letter of the word
+     * @param {string} text The text 
+     */
+    public static toCapitalize(text: string) {
+        return text[0].toUpperCase() + text.slice(1);
     };
 };

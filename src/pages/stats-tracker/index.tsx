@@ -1,28 +1,43 @@
 import { NextPageWithConfiguration } from "@util/types";
+import { FC } from "react";
 import Accordion from "@components/Accordion";
 import Center from "@components/Center";
+import Tabs from "@components/Tabs";
+import Input from "@components/Input";
+import Util from "@util/index";
 
-const ExamplePage: NextPageWithConfiguration = () => {
+const StatsTracker: NextPageWithConfiguration = () => {
     return (
         <>
-            <Accordion title="Clash of Clans">
-                <Center>
-                    <img className="h-56" src="/Images/Clash of Clans Background.png"/>
-                </Center>
-            </Accordion>
-            <Accordion title="Clash Royale">
-                <Center>
-                    <img className="h-56" src="/Images/Clash Royale Background.png"/>
-                </Center>
-            </Accordion>
-            <Accordion title="Brawl Stars">
-                <Center>
-                    <img className="h-56" src="/Images/Brawl Stars Background.png"/>
-                </Center>
-            </Accordion>
+            <Tabs tabs={{
+                "Clash of Clans" : <Tab backgroundImageName="Clash of Clans"/>,
+                "Clash Royale": <Tab backgroundImageName="Clash Royale"/>,
+                "Brawl Stars": <Tab backgroundImageName="Brawl Stars" club/>
+            }}/>
         </>
     );
+    
 };
-ExamplePage.title = "ExamplePage";
 
-export default ExamplePage;
+const Tab: FC<{
+    club?: boolean,
+    backgroundImageName: string
+}> = ({ club, backgroundImageName }) => {
+    const tabs: { [key: string]: JSX.Element } = {};
+    for (const element of ["player", "clan"]) tabs[`Find a ${element == "clan" ? (club ? "club" : element) : element}`] = <>
+        <Center>
+            <img className="h-56" src={"/Images/" + backgroundImageName + ".png"}/>
+        </Center>
+        <Center>
+            <Input name="tag" type="text" maxLength={10} minLength={8} placeholder={element == "clan" ? (club ? "Club" : Util.toCapitalize(element)) : Util.toCapitalize(element)}></Input>
+        </Center>
+    </>;
+    console.log(tabs)
+    return (
+        <Tabs tabs={tabs}/>
+    );
+};
+
+StatsTracker.title = "Stats Tracker";
+
+export default StatsTracker;
