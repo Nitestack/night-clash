@@ -9,16 +9,14 @@ config.autoAddCss = false
 dom.watch();
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout";
-import { StrictMode, useEffect, useState, FC, ReactNode } from "react";
+import { StrictMode, useEffect, useState, FC } from "react";
 import {
     ComponentWithConfigurationProps,
     SessionObject,
-    ComponentConfiguration,
     UserSession,
     CustomComponentType
 } from "@util/types";
 import { useRouter } from "next/router";
-import { NextComponentType, NextPageContext } from "next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoadingScreen from "@components/Loading";
 import $ from "jquery";

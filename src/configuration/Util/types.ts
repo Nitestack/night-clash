@@ -1,12 +1,10 @@
 import { NextPageContext, NextComponentType, NextPage } from "next";
 import { AppInitialProps, AppProps } from "next/app";
-import { Router } from "next/router";
 import { Session } from "next-auth";
 import { UserWithoutPassword } from "@models/user";
 import { LayoutProps } from "@components/Layout";
 import axios, { AxiosRequestConfig } from "axios";
 import { NextRouter } from "next/router";
-import { ReactNode } from "react";
 
 /**
  * A session with custom props
@@ -112,7 +110,7 @@ export type NextPageWithConfiguration<Props = {}, InitialProps = Props, DataType
 */
 export type ComponentWithConfigurationProps<Props = {}> = AppInitialProps & {
     Component: CustomComponentType<any, Props>,
-    router: Router;
+    router: NextRouter;
     __N_SSG?: boolean;
     __N_SSP?: boolean;
     __N_RSC?: boolean;
