@@ -40,12 +40,6 @@ const CustomProvider: FC<{
     const router = useRouter();
     useEffect(() => {
         if ($.isEmptyObject(router.query) && Component.queryRequired) return;
-        if (
-            !Component.authenticationRequired &&
-            !Component.adminRoleRequired &&
-            !Component.noAuthenticationRequired &&
-            !Component.fetchData
-        ) return setDone(true);
         if (status == "loading") return; // Do nothing while loading
         if (Component.authenticationRequired) {
             if (isUser) handleAuthentication(session);
@@ -58,6 +52,8 @@ const CustomProvider: FC<{
             // If authenticated, redirect to /account
             if (isUser) router.push("/account");
             else setDone(true);
+        } else {
+            handleAuthentication();
         };
     }, Component.queryRequired ? [status, router.query] : [status]);
     return done ? (
@@ -72,14 +68,17 @@ const CustomProvider: FC<{
         )
     ) : <LoadingScreen/>;
     function handleAuthentication(session?: UserSession) {
-        if (Component.authenticationRequired && Component.afterAuthentication) {
+        if (!Component.authenticationRequired &&
+            !Component.adminRoleRequired &&
+            !Component.noAuthenticationRequired &&
+            !Component.fetchData) return setDone(true);
+        if (Component.afterAuthentication) {
             //@ts-ignore
             const returnValue = Component.afterAuthentication(session, router);
-            if (typeof returnValue == "boolean" && returnValue == false)
-                return setTimeout(() => {
-                    setDone(true);
-                }, minAnimationTime);
-        }
+            if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => {
+                setDone(true);
+            }, minAnimationTime);
+        };
         if (Component.fetchData) {
             const config = Component.fetchData?.config
                 ? Component.fetchData?.config

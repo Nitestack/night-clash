@@ -6,11 +6,13 @@ const Tabs: FC<{
     tabs: {
         [key: string]: JSX.Element;
     };
-}> = ({ tabs }) => {
+    initialTabIndex?: number;
+    onTabChange?: (index: number) => void;
+}> = ({ tabs, initialTabIndex, onTabChange }) => {
     const [tabsState] = useState(tabs);
     return (
         <div className="w-full sm:p-0 bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg">
-            <Tab.Group>
+            <Tab.Group defaultIndex={initialTabIndex} onChange={onTabChange}>
                 <Tab.List className="flex p-1 space-x-1 rounded-xl">
                     {Object.keys(tabsState).map((category) => (
                         <Tab

@@ -44,31 +44,31 @@ const statsTrackers: Array<{
     {
         name: "Clash of Clans",
         description: "Get a players profile data or request clan data!",
-        href: "/stats-tracker",
-        icon: InformationCircleIcon
-    },
-    {
-        name: "Brawl Stars",
-        description: "Get a players profile data or request club data!",
-        href: "/stats-tracker",
+        href: "/stats-tracker#clashofclans",
         icon: InformationCircleIcon
     },
     {
         name: "Clash Royale",
         description: "Get a players profile data or request clan data!",
-        href: "/stats-tracker",
+        href: "/stats-tracker#clashroyale",
+        icon: InformationCircleIcon
+    },
+    {
+        name: "Brawl Stars",
+        description: "Get a players profile data or request club data!",
+        href: "/stats-tracker#brawlstars",
         icon: InformationCircleIcon
     },
     {
         name: "Clash Quest (Future Feature)",
         description: "Get a players profile data or request clan data!",
-        href: "/stats-tracker",
+        href: "/stats-tracker#clashquest",
         icon: InformationCircleIcon
     },
     {
         name: "Clash Mini (Future Feature)",
         description: "Get a players profile data!",
-        href: "/stats-tracker",
+        href: "/stats-tracker#clashmini",
         icon: InformationCircleIcon
     }
 ];

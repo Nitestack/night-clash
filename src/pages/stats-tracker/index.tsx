@@ -1,18 +1,21 @@
 import { NextPageWithConfiguration } from "@util/types";
-import { FC } from "react";
-import Accordion from "@components/Accordion";
+import { FC, useRef } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
-import Input from "@components/Input";
 import Util from "@util/index";
+import PlayerTagInput from "@components/PlayerTagInput";
 
 const StatsTracker: NextPageWithConfiguration = () => {
+    const tracker = ["clashofclans", "clashroyale", "brawlstars"];
+    const defaultIndex = tracker.includes(location.hash.replace(/#/g, "")) ? tracker.indexOf(location.hash.replace(/#/g, "")) : 0;
     return (
         <>
-            <Tabs tabs={{
+            <Tabs initialTabIndex={defaultIndex} tabs={{
                 "Clash of Clans" : <Tab backgroundImageName="Clash of Clans"/>,
                 "Clash Royale": <Tab backgroundImageName="Clash Royale"/>,
                 "Brawl Stars": <Tab backgroundImageName="Brawl Stars" club/>
+            }} onTabChange={(index) => {
+                location.hash = `#${tracker[index]}`;
             }}/>
         </>
     );
@@ -24,15 +27,31 @@ const Tab: FC<{
     backgroundImageName: string
 }> = ({ club, backgroundImageName }) => {
     const tabs: { [key: string]: JSX.Element } = {};
-    for (const element of ["player", "clan"]) tabs[`Find a ${element == "clan" ? (club ? "club" : element) : element}`] = <>
-        <Center>
-            <img className="h-56" src={"/Images/" + backgroundImageName + ".png"}/>
-        </Center>
-        <Center>
-            <Input name="tag" type="text" maxLength={10} minLength={8} placeholder={element == "clan" ? (club ? "Club" : Util.toCapitalize(element)) : Util.toCapitalize(element)}></Input>
-        </Center>
-    </>;
-    console.log(tabs)
+    const tracker = backgroundImageName.toLowerCase().replace(/ /g, "");
+    function redirectToTracker(classID: string, element: string) {
+        return () => {
+            const tag = $(`#${classID}`).val() as string;
+            if (tag && tag.length < 10 && tag.length >= 7) {
+                window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag}`, "_blank");
+            };
+        };
+    };
+    for (const element of ["player", "clan"]) {
+        const id = tracker + Util.toCapitalize(element == "clan" ? (club ? "club" : element) : element);
+        tabs[`Find a ${element == "clan" ? (club ? "club" : element) : element}`] = 
+        <>
+            <Center>
+                <img className="h-56" src={"/Images/" + backgroundImageName + ".png"}/>
+            </Center>
+            <Center>
+                <PlayerTagInput inputProps={{
+                    id: id
+                }} searchButtonProps={{
+                    onClick: redirectToTracker(id, element)
+                }} club={club} element={element}/>
+            </Center>
+        </>;
+    };
     return (
         <Tabs tabs={tabs}/>
     );

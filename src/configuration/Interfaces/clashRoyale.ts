@@ -1,64 +1,102 @@
 export interface CRProfile {
-    //Added by function
-    profileLink: string,
-    //Added by function
-    profileMobileLink: string,
+    clan: {
+        badgeId: number,
+        tag: string,
+        name: string
+    },
+    arena: {
+        id: number,
+        name: string
+    },
+    role: "elder" | "coLeader" | "member" | "leader",
+    wins: number,
+    losses: number,
+    totalDonations: number,
+    leagueStatistics?: {
+        currentSeason: { id: string, rank?: number, trophies: number, bestTrophies: number },
+        previousSeason: { id: string, rank?: number, trophies: number, bestTrophies: number },
+        bestSeason: { id: string, rank?: number, trophies: number, bestTrophies: number }
+    },
+    cards: Array<CRCard>,
+    currentFavouriteCard: {
+        iconUrls: { medium: string },
+        name: string,
+        id: number,
+        maxLevel: number
+    },
+    badges: Array<{
+        maxLevel: number,
+        progress: number,
+        level: number,
+        target: number,
+        name: string
+    }>,
     tag: string,
     name: string,
     expLevel: number,
-    starPoints: number,
     trophies: number,
     bestTrophies: number,
-    wins: number,
-    losses: number,
+    donations: number,
+    donationsReceived: number,
+    achievements: Array<{
+        stars: number,
+        value: number,
+        name: string,
+        target: number,
+        info: string,
+        completionInfo: string
+    }>,
     battleCount: number,
     threeCrownWins: number,
     challengeCardsWon: number,
     challengeMaxWins: number,
     tournamentCardsWon: number,
     tournamentBattleCount: number,
-    role: 'coLeader' | 'member' | 'elder' | 'leader',
-    donations: number,
-    donationsReceived: number,
-    totalDonations: number,
+    currentDeck: Array<CRCard>,
     warDayWins: number,
     clanCardsCollected: number,
-    clan: { tag: string, name: string, badgeId: number },
-    //Added by function
-    clanLink: string,
-    //Added by function
-    clanMobileLink: string,
-    arena: { id: number, name: string },
-    leagueStatistics?: {
-        //Added by function ("name" of each season)
-        currentSeason: { rank?: number, trophies: number, bestTrophies: number, name: string, bestName: string },
-        previousSeason: { id: string, rank?: number, trophies: number, bestTrophies: number, name: string },
-        bestSeason: { id: string, rank?: number, trophies: number, name: string }
+    starPoints: number,
+    expPoints: number
+};
+
+export interface CRClan {
+    tag: string,
+    name: string,
+    type: "inviteOnly" | "open" | "closed",
+    description: string,
+    badgeId: number,
+    clanScore: number,
+    clanWarTrophies: number,
+    location: {
+        localizedName?: string,
+        id: number,
+        name: string,
+        isCountry: boolean,
+        countryCode?: string
     },
-    badges: Array<{
+    requiredTrophies: number,
+    donationsPerWeek: number,
+    clanChestStatus: string,
+    clanChestLevel: number,
+    clanChestMaxLevel: number,
+    members: number,
+    memberList: Array<{
+        tag: string,
         name: string,
-        progress: number,
-        level?: number,
-        maxLevel?: number,
-        target?: number
-    }>,
-    achievements: Array<{
-        name: string,
-        stars: number,
-        value: number,
-        target: number,
-        info: string,
-        completionInfo: null
-    }>,
-    cards: Array<CRCard>,
-    currentDeck: Array<CRCard>,
-    //Added by function
-    currentDeckAverageElixirCost: number,
-    //Added by function
-    currentDeckLink: string,
-    //Added by function
-    currentDeckMobileLink: string,
-    currentFavouriteCard: CRCard
+        role: "elder" | "coLeader" | "member" | "leader",
+        lastSeen: string,
+        expLevel: number,
+        trophies: number,
+        arena: {
+            id: number,
+            name: string
+        },
+        clanRank: number,
+        previousClanRank: number,
+        donations: number,
+        donationsReceived: number,
+        clanChestPoints: number
+    }>
 };
 
 export interface CRCard {

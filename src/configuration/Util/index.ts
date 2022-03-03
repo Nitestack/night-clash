@@ -127,7 +127,7 @@ export default class Util {
     /**
      * Connects to the MongoDB database or if there is an active connection it returns the cached connection
      */
-    public static async getConnection(): Promise<typeof import("mongoose")> {
+    public static async getConnection() {
         return await getDatabaseConnection();
     };
     /**
@@ -135,6 +135,18 @@ export default class Util {
      */
     public static async getCoCAPI(): Promise<Client> {
         return await getAPI("coc");
+    };
+    /**
+     * Get's the Clash Royale API Client
+     */
+    public static async getCRAPI() {
+        return await getAPI("cr");
+    };
+    /**
+     * Get's the Brawl Stars API Client
+     */
+    public static async getBSAPI() {
+        return await getAPI("bs");
     };
     /**
      * Returns the rarity of a Clash Royale card
