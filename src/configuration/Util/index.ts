@@ -47,7 +47,7 @@ export default class Util {
      */
     public static validateTag(tag: string) {
         let resolvedTag = tag;
-        if (!tag.includes("#")) resolvedTag = "#" + tag;
+        if (!tag.includes("#")) resolvedTag = `#${tag}`;
         return resolvedTag;
     };
     /**
@@ -113,7 +113,7 @@ export default class Util {
      */
     public static deleteCookie(name: string, path?: string) {
         if (Util.getCookie(name)) {
-            document.cookie = name + "=" + ((path) ? ";path=" + path : "") + ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            document.cookie = `${name}=${(path) ? ";path=" + path : ""};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
         };
     };
     /**
@@ -149,12 +149,34 @@ export default class Util {
         return await getAPI("bs");
     };
     /**
-     * Returns the rarity of a Clash Royale card
+     * Gets the image of a Town Hall
+     * @param {number} townHallLevel The Town Hall level 
+     * @param {number?} townHallWeaponLevel The Town Hall Weapon level
+     */
+    public static getTownHallImage(townHallLevel: number, townHallWeaponLevel?: number) {
+        return `/Images/Clash of Clans/Home/${townHallLevel >= 12 ? 
+            `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
+            `Town Hall/${townHallLevel}`}.png`;
+    };
+    /**
+     * Gets the image of a Builder Hall
+     * @param {number} builderHallLevel The Builder Hall level
+     */
+    public static getBuilderHallImage(builderHallLevel: number) {
+        return `/Images/Clash of Clans/Builder/Builder Hall/${builderHallLevel}.png`;
+    };
+    /**
+     * Get's the rarity of a Clash Royale card
      * @param {CRCard} card The card
      */
     public static getRarityOfClashRoyaleCard(card: CRCard) {
         return card.maxLevel == ClashRoyaleConstants.maxLevel ? "common" : (card.maxLevel == ClashRoyaleConstants.maxLevel - 2 ? "rare" : (card.maxLevel == ClashRoyaleConstants.maxLevel - 5 ? "epic" : "legendary"));
     };
+    /**
+     * Get's the level of a Clash Royale card
+     * @param card 
+     * @returns 
+     */
     public static getLevelOfClashRoyaleCard(card: CRCard) {
         return card.level + (ClashRoyaleConstants.maxLevel - card.maxLevel);
     };
@@ -183,7 +205,7 @@ export default class Util {
      * @param {number} end The end date in milliseconds
      */
     public static getPercentage(start: number, end: number) {
-        return Math.round(((Date.now() - start) / (end - start)) * 100) + '%';
+        return `${Math.round(((Date.now() - start) / (end - start)) * 100)}%`;
     };
     /**
      * Resolves a database name
@@ -263,6 +285,6 @@ export default class Util {
      * @param {string} text The text 
      */
     public static toCapitalize(text: string) {
-        return text[0].toUpperCase() + text.slice(1);
+        return `${text[0].toUpperCase()}${text.slice(1)}`;
     };
 };

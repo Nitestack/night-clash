@@ -7,7 +7,7 @@ export default class Base {
         this.village = infos.village;
         const convertedLevels: Array<ClashOfClansConvertedLevel> = [];
         for (const level of infos.levels) convertedLevels.push({
-            imageUrl: "/Images/Clash of Clans/" + infos.baseImageUrl + "/" + (infos.levels.indexOf(level) + 1) + ".png",
+            imageUrl: `/Images/Clash of Clans/${infos.baseImageUrl}/${infos.levels.indexOf(level) + 1}.png`,
             convertedPrice: convertNumber(level.costs),
             upgradeDurationInSeconds: convertTime(level.upgradeDuration),
             calculateSeasonBoostCosts: (percentage: number) => {

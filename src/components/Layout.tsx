@@ -10,9 +10,12 @@ export interface LayoutProps {
     header?: string;
     description?: string;
     scripts?: Array<string>;
+    meta?: {
+        keywords?: string
+    }
 };
 
-const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts }) => {
+const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts, meta }) => {
     return (
         <>
             <Head>
@@ -20,9 +23,11 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <meta name="title" content={title}/>
                 <title> {title} - {Util.Constants.websiteApplicationName} </title>
                 <meta charSet="UTF-8"/>
-                <meta name="description" content={Util.Constants.websiteApplicationName + Util.Constants.websiteApplicationDescription}/>
-                <meta name="keywords" content="coc, cr, bs, bb, clash of clans, clash royale, brawl stars, boom beach, tracker, stats, nightclash, supercell web, night clash"/>
+                <meta name="description" content={description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}/>
+                <meta name="keywords" content={`${meta?.keywords ? `${meta?.keywords}, `  : ""}coc, cr, bs, bb, clash of clans, clash royale, brawl stars, boom beach, tracker, stats, nightclash, supercell web, night clash`}/>
                 <meta name="author" content={Util.Constants.websiteApplicationName}/>
+                <meta charSet="utf-8"/>
+                <link rel="icon" type="image/png" href="/Images/profile.png"/>
             </Head>
             <div>
                 <Navbar></Navbar>
@@ -45,7 +50,7 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                                     {header ? header : title}
                                 </p>
                                 <p className="mt-4 text-3xl text-gray-700 lg:mx-auto coc-description">
-                                    {description ? description : Util.Constants.websiteApplicationName + Util.Constants.websiteApplicationDescription}
+                                    {description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}
                                 </p>
                             </div>
                             <div className="mt-10 z-0 mb-0 mx-auto">

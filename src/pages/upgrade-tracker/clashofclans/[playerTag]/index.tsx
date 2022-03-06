@@ -12,17 +12,15 @@ const CocUpgradeTrackerPlayerPage: NextPageWithConfiguration<{}, {}, {
     const { player } = playerSchema;
     const { townHallLevel, builderHallLevel, townHallWeaponLevel, tag, name } = player;
     return (
-        <Layout header={name + " - Overview"} title={name + " - Overview - Clash of Clans - Upgrade Tracker"} description="Choose a village to proceed using the upgrade tracker!">
+        <Layout header={`${name} - Overview`} title={`${name} - Overview - Clash of Clans - Upgrade Tracker`} description="Choose a village to proceed using the upgrade tracker!">
             <div className="container mx-auto py-9 md:py-12 px-4 md:px-6">
                 <div className="flex items-strech justify-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8">
                     <div className="md:w-4/12 lg:w-5/12 xl:w-4/12 2xl:w-3/12 py-6 px-6 md:py-0 md:px-4 lg:px-6 flex flex-col justify-center relative">
                         <div className="flex flex-col justify-center text-center">
                             <h1 className="text-3xl lg:text-4xl font-semibold text-lightmodeprimary dark:text-darkmodeprimary">Town Hall</h1>
-                            <Link className="text-lightmodetext dark:text-darkmodetext" href={"/upgrade-tracker/clashofclans/" + tag.replace(/#/g, "") + "/home"}>
+                            <Link className="text-lightmodetext dark:text-darkmodetext" href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/home`}>
                                 <Center>
-                                    <img className="h-36" src={`/Images/Clash of Clans/Home/${townHallLevel >= 12 ? 
-                                        `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
-                                        `Town Hall/${townHallLevel}`}.png`}/>
+                                    <img className="w-36" src={Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
                                 </Center>
                             </Link>
                         </div>
@@ -31,9 +29,9 @@ const CocUpgradeTrackerPlayerPage: NextPageWithConfiguration<{}, {}, {
                     <div className="md:w-4/12 lg:w-5/12 xl:w-4/12 2xl:w-3/12 py-6 px-6 md:py-0 md:px-4 lg:px-6 flex flex-col justify-center relative">
                         <div className="flex flex-col justify-center text-center">
                             <h1 className="text-3xl lg:text-4xl font-semibold text-lightmodeprimary dark:text-darkmodeprimary">Builder Hall</h1>
-                            <Link className="text-lightmodetext dark:text-darkmodetext" href={"/upgrade-tracker/clashofclans/" + tag.replace(/#/g, "") + "/builder"}>
+                            <Link className="text-lightmodetext dark:text-darkmodetext" href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/builder`}>
                                 <Center>
-                                    <img className="h-36" src={"/Images/Clash of Clans/Builder/Builder Hall/" + builderHallLevel + ".png"}/>
+                                    <img className="w-36" src={Util.getBuilderHallImage(builderHallLevel)}/>
                                 </Center>
                             </Link>
                         </div>

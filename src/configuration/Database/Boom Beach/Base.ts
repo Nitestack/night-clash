@@ -8,7 +8,7 @@ export default class Base {
         for (const level of infos.levels) convertedLevels.push({
             convertedPrice: level.costs.map((cost) => convertNumber(cost)),
             upgradeDurationInSeconds: convertTime(level.upgradeDuration),
-            imageUrl: "/Images/Boom Beach/" + infos.baseImageUrl + "/" + (infos.levels.indexOf(level) + 1) + ".png",
+            imageUrl: `/Images/Boom Beach/${infos.baseImageUrl}/${infos.levels.indexOf(level) + 1}.png`,
             ...level
         });
         this.levels = convertedLevels;

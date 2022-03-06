@@ -1,9 +1,35 @@
 import Layout from "@components/Layout";
 import { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
+import { APIClan, APIPlayer } from "clashofclans.js";
+import ClashOfClansPlayerProfile from "@modules/ClashOfClansPlayerProfile";
+import { useState } from "react";
+import Button from "@components/Button";
+import Center from "@components/Center";
 
-const ClashOfClansStatsTracker: NextPageWithConfiguration = () => {
-    return (
+const ClashOfClansStatsTracker: NextPageWithConfiguration<{}, {}, {
+    player?: APIPlayer,
+    clan?: APIClan
+}> = ({ data }) => {
+    const { player, clan } = data;
+    const [village, setVillage] = useState<"home" | "builder">("home");
+    function switchVillage() {
+        return () => {
+            setVillage(village == "home" ? "builder" : "home");
+        };
+    };
+    if (player) return (
+        <Layout title={`${player.name} - Clash of Clans - Stats Tracker`} description={player.tag} header={player.name}>
+            {village == "home" ? <ClashOfClansPlayerProfile player={player} village="home"/> : 
+            <ClashOfClansPlayerProfile player={player} village="builder"/>}
+            <Center>
+                <Button style={{ backgroundColor: "blue" }} onClick={() => {
+                    setVillage(village == "home" ? "builder" : "home")
+                }}> Switch to {village == "home" ? "Builder Base" : "Home Village"} </Button>
+            </Center>
+        </Layout>
+    );
+    else return (
         <Layout>
 
         </Layout>

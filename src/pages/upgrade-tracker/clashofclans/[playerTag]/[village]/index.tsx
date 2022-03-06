@@ -13,7 +13,7 @@ import Link from "@components/Link";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PlayerProfile from "@modules/Upgrade Tracker/cocPlayer";
+import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/Upgrade Tracker/cocOverview";
 import Table from "@modules/Upgrade Tracker/cocTable";
 import ClashOfClansWallTable from "@modules/Upgrade Tracker/cocWallTable";
@@ -115,9 +115,9 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
     };
     return (
         <Layout
-            header={ name + " - " + (village == "home" ? "Home Village" : "Builder Base")}
+            header={`${name} - ${village == "home" ? "Home Village" : "Builder Base"}`}
             description={tag}
-            title={name + " - " + (village == "home" ? "Home Village" : "Builder Base") + " - Clash of Clans - Upgrade Tracker"}>
+            title={`${name} - ${village == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`}>
             <Container className="p-0 max-w-none">
                 <PlayerProfile player={player} village={village}/>
                 <Row>
@@ -125,19 +125,19 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                         {village == "home" || (village == "builder" && builderHallLevel && builderHallLevel >= 4) ? <>
                         {village == "home" ? 
                         <>
-                            <Button className="w-28 h-28">
-                                <img src="/Images/Clash of Clans/Magic Items/Builder Potion Button.png"/>
+                            <Button>
+                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Builder Potion Button.png"/>
                             </Button>
-                            {homeVillage.Laboratory1 ? <Button className="w-28 h-28">
-                                <img src="/Images/Clash of Clans/Magic Items/Research Potion Button.png"/>
+                            {homeVillage.Laboratory1 ? <Button>
+                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Research Potion Button.png"/>
                             </Button> : undefined}
                         </> : 
                         <>
-                            <Button className="w-28 h-28">
-                                <img src="/Images/Clash of Clans/Magic Items/Clock Tower Boost.png"/>
+                            <Button>
+                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Boost.png"/>
                             </Button>
-                            <Button className="w-28 h-28">
-                                <img src="/Images/Clash of Clans/Magic Items/Clock Tower Potion Button.png"/>
+                            <Button>
+                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Potion Button.png"/>
                             </Button>
                         </>}
                         </> : undefined}
@@ -169,20 +169,18 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                     </Col>
                     {builderHallLevel ? <Col className="p-0">
                         <Center>
-                            <a href={"/upgrade-tracker/clashofclans/" + tag.replace(/#/g, "") + "/" + (village == "home" ? "builder" : "home")}>
+                            <Link href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/${village == "home" ? "builder" : "home"}`}>
                                 <Button style={{ backgroundColor: "blue" }}>
                                     <Container className="p-0">
                                         <Row>
                                             <Col className="p-0 inline-flex">
-                                                <img className="h-10" src={"/Images/Clash of Clans/" + (village == "builder" ? `Home/${townHallLevel >= 12 ? 
-                                                    `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
-                                                    `Town Hall/${townHallLevel}`}` : `Builder/Builder Hall/${builderHallLevel}`) + ".png"}/>
+                                                <img className="w-10 pr-1" src={village == "home" ? Util.getBuilderHallImage(builderHallLevel) : Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
                                                 <p className="p-0 sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
                                             </Col>
                                         </Row>
                                     </Container>
                                 </Button>
-                            </a>
+                            </Link>
                         </Center>
                     </Col> : undefined}
                 </Row>
@@ -228,13 +226,13 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                             <div className="grid grid-cols-2">
                                 <div className="justify-center">
                                     <Center>
-                                        <img className="h-20" src="/Images/Clash of Clans/Season Boost Builder.png"/>
+                                        <img className="w-20" src="/Images/Clash of Clans/Season Boost Builder.png"/>
                                     </Center>
                                     <Select id="builderBoost" defaultValue={builderBoost} options={getSeasonBoostPercentages()}/>
                                 </div>
                                 <div className="justify-center">
                                     <Center>
-                                        <img className="h-20" src="/Images/Clash of Clans/Season Boost Research.png"/>
+                                        <img className="w-20" src="/Images/Clash of Clans/Season Boost Research.png"/>
                                     </Center>
                                     <Select id="researchBoost" defaultValue={researchBoost} options={getSeasonBoostPercentages()}/>
                                 </div>
@@ -262,11 +260,11 @@ CocUpgradeTrackerPlayerVillagePage.afterAuthentication = function (session, rout
     const resolvedTag = Util.validateTag(playerTag);
     //Ensures the village parameter was given and is valid
     if (!village) {
-        router.push("/upgrade-tracker/" + resolvedTag.replace(/#/g, ""));
+        router.push(`/upgrade-tracker/${resolvedTag.replace(/#/g, "")}`);
         return false;
     };
     if (!["home", "builder"].includes(village)) {
-        router.push("/upgrade-tracker/" + resolvedTag.replace(/#/g, ""));
+        router.push(`/upgrade-tracker/${resolvedTag.replace(/#/g, "")}`);
         return false;
     };
 };

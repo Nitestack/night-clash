@@ -6,7 +6,7 @@ import Util from "@util/index";
 import UnitIcon from "@modules/Upgrade Tracker/cocUnitIcon";
 import { APIPlayer } from "clashofclans.js";
 import Progress from "@components/Progress";
-import Achievement from "@modules/Upgrade Tracker/cocAchievement";
+import Achievement from "@modules/ClashOfClansAchievement";
 import Image from "next/image";
 
 const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer }> = ({ village, player }) => {
@@ -22,11 +22,6 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
         const overAllPercentage = Math.floor(allStars / (achievements.length * 3) * 100);
         return(
             <>
-                <style jsx>{`
-                .achievement {
-                    background: -webkit-linear-gradient(top, rgba(194, 198, 201, 0.8) 0%, rgba(176, 181, 187, 0.8) 49%, rgba(161, 168, 176, 0.8) 50%, rgba(157, 165, 176, 0.8) 100%);
-                }
-                `}</style>
                 <h5 className="pt-[10px]">{item} {item.toLowerCase() == "home" ? "Village" : "Base"} Achievements</h5>
                 <Container className="p-0 ml-3 mt-3">
                     <Row>

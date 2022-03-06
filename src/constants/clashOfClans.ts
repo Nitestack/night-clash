@@ -35,6 +35,6 @@ export default class CocConstants {
     public static laboratoryArray = [...CocConstants.homePetsArray, ...CocConstants.homeTroopsArray, ...CocConstants.homeDarkTroopsArray, ...CocConstants.homeSpellsArray, ...CocConstants.homeSiegeMachinesArray, ...CocConstants.builderTroopsArray];
 
     public static getPlayerLink(tag: string) {
-        return "https://link.clashofclans.com/de?action=OpenPlayerProfile&tag=" + encodeURIComponent(tag.replace(/#/g, ""));
+        return `https://link.clashofclans.com/de?action=OpenPlayerProfile&tag=${encodeURIComponent(tag.replace(/#/g, ""))}`;
     };
 };

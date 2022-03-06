@@ -68,21 +68,21 @@ const ClashOfClansTable: FC<{
         let source = "";
         if (homeHeroesArray.includes(name)) {
             if (["Barbarian King", "Archer Queen"].includes(name)) {
-                if (lvl >= 41) source = imagePath + "/41.png";
-                else if (lvl >= 20) source = imagePath + "/20.png";
-                else if (lvl >= 10) source = imagePath + "/10.png";
-                else if (lvl >= 1) source = imagePath + "/1.png";
+                if (lvl >= 41) source = `${imagePath}/41.png`;
+                else if (lvl >= 20) source = `${imagePath}/20.png`;
+                else if (lvl >= 10) source = `${imagePath}/10.png`;
+                else if (lvl >= 1) source = `${imagePath}/1.png`;
             } else if (name == "Battle Machine") {
-                if (lvl >= 30) source = imagePath + "/30.png";
-                else if (lvl >= 26) source = imagePath + "/26.png";
-                else if (lvl >= 20) source = imagePath + "/20.png";
-                else if (lvl >= 10) source = imagePath + "/10.png";
-                else if (lvl >= 1) source = imagePath + "/1.png";
-            } else source = imagePath + "/" + 1 + ".png";
-        } else if (homePetsArray.includes(name) || homeSpellsArray.includes(name)) source = imagePath + ".png";
-        else if (village == "builder" && name == "Army Camp") source = imagePath + "/1.png";
-        else source = imagePath + "/" + lvl + ".png";
-        return <img src={source} className={(small ? "h-8" : "h-16") + (homeSpellsArray.includes(name) ? " border border-solid border-[#3E4251] rounded-lg" : "")}/>
+                if (lvl >= 30) source = `${imagePath}/30.png`;
+                else if (lvl >= 26) source = `${imagePath}/26.png`;
+                else if (lvl >= 20) source = `${imagePath}/20.png`;
+                else if (lvl >= 10) source = `${imagePath}/10.png`;
+                else if (lvl >= 1) source = `${imagePath}/1.png`;
+            } else source = `${imagePath}/1.png`;
+        } else if (homePetsArray.includes(name) || homeSpellsArray.includes(name)) source = `${imagePath}.png`;
+        else if (village == "builder" && name == "Army Camp") source = `${imagePath}/1.png`;
+        else source = `${imagePath}/${lvl}.png`;
+        return <img src={source} className={`w-auto max-h-full ${small ? "h-5 sm:h-8" : "h-12 sm:h-16"} ${homeSpellsArray.includes(name) ? "border border-solid border-[#3E4251] rounded-lg" : ""}`}/>
     };
     const rows: Array<Array<JSX.IntrinsicElements["td"]>> = [];
     function getPriceListItem(level: number, item: string, index: number, element?: Base) {
@@ -104,22 +104,16 @@ const ClashOfClansTable: FC<{
                 </>
             );
             else return (
-                <>
-                    <Col>
-                        <div>{village == "builder" && item == "Army Camp" ? "" : "Lv."} {level + index + 1}{village == "builder" && item == "Army Camp" ? "." : ""}</div>
-                    </Col>
-                    <Col>
-                        <div className="inline-flex">
-                            <div align="right">{item == "Builder's Hut" && level + index + 1 == 1 ? (parseInt(database.Builder) == 4 ? "2k" : (parseInt(database.Builder) == 3 ? "1k & 2k" : "500 & 1k & 2k")) : Util.convertNumber(elementLevel?.calculateSeasonBoostCosts(playerSchema[laboratoryArray.includes(item) || homePetsArray.includes(item) ? "researchSeasonBoost" : "builderSeasonBoost"]))}</div>
-                            {elementLevel?.costType == "builderGoldAndElixir" || elementLevel?.costType == "goldAndElixir" ? 
-                            <img className="h-6" src="/Images/Clash of Clans/Home/Gold and Elixir.png"/> : 
-                            <img className="h-6" src={"/Images/Clash of Clans/" + village[0].toUpperCase() + village.slice(1) + "/" + (elementLevel?.costType[0].toUpperCase() + elementLevel?.costType.slice(1)).replace(/([A-Z]+)/g, ' $1').trim() + ".png"}/>}
-                        </div>
-                    </Col>
-                    <Col>
-                        <div align="right">{Util.convertMilliseconds(elementLevel?.calculateSeasonBoostTimeInSeconds(laboratoryArray.includes(item) || homePetsArray.includes(item) ? playerSchema.researchSeasonBoost : playerSchema.builderSeasonBoost) * 1000, true)}</div>
-                    </Col>
-                </>
+                <div className="inline-flex">
+                    <div>{village == "builder" && item == "Army Camp" ? "" : "Lv."} {level + index + 1}{village == "builder" && item == "Army Camp" ? "." : ""}</div>
+                    <div className="inline-flex">
+                        <div align="right">{item == "Builder's Hut" && level + index + 1 == 1 ? (parseInt(database.Builder) == 4 ? "2k" : (parseInt(database.Builder) == 3 ? "1k & 2k" : "500 & 1k & 2k")) : Util.convertNumber(elementLevel?.calculateSeasonBoostCosts(playerSchema[laboratoryArray.includes(item) || homePetsArray.includes(item) ? "researchSeasonBoost" : "builderSeasonBoost"]))}</div>
+                        {elementLevel?.costType == "builderGoldAndElixir" || elementLevel?.costType == "goldAndElixir" ? 
+                        <img className="w-6" src="/Images/Clash of Clans/Home/Gold and Elixir.png"/> : 
+                        <img className="w-6" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/${Util.toCapitalize(elementLevel?.costType.replace(/([A-Z]+)/g, ' $1').trim())}.png`}/>}
+                    </div>
+                    <div align="right">{Util.convertMilliseconds(elementLevel?.calculateSeasonBoostTimeInSeconds(laboratoryArray.includes(item) || homePetsArray.includes(item) ? playerSchema.researchSeasonBoost : playerSchema.builderSeasonBoost) * 1000, true)}</div>
+                </div>
             );
         };
     };
@@ -169,7 +163,7 @@ const ClashOfClansTable: FC<{
         const maxTownHall = townHall[townHall.length - 1];
         const maxBuilderHall = builderHall[builderHall.length - 1];
         if (Util.CocUpgradeTracker.isInHall(item, village == "home" ? playerTownHall : playerBuilderHall)) {
-            const imagePath = "/Images/Clash of Clans/" + (village == "home" ? "Home" : "Builder") + "/" + (item == "Battle Machine" ? "Army" : (type == "Dark Troop" ? "Troop" : type) + (type != "Army" ? (type == "Hero" ? "es" : "s") : "")) + "/" + item;
+            const imagePath = `/Images/Clash of Clans/${village == "home" ? "Home" : "Builder"}/${item == "Battle Machine" ? "Army" : (type == "Dark Troop" ? "Troop" : type)}${type != "Army" ? (type == "Hero" ? "es" : "s") : ""}/${item}`;
             const hallItem = (village == "home" ? playerTownHall : playerBuilderHall)[Util.toCamelCase(item)];
             const maxedHallItem = item.toLowerCase().includes("giga") ? hallItem : (village == "home" ? maxTownHall : maxBuilderHall)[Util.toCamelCase(item)];
             const element = (village == "home" ? home : builder).find(unit => unit.name == item);

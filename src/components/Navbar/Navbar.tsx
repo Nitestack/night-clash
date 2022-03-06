@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { ComponentProps, Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon, AdjustmentsIcon, InformationCircleIcon } from "@heroicons/react/outline";

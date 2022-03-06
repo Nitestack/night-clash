@@ -9,14 +9,14 @@ const UpgradeTrackerPage: NextPageWithConfiguration = () => {
             <Accordion title="Clash of Clans">
                 <Link className="h-56" disablemotion="true" href="/upgrade-tracker/clashofclans">
                     <Center>
-                        <img className="h-56" src="/Images/Clash of Clans.png"/>
+                        <img className="w-[80vw]" src="/Images/Clash of Clans.png"/>
                     </Center>
                 </Link>
             </Accordion>
             <Accordion title="Boom Beach">
                 <Link className="h-56" disablemotion="true" href="/upgrade-tracker/boombeach">
                     <Center>
-                        <img className="h-56" src="/Images/Boom Beach.png"/>
+                        <img className="w-[80vw]" src="/Images/Boom Beach.png"/>
                     </Center>
                 </Link>
             </Accordion>

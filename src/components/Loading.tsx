@@ -11,7 +11,7 @@ const LoadingScreen: FC = () => {
             <div className="bg-lightmodebackground dark:bg-darkmodebackground flex min-h-[100vh] justify-center items-center">
                 <div className="loader">
                     {numbers.map((number) => (
-                        <div key={number} className={"box box" + number}><div/></div>
+                        <div key={number} className={`box box${number}`}><div/></div>
                     ))}
                     <div className="ground"><div/></div>
                 </div>

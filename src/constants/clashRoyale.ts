@@ -7,7 +7,7 @@ class ClashRoyaleElixir {
         let elixirCosts = 0;
         for (let i = 1; i < 10; i++) {
             //@ts-ignore
-            const cards: Array<string> = ClashRoyaleElixir[(ClashRoyaleElixir.numbers[i] + "ElixirCards")];
+            const cards: Array<string> = ClashRoyaleElixir[(`${ClashRoyaleElixir.numbers[i]}ElixirCards`)];
             if (cards.includes(card)) {
                 elixirCosts = i;
                 break;
@@ -44,10 +44,10 @@ export default class CrConstants {
     };
     
     public static openProfile(tag: string, isMobile?: boolean) {
-        return (isMobile ? "clashroyale://playerInfo?id=" : "https://link.clashroyale.com/en?playerInfo?id=") + tag.toUpperCase().replace(/#/g, "");
+        return `${isMobile ? "clashroyale://" : "https://link.clashroyale.com/en?"}playerInfo?id=${tag.toUpperCase().replace(/#/g, "")}`;
     };
     
     public static openClan(tag: string, isMobile?: boolean) {
-        return (isMobile ? "clashroyale://clanInfo?id=" : "https://link.clashroyale.com/en?clanInfo?id=") + tag.toUpperCase().replace(/#/g, "");
+        return `${isMobile ? "clashroyale://" : "https://link.clashroyale.com/en?"}clanInfo?id=${tag.toUpperCase().replace(/#/g, "")}`;
     };
 };

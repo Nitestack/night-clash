@@ -1,26 +1,26 @@
 import { NextApiHandler } from "next";
 import Util from "@util/index";
-import { Clan, Player } from "clashofclans.js";
+import { APIClan, APIPlayer } from "clashofclans.js";
 
 const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
     const tag = req.body.tag as string;
     const element = req.body.element as "clans" | "players";
     const client = await Util.getCoCAPI();
     if (element == "players") {
-        const player = await client.getPlayer(tag);
-        if (!player) return Util.ApiHandler.sendError(res, 1, "Couldn't find the player!");
+        const response = await client.rest.getPlayer(tag);
+        if (!response.ok) return Util.ApiHandler.sendError(res, 1, "Couldn't find the player!");
         Util.ApiHandler.sendSuccess<{
-            player: Player
+            player: APIPlayer
         }>(res, {
-            player: player
+            player: response.data
         });
     } else {
-        const clan = await client.getClan(tag);
-        if (!clan) return Util.ApiHandler.sendError(res, 1, "Couldn't find the clan!");
+        const response = await client.rest.getClan(tag);
+        if (!response.ok) return Util.ApiHandler.sendError(res, 1, "Couldn't find the clan!");
         Util.ApiHandler.sendSuccess<{
-            clan: Clan
+            clan: APIClan
         }>(res, {
-            clan: clan
+            clan: response.data
         });
     };
 };

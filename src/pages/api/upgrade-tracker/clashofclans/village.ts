@@ -16,7 +16,7 @@ const Village: NextApiHandler = async (req, res) => {
     //Ensures the village is from the session user
     if (!user.clashOfClansVillages?.includes(playerSchema.id)) return res.redirect("/upgrade-tracker/clashofclans");
     //Ensures, if the village parameter is "builder", that the player unlocked the builder base
-    if (village && village == "builder" && !playerSchema.player.builderHallLevel) return res.redirect("/upgrade-tracker/clashofclans/" + playerTag.replace(/#/g, "") + "/home");
+    if (village && village == "builder" && !playerSchema.player.builderHallLevel) return res.redirect(`/upgrade-tracker/clashofclans/${playerTag.replace(/#/g, "")}/home`);
     const returnObj: {
         playerSchema: ClashOfClansVillage & { _id: any },
         village?: string

@@ -9,7 +9,6 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <link rel="shortcut icon" type="image/png" href="/Images/profile.png"/>
                     {/*LILITIA ONE FONT (FROM GOOGLE)*/}
                     <link rel="preconnect" href="https://fonts.googleapis.com"/>
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>

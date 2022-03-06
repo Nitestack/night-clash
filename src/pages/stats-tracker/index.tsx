@@ -3,7 +3,7 @@ import { FC, useRef } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Util from "@util/index";
-import PlayerTagInput from "@components/PlayerTagInput";
+import PlayerTagInput from "@modules/PlayerTagInput";
 
 const StatsTracker: NextPageWithConfiguration = () => {
     const tracker = ["clashofclans", "clashroyale", "brawlstars"];
@@ -31,17 +31,17 @@ const Tab: FC<{
     function redirectToTracker(classID: string, element: string) {
         return () => {
             const tag = $(`#${classID}`).val() as string;
-            if (tag && tag.length < 10 && tag.length >= 7) {
-                window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag}`, "_blank");
+            if (tag && tag.length < 12 && tag.length >= 7) {
+                window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag.replace(/#/g, "")}`, "_blank");
             };
         };
     };
     for (const element of ["player", "clan"]) {
-        const id = tracker + Util.toCapitalize(element == "clan" ? (club ? "club" : element) : element);
+        const id = `${tracker}${Util.toCapitalize(element == "clan" ? (club ? "club" : element) : element)}`;
         tabs[`Find a ${element == "clan" ? (club ? "club" : element) : element}`] = 
         <>
             <Center>
-                <img className="h-56" src={"/Images/" + backgroundImageName + ".png"}/>
+                <img className="w-[60vw]" src={`/Images/${backgroundImageName}.png`}/>
             </Center>
             <Center>
                 <PlayerTagInput inputProps={{

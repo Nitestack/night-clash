@@ -24,8 +24,6 @@ const ClashOfClansWallTable: FC<{
     const hallItem = village == "home" ? townHall[townHallLevel - 1].wall : builderHall[builderHallLevel - 1].wall;
     //@ts-ignore
     const hallItemMaxLevel = hallItem.maxLevel ? hallItem.maxLevel : builderHallLevel;
-    //@ts-ignore
-    const hallItemAmount = hallItem.amount ? hallItem.amount : hallItem;
     for (let i = lowestWall; i <= (village == "home" ? hallItemMaxLevel : builderHallLevel); i++) levels.push(i);
     const rows: Array<Array<JSX.IntrinsicElements["td"]>> = [];
     for (const item of levels) {
@@ -34,7 +32,7 @@ const ClashOfClansWallTable: FC<{
         rows.push([
             <td className="align-middle">
                 <Center>
-                    <img className="h-16" src={"/Images/Clash of Clans/" + (village == "home" ? "Home" : "Builder") + "/Defenses/Wall/" + item + ".png"}/>
+                    <img className="h-16 w-auto max-h-full" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/Defenses/Wall/${item}.png`}/>
                 </Center>
                 <p className="coc-description text-green-500 text-xl" align="center">Level {item}</p>
             </td>,
@@ -49,13 +47,17 @@ const ClashOfClansWallTable: FC<{
                             <Col>
                                 <div>Lv. {item + 1}</div>
                             </Col>
-                            <Col className="inline-flex">
-                                <div align="right">{Util.convertNumber(wallItem?.levels[item].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
-                                <img className="h-6" src={"/Images/Clash of Clans/" + (wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir") + ".png"}></img>
+                            <Col>
+                                <div className="inline-flex">
+                                    <div align="right">{Util.convertNumber(wallItem?.levels[item].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
+                                    <img className="w-6" src={`/Images/Clash of Clans/${(wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir")}.png`}/>
+                                </div>
                             </Col>
-                            <Col className="inline-flex">
-                                <div align="right">{Util.convertNumber((parseInt(dataBaseItem[item.toString()]) || 0) * wallItem?.levels[parseInt(item)].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
-                                <img className="h-6" src={"/Images/Clash of Clans/" + (wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir") + ".png"}></img>
+                            <Col>
+                                <div className="inline-flex">
+                                    <div align="right">{Util.convertNumber((parseInt(dataBaseItem[item.toString()]) || 0) * wallItem?.levels[parseInt(item)].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
+                                    <img className="w-6" src={`/Images/Clash of Clans/${(wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir")}.png`}/>
+                                </div>
                             </Col>
                             <Col>
                                 {(parseInt(dataBaseItem[item.toString()]) || 0) != 0 ? 

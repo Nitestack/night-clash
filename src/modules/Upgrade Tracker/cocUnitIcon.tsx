@@ -20,7 +20,7 @@ const ClashOfClansUnitIcon: FC<{
         level = unitElement.level; maxLevel = unitElement.maxLevel; 
     };
     const backgroundImage: CSSProperties = {
-        backgroundImage: `url("/Images/Clash of Clans/${village[0].toUpperCase() + village.slice(1)}/${path}/${name}${type == "pet" ? "_Icon" : ""}.png")`
+        backgroundImage: `url("/Images/Clash of Clans/${Util.toCapitalize(village)}/${path}/${name}${type == "pet" ? "_Icon" : ""}.png")`
     };
     if (level == 0) return (
         <div className="unit-icon locked" style={backgroundImage} title={`${name} Level 0 (Max for TH: ${hall[Util.toCamelCase(name)] ? hall[Util.toCamelCase(name)].maxLevel : 0})`}></div>  
@@ -28,7 +28,7 @@ const ClashOfClansUnitIcon: FC<{
     return (
         <div className="unit-icon" style={backgroundImage} title={`${name} Level ${level} (Max for TH: ${hall[Util.toCamelCase(name)].maxLevel})`}>
             {level == 1 && ![...Util.Constants.CoC.homeHeroesArray, "Battle Machine"].includes(name) ? undefined : 
-            <div className={"[font-size:_17px;] unit-icon-level " + (level == maxLevel ? "max" : (hall[Util.toCamelCase(name)].maxLevel == level) ? "maxTH" : "") + " coc-description"}>{level}</div>}
+            <div className={`[font-size:_17px;] unit-icon-level coc-description ${level == maxLevel ? "max" : (hall[Util.toCamelCase(name)].maxLevel == level) ? "maxTH" : ""}`}>{level}</div>}
         </div>
     );
 };

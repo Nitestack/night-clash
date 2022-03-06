@@ -4,10 +4,10 @@ import humanizer from "humanize-duration";
 
 export function convertNumber(number: number) {
     if (number < 1000) return number.toString();
-    else if (number < 1000000) return (number / 1000).toString() + "k";
-    else if (number < 1000000000) return (number / 1000000).toString() + "M";
-    else if (number < 1000000000000) return (number / 1000000000).toString() + "B";
-    else return (number / 1000000000000).toString() + "T";
+    else if (number < 1000000) return `${(number / 1000).toString()}k`;
+    else if (number < 1000000000) return `${(number / 1000000).toString()}M`;
+    else if (number < 1000000000000) return `${(number / 1000000000).toString()}B`;
+    else return `${(number / 1000000000000).toString()}T`;
 };
 
 export function convertTime(time: string) {
@@ -29,5 +29,5 @@ export function convertMilliseconds(timeInMilliseconds: number, short?: boolean,
 };
 
 export function toCamelCase(name: string) {
-   return name[0].toLowerCase() + name.slice(1).replace(/ /g, "").replace(/-/g, "_").replace(/\./g, "").replace(/'/g, "");
+    return `${name[0].toLowerCase()}${name.slice(1).replace(/ /g, "").replace(/-/g, "_").replace(/\./g, "").replace(/'/g, "")}`;
 };

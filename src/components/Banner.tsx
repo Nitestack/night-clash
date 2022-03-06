@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
 import Link from "@components/Link";
 import { FC } from "react";

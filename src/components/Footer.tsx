@@ -80,7 +80,7 @@ const Footer: FC = () => {
                             <div className="w-full lg:w-1/2 px-6 flex flex-col justify-between">
                                 <div className="flex items-center mb-6">
                                     {socialNetworks.map((item, i) => 
-                                    <Link rel="noreferrer" key={i} className="m-2 rounded-full p-2 bg-primary text-lightmodetext dark:text-darkmodetext focus:ring-2 focus:ring-primarycontrast" target="_blank" href={"/" + item.name.replace(/ /g, "").toLowerCase()}>
+                                    <Link rel="noreferrer" key={i} className="m-2 rounded-full p-2 bg-primary text-lightmodetext dark:text-darkmodetext focus:ring-2 focus:ring-primarycontrast" target="_blank" href={`/${item.name.replace(/ /g, "").toLowerCase()}`}>
                                         <FontAwesomeIcon icon={item.icon}/>
                                     </Link>)}
                                 </div>
