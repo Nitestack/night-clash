@@ -21,8 +21,10 @@ body {
     @apply bg-lightmodebackground 
     dark:bg-darkmodebackground 
     text-lightmodetext 
-    dark:text-darkmodetext bg-cover flex-col;
+    dark:text-darkmodetext;
     text-shadow: 0px 1px black;
+    background-size: cover;
+    flex-direction: column;
 }
 
 /*Fonts*/

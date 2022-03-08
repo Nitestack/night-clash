@@ -10,11 +10,11 @@ import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Button";
 import Link from "@components/Link";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "@components/Grid/Container";
+import Row from "@components/Grid/Row";
+import Column from "@components/Grid/Column";
 import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
-import Overview from "@modules/Upgrade Tracker/cocOverview";
+import Overview from "@modules/ClashOfClansOverview";
 import Table from "@modules/Upgrade Tracker/cocTable";
 import ClashOfClansWallTable from "@modules/Upgrade Tracker/cocWallTable";
 
@@ -144,9 +144,9 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                     </Center>
                 </Row>
                 <Row>
-                    <Col className="p-0">
+                    <Column>
                         <Center>
-                            <Button style={{ backgroundColor: "green" }} onClick={() => {
+                            <Button className="bg-green-500" onClick={() => {
                                 Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
                                     method: "POST",
                                     data: {
@@ -159,49 +159,49 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                                 });
                             }}>API Update</Button>
                         </Center>
-                    </Col>
-                    <Col className="p-0">
+                    </Column>
+                    <Column>
                         <Center>
                             <Link>
-                                <Button style={{ backgroundColor: "red" }}> Edit Structures</Button>
+                                <Button className="bg-red-600"> Edit Structures</Button>
                             </Link> 
                         </Center>
-                    </Col>
-                    {builderHallLevel ? <Col className="p-0">
+                    </Column>
+                    {builderHallLevel ? <Column>
                         <Center>
                             <Link href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/${village == "home" ? "builder" : "home"}`}>
-                                <Button style={{ backgroundColor: "blue" }}>
+                                <Button className="bg-blue-700">
                                     <Container className="p-0">
                                         <Row>
-                                            <Col className="p-0 inline-flex">
+                                            <Column className="inline-flex">
                                                 <img className="w-10 pr-1" src={village == "home" ? Util.getBuilderHallImage(builderHallLevel) : Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
                                                 <p className="p-0 sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
-                                            </Col>
+                                            </Column>
                                         </Row>
                                     </Container>
                                 </Button>
                             </Link>
                         </Center>
-                    </Col> : undefined}
+                    </Column> : undefined}
                 </Row>
                 <Row>
-                    <Col className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
+                    <Column className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
                         <Center>
                             <img src="/Images/Clash of Clans/Season Boost Builder.png"/>
                         </Center>
                         <h5 align="center"> Builder Boost </h5>
                         <h1 align="center" className="coc-description"> {builderBoost}% </h1>
-                    </Col>
-                    <Col className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
+                    </Column>
+                    <Column className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
                         <Center>
                             <img src="/Images/Clash of Clans/Season Boost Research.png"/>
                         </Center>
                         <h5 align="center"> Research Boost </h5>
                         <h1 align="center" className="coc-description"> {researchBoost}% </h1>
-                    </Col>
+                    </Column>
                 </Row>
                 <Row>
-                    <Col className="p-0">
+                    <Column>
                     {townHallLevel >= 7 ? (
                         <Modal
                             openButtonOptions={{ children: "Set Season Boosts", style: { backgroundColor: "blue", width: "100%" } }}
@@ -223,7 +223,7 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                                     }
                                 });
                             }}>
-                            <div className="grid grid-cols-2">
+                            <div className="grid grid-Columns-2">
                                 <div className="justify-center">
                                     <Center>
                                         <img className="w-20" src="/Images/Clash of Clans/Season Boost Builder.png"/>
@@ -239,7 +239,7 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                             </div>
                         </Modal>
                     ) : undefined}
-                    </Col>
+                    </Column>
                 </Row>
             </Container>
             <Tabs tabs={tabs}></Tabs>

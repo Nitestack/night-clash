@@ -7,9 +7,9 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { home } from "@database/Clash of Clans/home";
 import { builder } from "@database/Clash of Clans/builder";
 import Center from "@components/Center";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "@components/Grid/Container";
+import Row from "@components/Grid/Row";
+import Column from "@components/Grid/Column";
 import Input from "@components/Input";
 import Button from "@components/Button";
 
@@ -44,28 +44,28 @@ const ClashOfClansWallTable: FC<{
                     <Row>
                         {item != hallItemMaxLevel ? 
                         <>
-                            <Col>
+                            <Column>
                                 <div>Lv. {item + 1}</div>
-                            </Col>
-                            <Col>
+                            </Column>
+                            <Column>
                                 <div className="inline-flex">
                                     <div align="right">{Util.convertNumber(wallItem?.levels[item].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
                                     <img className="w-6" src={`/Images/Clash of Clans/${(wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir")}.png`}/>
                                 </div>
-                            </Col>
-                            <Col>
+                            </Column>
+                            <Column>
                                 <div className="inline-flex">
                                     <div align="right">{Util.convertNumber((parseInt(dataBaseItem[item.toString()]) || 0) * wallItem?.levels[parseInt(item)].calculateSeasonBoostCosts(playerSchema.builderSeasonBoost))}</div>
                                     <img className="w-6" src={`/Images/Clash of Clans/${(wallItem?.levels[item].costType == "gold" ? "Home/Gold" : (wallItem?.levels[item].costType == "builderGold") ? "Builder/Builder Gold" : "Home/Gold and Elixir")}.png`}/>
                                 </div>
-                            </Col>
-                            <Col>
+                            </Column>
+                            <Column>
                                 {(parseInt(dataBaseItem[item.toString()]) || 0) != 0 ? 
                                 <div className="flex" align="right">
                                     <Input type="number" min="1" max={dataBaseItem[item.toString()]} defaultValue="1"/>
                                     <Button className="builder-button"/>
                                 </div> : undefined}
-                            </Col>
+                            </Column>
                         </> : undefined}
                     </Row>
                 </Container>

@@ -7,9 +7,9 @@ import { builder } from "@database/Clash of Clans/builder";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import Center from "@components/Center";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "@components/Grid/Container";
+import Row from "@components/Grid/Row";
+import Column from "@components/Grid/Column";
 import Base from "@database/Clash of Clans/Base";
 import Button from "@components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -88,19 +88,19 @@ const ClashOfClansTable: FC<{
     function getPriceListItem(level: number, item: string, index: number, element?: Base) {
         const elementLevel = element?.levels[level + index];
         if (elementLevel?.text) return (
-            <Col>
+            <Column>
                 <div className="text-red-600" align="center">{elementLevel?.text}</div>
-            </Col>
+            </Column>
         );
         else {
             if (laboratoryArray.includes(item) && elementLevel?.requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0)) return (
                 <>
-                    <Col>
+                    <Column>
                         <div>{village == "builder" && item == "Army Camp" ? "" : "Lv."} {level + index + 1}{village == "builder" && item == "Army Camp" ? "." : ""}</div>
-                    </Col>
-                    <Col>
+                    </Column>
+                    <Column>
                         <div className="text-red-600" align="center">{village == "home" ? "" : "Star"} Level {elementLevel?.requiredLabLevel} {village == "home" ? "" : "Star"} Laboratory Required!</div>
-                    </Col>
+                    </Column>
                 </>
             );
             else return (
@@ -133,23 +133,23 @@ const ClashOfClansTable: FC<{
             <td className={"align-middle"}>
                 <Container>
                     <Row>
-                        <Col xs="2">
+                        <Column xs="2">
                             {getImage(item, lvl, imagePath, true)}
-                        </Col>
+                        </Column>
                         {builder ? <>
                         </> : 
                         <>
                             {!(village == "builder" && item == "Army Camp") ? 
-                            <Col className="text-center py-2">
+                            <Column className="text-center py-2">
                                 <div>Lv. {lvl}</div>
-                            </Col> : undefined}
-                            <Col className="flex justify-end p-0">
+                            </Column> : undefined}
+                            <Column className="flex justify-end">
                                 {hallItemMaxLevel == lvl ? 
-                                <Button disabled style={{ backgroundColor: "green" }}><FontAwesomeIcon icon={faCheck}/></Button> : (laboratoryArray.includes(item) ? (lvl == 0 || element.levels[lvl - 1].requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0) ? 
-                                <Button disabled style={{ backgroundColor: "red" }}><FontAwesomeIcon icon={faLock}/></Button> : 
+                                <Button disabled className="bg-green-500"><FontAwesomeIcon icon={faCheck}/></Button> : (laboratoryArray.includes(item) ? (lvl == 0 || element.levels[lvl - 1].requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0) ? 
+                                <Button disabled className="bg-red-600"><FontAwesomeIcon icon={faLock}/></Button> : 
                                 <Button className="lab-button"/>) : 
                                 <Button className="builder-button"/>)}
-                            </Col>
+                            </Column>
                         </>}
                     </Row>
                 </Container>

@@ -3,35 +3,48 @@ import { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import { APIClan, APIPlayer } from "clashofclans.js";
 import ClashOfClansPlayerProfile from "@modules/ClashOfClansPlayerProfile";
-import { useState } from "react";
-import Button from "@components/Button";
-import Center from "@components/Center";
+import ClashOfClansOverview from "@modules/ClashOfClansOverview";
+import Tabs from "@components/Tabs";
+import ClashOfClansClanProfile from "@modules/ClashOfClansClanProfile";
 
 const ClashOfClansStatsTracker: NextPageWithConfiguration<{}, {}, {
     player?: APIPlayer,
     clan?: APIClan
 }> = ({ data }) => {
     const { player, clan } = data;
-    const [village, setVillage] = useState<"home" | "builder">("home");
-    function switchVillage() {
-        return () => {
-            setVillage(village == "home" ? "builder" : "home");
-        };
-    };
+    const stats = ["home", "builder"];
+    if (!location.hash) location.hash = `#${stats[0]}`;
+    const defaultIndex = stats.indexOf(location.hash.replace(/#/g, ""));
     if (player) return (
-        <Layout title={`${player.name} - Clash of Clans - Stats Tracker`} description={player.tag} header={player.name}>
-            {village == "home" ? <ClashOfClansPlayerProfile player={player} village="home"/> : 
-            <ClashOfClansPlayerProfile player={player} village="builder"/>}
-            <Center>
-                <Button style={{ backgroundColor: "blue" }} onClick={() => {
-                    setVillage(village == "home" ? "builder" : "home")
-                }}> Switch to {village == "home" ? "Builder Base" : "Home Village"} </Button>
-            </Center>
+        <Layout title={`${player.name} - Player - Clash of Clans - Stats Tracker`} description={player.tag} header={player.name}>
+            <Tabs 
+            tabs={{
+                "Home Village": <>
+                    <ClashOfClansPlayerProfile player={player} village="home"/>
+                    <ClashOfClansOverview player={player} village="home"/>
+                </>,
+                "Builder Base": <>
+                    <ClashOfClansPlayerProfile player={player} village="builder"/>
+                    <ClashOfClansOverview player={player} village="builder"/>
+                </>
+            }} 
+            initialTabIndex={defaultIndex}
+            onTabChange={(index) => location.hash = `#${stats[index]}`}/>
         </Layout>
     );
-    else return (
-        <Layout>
-
+    else if (clan) return (
+        <Layout title={`${clan.name} - Clan - Clash of Clans - Stats Tracker`} description={clan.tag} header={clan.name}>
+            <Tabs
+            tabs={{
+                "Home Village": <>
+                    <ClashOfClansClanProfile clan={clan} village="home"/>
+                </>,
+                "Builder Base": <>
+                    <ClashOfClansClanProfile clan={clan} village="builder"/>
+                </>
+            }}
+            initialTabIndex={defaultIndex}
+            onTabChange={(index) => location.hash = `#${stats[index]}`}/>
         </Layout>
     );
 };

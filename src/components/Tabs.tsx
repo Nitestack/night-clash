@@ -32,7 +32,7 @@ const Tabs: FC<{
                     {Object.values(tabsState).map((content, index) => (
                         <Tab.Panel
                             key={index}
-                            className="bg-lightmodeprimary dark:bg-darkmodeprimary rounded-xl p-3">
+                            className="bg-lightmodeprimary dark:bg-darkmodeprimary rounded-xl sm:p-3">
                             {content}
                         </Tab.Panel>
                     ))}

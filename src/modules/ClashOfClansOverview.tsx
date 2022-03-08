@@ -1,7 +1,7 @@
 import { FC } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "@components/Grid/Container";
+import Row from "@components/Grid/Row";
+import Column from "@components/Grid/Column";
 import Util from "@util/index";
 import UnitIcon from "@modules/Upgrade Tracker/cocUnitIcon";
 import { APIPlayer } from "clashofclans.js";
@@ -25,18 +25,18 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
                 <h5 className="pt-[10px]">{item} {item.toLowerCase() == "home" ? "Village" : "Base"} Achievements</h5>
                 <Container className="p-0 ml-3 mt-3">
                     <Row>
-                        <Col className="p-0">
+                        <Column className="p-0">
                             <Progress percentage={overAllPercentage}>{overAllPercentage}%</Progress>
-                        </Col>
-                        <Col>
+                        </Column>
+                        <Column>
                             <p className="p-0">{completedAchievements}/{achievements.length}</p>
-                        </Col>
-                        <Col>
+                        </Column>
+                        <Column>
                             <p className="pt-0 inline-flex">
                                 {allStars}/{achievements.length * 3}
                                 <Image className="ml-2" height="25px" width="25px" src="/Images/Clash of Clans/Achievement Star.png"/>
                             </p>
-                        </Col>
+                        </Column>
                     </Row>
                 </Container>
                 {achievements.map((achievementElement, index) => 
@@ -48,38 +48,38 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
         <>
             <Container className="bg-[linear-gradient(#8A94AD,_#6A7798)] p-3 rounded-lg border border-solid border-lightmodetext dark:border-darkmodetext">
                 <Row>
-                    <Col>
+                    <Column>
                         <h5>Troops</h5>
                         {(village == "home" ? [...homeTroopsArray, ...homeDarkTroopsArray] : builderTroopsArray).map((item, index) => 
                         <UnitIcon key={index} village={village} name={item} path="Troops" type="troop" player={player}/>)}
-                    </Col>
+                    </Column>
                 </Row>
                 <Row>
                     {village == "home" ? <>
-                        <Col>
+                        <Column>
                             <h5>Spells</h5>
                             {homeSpellsArray.map((item, index) => 
                             <UnitIcon key={index} village={village} name={item} path="Spells" type="spell" player={player}/>)}
-                        </Col>
-                        <Col>
+                        </Column>
+                        <Column>
                             <h5>Siege Machines</h5>
                             {homeSiegeMachinesArray.map((item, index) => 
                             <UnitIcon key={index} village={village} name={item} path="Siege Machines" type="siegeMachine" player={player}/>)}
-                        </Col>
+                        </Column>
                     </> : undefined}
                 </Row>
                 <Row>
-                    <Col>
+                    <Column>
                         <h5>Heroes</h5>
                         {(village == "home" ? homeHeroesArray : ["Battle Machine"]).map((item, index) => 
                         <UnitIcon key={index} village={village} name={item} path="Heroes" type="hero" player={player}/>)}
-                    </Col>
+                    </Column>
                     {village == "home" ? 
-                    <Col>
+                    <Column>
                         <h5>Pets</h5>
                         {homePetsArray.map((item, index) => 
                         <UnitIcon key={index} village={village} name={item} path="Pets" type="pet" player={player}/>)}
-                    </Col> : undefined}
+                    </Column> : undefined}
                 </Row>
             </Container>
             {displayAchievements("Home")}

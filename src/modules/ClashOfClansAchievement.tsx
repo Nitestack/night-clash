@@ -1,13 +1,13 @@
 import { APIPlayerAchievement } from "clashofclans.js";
 import { FC } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "@components/Grid/Container";
+import Row from "@components/Grid/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Progress from "@components/Progress";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import Center from "@components/Center";
 import styles from "@modules/ClashOfClansAchievement.module.scss";
+import Column from "@components/Grid/Column";
 
 const ClashOfClansAchievement: FC<{
     achievement: APIPlayerAchievement
@@ -16,9 +16,9 @@ const ClashOfClansAchievement: FC<{
         <div className={`${styles.achievement} mt-3 p-2 border border-solid border-[#EEEFED] rounded-md h-[60px]`}>
             <Container className="p-0">
                 <Row>
-                    <Col xs="2" className="p-0">
-        	            <img className="w-24" src={`/Images/Clash of Clans/Achievement-${achievement.stars}.png`}/>
-                    </Col>
+                    <Column xs="2">
+                        <img className="w-24" src={`/Images/Clash of Clans/Achievement-${achievement.stars}.png`}/>
+                    </Column>
                     <div className="font-bold [-webkit-box-flex:_1;] shrink grow basis-[0%] w-full ">
                         <h5 className="mb-[5px] text-[16px] [line-height:_15px;] font-bold">{achievement.name}</h5>
                         <div className="coc-description text-black font-normal">{achievement.info}</div>

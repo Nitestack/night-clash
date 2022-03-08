@@ -93,10 +93,12 @@ const CustomProvider: FC<{
                         ? Component.fetchData?.parseData(router, user) : {})
                     : undefined,
                 Component.fetchData.method == "post" ? config : undefined).then((res) => {
-                setData(res.data);
-                setTimeout(() => {
-                    setDone(true);
-                }, minAnimationTime);
+                if (res.status == 200) {
+                    setData(res.data);
+                    setTimeout(() => {
+                        setDone(true);
+                    }, minAnimationTime);
+                } else console.log(res);
             });
         } else setTimeout(() => {
             setDone(true);

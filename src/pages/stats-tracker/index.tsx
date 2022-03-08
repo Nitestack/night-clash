@@ -7,11 +7,12 @@ import PlayerTagInput from "@modules/PlayerTagInput";
 
 const StatsTracker: NextPageWithConfiguration = () => {
     const tracker = ["clashofclans", "clashroyale", "brawlstars"];
+    if (!location.hash) location.hash = `#${tracker[0]}`;
     const defaultIndex = tracker.includes(location.hash.replace(/#/g, "")) ? tracker.indexOf(location.hash.replace(/#/g, "")) : 0;
     return (
         <>
             <Tabs initialTabIndex={defaultIndex} tabs={{
-                "Clash of Clans" : <Tab backgroundImageName="Clash of Clans"/>,
+                "Clash of Clans" : <Tab backgroundImageName="Clash of Clans" hash="home"/>,
                 "Clash Royale": <Tab backgroundImageName="Clash Royale"/>,
                 "Brawl Stars": <Tab backgroundImageName="Brawl Stars" club/>
             }} onTabChange={(index) => {
@@ -24,15 +25,16 @@ const StatsTracker: NextPageWithConfiguration = () => {
 
 const Tab: FC<{
     club?: boolean,
-    backgroundImageName: string
-}> = ({ club, backgroundImageName }) => {
+    backgroundImageName: string,
+    hash?: string
+}> = ({ club, backgroundImageName, hash }) => {
     const tabs: { [key: string]: JSX.Element } = {};
     const tracker = backgroundImageName.toLowerCase().replace(/ /g, "");
     function redirectToTracker(classID: string, element: string) {
         return () => {
             const tag = $(`#${classID}`).val() as string;
             if (tag && tag.length < 12 && tag.length >= 7) {
-                window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag.replace(/#/g, "")}`, "_blank");
+                window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag.replace(/#/g, "")}${hash ? `#${hash}` : ""}`, "_blank");
             };
         };
     };

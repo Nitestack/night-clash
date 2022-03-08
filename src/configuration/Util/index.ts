@@ -11,6 +11,7 @@ import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@u
 import { Dispatch, SetStateAction } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
+import { twMerge } from "tailwind-merge";
 
 export default class Util {
     /*Classes*/
@@ -52,10 +53,10 @@ export default class Util {
     };
     /**
      * Converts all class names into one class string
-     * @param {Array<string>} classes The class(es)
+     * @param {Argument[]} args The class(es)
      */
-    public static classNames(...classes: Array<string>) {
-        return classes.filter(Boolean).join(" ");
+    public static classNames(...classLists: (string | false | null | undefined)[]) {
+        return twMerge(...classLists);
     };
     /**
      * Whether the device is mobile or table or neither

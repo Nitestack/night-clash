@@ -8,7 +8,7 @@ const Link: FC<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAn
     return ( 
         <Motion {...props}>
             <NextLink href={props.href || "/"}>
-                <a {...omit("href", props)} style={props.style ? props.style : { textDecoration: "none" }}/>
+                <a {...omit("href", props)} style={{ textDecoration: "none", ...props.style }}/>
             </NextLink>
         </Motion>
     );

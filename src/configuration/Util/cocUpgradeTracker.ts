@@ -208,4 +208,58 @@ export default class ClashOfClansUpgradeTracker {
             return `${months[parseInt(dateArray[1])]} ${dateArray[0]}`;
         };
     };
+    public static getClanPerks(clanLevel: number) {
+        const perks: {
+            donationRequestWaitTime: 20 | 15 | 10,
+            donationLimit: [6, 1] | [7, 2] | [9, 3],
+            donationRefund: 0 | 20 | 35 | 50,
+            donationUpgrade: 0 | 1 | 2,
+            treasuryExtraStorage: 0 | 10 | 20 | 30 | 40 | 50
+            warBonusExtraLoot: 0 | 10 | 15 | 20 | 25
+        } = {
+            donationRequestWaitTime: 20,
+            donationLimit: [6, 1],
+            donationRefund: 0,
+            donationUpgrade: 0,
+            treasuryExtraStorage: 0,
+            warBonusExtraLoot: 0
+        };
+        if (clanLevel >= 2) {
+            perks.donationRequestWaitTime = 15;
+            perks.treasuryExtraStorage = 10;
+        };
+        if (clanLevel >= 3) {
+            perks.donationRefund = 20;
+            perks.warBonusExtraLoot = 10;
+        };
+        if (clanLevel >= 4) {
+            perks.donationLimit = [7, 2];
+            perks.treasuryExtraStorage = 20;
+        };
+        if (clanLevel >= 5) {
+            perks.donationUpgrade = 1;
+            perks.warBonusExtraLoot = 15;
+        };
+        if (clanLevel >= 6) {
+            perks.donationRefund = 35;
+            perks.treasuryExtraStorage = 30;
+        };
+        if (clanLevel >= 7) {
+            perks.donationRequestWaitTime = 10;
+            perks.warBonusExtraLoot = 20;
+        };
+        if (clanLevel >= 8) {
+            perks.donationLimit = [9, 3];
+            perks.treasuryExtraStorage = 40;
+        };
+        if (clanLevel >= 9) {
+            perks.donationRefund = 50;
+            perks.warBonusExtraLoot = 25;
+        };
+        if (clanLevel >= 10) {
+            perks.donationUpgrade = 2;
+            perks.treasuryExtraStorage = 50;
+        };
+        return perks;
+    };
 };
