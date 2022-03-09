@@ -13,7 +13,8 @@ const ClashOfClansStatsTracker: NextPageWithConfiguration<{}, {}, {
 }> = ({ data }) => {
     const { player, clan } = data;
     const stats = ["home", "builder"];
-    if (!location.hash) location.hash = `#${stats[0]}`;
+    if ((!location.hash || !stats.includes(location.hash.replace(/#/g, "")))&& player) location.hash = `#${stats[0]}`;
+    if ((!location.hash || !["info", "stats"].includes(location.hash.replace(/#/g, "")))&& clan) location.hash = `#info`;
     const defaultIndex = stats.indexOf(location.hash.replace(/#/g, ""));
     if (player) return (
         <Layout title={`${player.name} - Player - Clash of Clans - Stats Tracker`} description={player.tag} header={player.name}>
@@ -34,17 +35,7 @@ const ClashOfClansStatsTracker: NextPageWithConfiguration<{}, {}, {
     );
     else if (clan) return (
         <Layout title={`${clan.name} - Clan - Clash of Clans - Stats Tracker`} description={clan.tag} header={clan.name}>
-            <Tabs
-            tabs={{
-                "Home Village": <>
-                    <ClashOfClansClanProfile clan={clan} village="home"/>
-                </>,
-                "Builder Base": <>
-                    <ClashOfClansClanProfile clan={clan} village="builder"/>
-                </>
-            }}
-            initialTabIndex={defaultIndex}
-            onTabChange={(index) => location.hash = `#${stats[index]}`}/>
+            <ClashOfClansClanProfile clan={clan}/>
         </Layout>
     );
 };

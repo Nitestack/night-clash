@@ -173,7 +173,7 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                                         <Row>
                                             <Column className="inline-flex">
                                                 <img className="w-10 pr-1" src={village == "home" ? Util.getBuilderHallImage(builderHallLevel) : Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
-                                                <p className=" sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
+                                                <p className="sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
                                             </Column>
                                         </Row>
                                     </Grid>

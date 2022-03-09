@@ -5,6 +5,7 @@ import { FC } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import Util from "@util/index";
 import { faDiscord, faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import Center from "@components/Center";
 
 const socialNetworks: Array<{
     name: string,
@@ -89,12 +90,12 @@ const Footer: FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="py-8 flex flex-col justify-center items-center border-b">
+            <Center className="py-8 flex-col border-b">
                 <Link href="/">
                     <Image className="rounded-full bg-primary" src="/Images/profile.png" width="150" height="150"></Image>
                 </Link>
                 <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.websiteApplicationName}. All rights reserved.</p>
-            </div>
+            </Center>
             <div className="coc-description py-8 px-3">
                 <p className="text-lightmodetext dark:text-darkmodetext" align="center"> This website is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for the operation or content of this site/application. Use of the trademarks and other intellectual property of Supercell is subject to Supercell&apos;s Fan Kit Agreement. </p>
                 <p className="text-lightmodetext dark:text-darkmodetext" align="center"> 

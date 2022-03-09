@@ -1,10 +1,11 @@
 import Util from "@util/index";
 import { NextPageWithConfiguration } from "@util/types";
+import Center from "@components/Center";
 
 const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
     return (
-        <div className="mx-auto container flex justify-center items-center py-12 px-4 sm:px-6 2xl:px-0">
-            <div className="flex flex-col lg:flex-row justify-center items-center space-y-6 lg:space-y-0">
+        <Center className="mx-auto container py-12 px-4 sm:px-6 2xl:px-0">
+            <Center className="flex-col lg:flex-row space-y-6 lg:space-y-0">
                 <div className="w-80 sm:w-auto flex flex-col justify-start items-start">
                     <div>
                         <p className="text-3xl xl:text-4xl font-semibold leading-9 text-lightmodeprimary dark:text-darkmodeprimary">Keep your village on track</p>
@@ -14,12 +15,12 @@ const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
                         <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext mt-6">In order to get started you must have a {Util.Constants.websiteApplicationName} account to save the village!</p>
                     </div>
                 </div>
-                <div className="flex flex-col sm:flex-row jusitfy-center items-center sm:space-x-5 xl:space-x-8 space-y-4 sm:space-y-0">
+                <Center className="flex-col sm:flex-row sm:space-x-5 xl:space-x-8 space-y-4 sm:space-y-0">
                     <div>
                         <img className="hidden lg:block" src="https://i.ibb.co/61TfVVW/olena-sergienko-gx-KL334b-UK4-unsplash-1.png" alt="sofa" />
                         <img className="w-80 sm:w-auto lg:hidden" src="https://i.ibb.co/QvxmJjB/olena-sergienko-gx-KL334b-UK4-unsplash-1-1.png" alt="sofa" />
                     </div>
-                    <div className="flex flex-col justify-center items-center space-y-4 sm:space-y-5 lg:space-y-5 xl:space-y-8">
+                    <Center className="flex-col space-y-4 sm:space-y-5 lg:space-y-5 xl:space-y-8">
                         <div>
                             <img className="hidden lg:block" src="https://i.ibb.co/1MY5P3y/nirzar-pangarkar-Csw-Kf-D546-Z8-unsplash-1.png" alt="chairs" />
                             <img className="w-80 sm:w-auto lg:hidden" src="https://i.ibb.co/r0rvcCh/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1-1.png" alt="chairs" />
@@ -28,10 +29,10 @@ const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
                             <img className="hidden lg:block" src="https://i.ibb.co/9N7ZX2C/behzad-ghaffarian-nh-Wg-ZNV85-LQ-unsplash-1-1.png" alt="chairs" />
                             <img className="w-80 sm:w-auto lg:hidden" src="https://i.ibb.co/0BFt400/nirzar-pangarkar-Csw-Kf-D546-Z8-unsplash-2.png" alt="chairs" />
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Center>
+                </Center>
+            </Center>
+        </Center>
     );
 };
 CoCUpgradeTrackerPage.title = "Upgrade Tracker - Clash of Clans";

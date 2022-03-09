@@ -163,8 +163,8 @@ export default class Util {
      * Gets the image of a Builder Hall
      * @param {number} builderHallLevel The Builder Hall level
      */
-    public static getBuilderHallImage(builderHallLevel: number) {
-        return `/Images/Clash of Clans/Builder/Builder Hall/${builderHallLevel}.png`;
+    public static getBuilderHallImage(builderHallLevel?: number) {
+        return `/Images/Clash of Clans/Builder/Builder Hall/${builderHallLevel || 0}.png`;
     };
     /**
      * Get's the rarity of a Clash Royale card

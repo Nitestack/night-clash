@@ -1,10 +1,9 @@
-import { FC } from "react";
+import Util from "@util/index";
+import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 
-const Center: FC = ({ children }) => {
+const Center: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = (props) => {
     return (
-        <div className="flex items-center justify-center">
-            {children}
-        </div>
+        <div {...props} className={Util.classNames("flex items-center justify-center", props.className)}/>
     );
 };
 export default Center;

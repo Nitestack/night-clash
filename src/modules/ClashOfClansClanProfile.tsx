@@ -2,21 +2,133 @@ import { APIClan, APIClanMember } from "clashofclans.js";
 import { FC, useState } from "react";
 import Grid from "@components/Grid";
 import Tabs from "@components/Tabs";
-import { faShare, faTrophy } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@components/Button";
 import Util from "@util/index";
 import ClashOfClansPlayerProfileStyles from "@modules/ClashOfClansPlayerProfile.module.scss";
 import ClashOfClansAchievementStyles from "@modules/ClashOfClansAchievement.module.scss";
-import Tooltip from "@components/Tooltip";
+import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
+import ClashOfClansLabels from "./ClashOfClansLabels";
+import Center from "@components/Center";
 
 const ClashOfClansClanProfile: FC<{
     clan: APIClan;
-    village: "home" | "builder";
-}> = ({ clan, village }) => {
+}> = ({ clan }) => {
     const clanPerks = Util.CocUpgradeTracker.getClanPerks(clan.clanLevel);
+    const stats = ["info", "stats"];
+    const defaultIndex = stats.indexOf(location.hash.replace(/#/g, ""));
+    function changeTab(index: number) {
+        location.hash = `#${stats[index]}`;
+    };
+    return (
+        <>
+            <Tabs initialTabIndex={defaultIndex} onTabChange={(index) => changeTab(index)} tabs={{
+                "Info": (
+                    <Grid className="grid-cols-1 lg:grid-cols-5 gap-1">
+                        <Center className="pb-2 lg:pb-0">
+                            <img className="w-52" src={clan.badgeUrls.large}/>
+                        </Center>
+                        <div className="lg:col-span-2 pb-2 lg:pb-0">
+                            <div className="mb-2">
+                                <Center className="lg:justify-start">
+                                    <p className="font-bold text-[#FDFDCA]">{clan.name}</p>
+                                </Center>
+                                <Center className="lg:justify-start">
+                                    <p className="text-white coc-description font-bold">{clan.tag}</p>
+                                </Center>
+                                <Center className="lg:justify-start">
+                                    <p className="coc-description">{clan.description}</p>
+                                </Center>
+                            </div>
+                            <Center className="lg:justify-start">
+                                <ClashOfClansLabels labels={clan.labels}/>
+                            </Center>
+                        </div>
+                        <Grid className="lg:col-span-2 grid-cols-3 coc-description">
+                            <p className="whitespace-nowrap" align="left"> Clan War League </p>
+                            <p className="whitespace-nowrap col-span-2" align="right">{clan.warLeague ? clan.warLeague.name : "Unranked"}</p>
+                            <p className="whitespace-nowrap" align="left"> Total Points: </p>
+                            <ClashOfClansTrophyCount className="justify-end" trophyCount={clan.clanPoints}/>
+                            <ClashOfClansTrophyCount className="justify-end" trophyCount={clan.clanVersusPoints} village="builder"/>
+                            <p className="whitespace-nowrap" align="left"> Clan Location: </p>
+                            <p className="whitespace-nowrap col-span-2" align="right">{clan.location ? clan.location.name : "Not Set"}</p>
+                            <p className="whitespace-nowrap" align="left"> Chat Language </p>
+                            <p className="whitespace-nowrap col-span-2" align="right">{clan.chatLanguage ? clan.chatLanguage : "Not Set"}</p>
+                            <p className="whitespace-nowrap" align="left"> Type: </p>
+                            <p className="whitespace-nowrap col-span-2" align="right">{clan.type == "open" ? "Anyone can join" : (clan.type == "inviteOnly" ? "Invite only" : "Closed")}</p>
+                            <p className="whitespace-nowrap" align="left"> Required Trophies: </p>
+                            <ClashOfClansTrophyCount className="justify-end col-span-2"trophyCount={clan.requiredTrophies}/>
+                            <p className="whitespace-nowrap" align="left"> Required Town Hall level: </p>
+                            <p className="whitespace-nowrap col-span-2" align="right">{clan.requiredTownhallLevel}</p>
+                        </Grid>
+                    </Grid>
+                ),
+                "Stats": (
+                    <Grid className="grid-cols-1 md:grid-cols-2 gap-2 rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext p-3">
+                        <div className="pb-2 md:pb-2">
+                            <p> War Stats </p>
+                            <Grid className="grid-cols-2 coc-description">
+                                <p className="whitespace-nowrap" align="left"> Wars Won </p>
+                                <p align="right">{clan.warWins}</p>
+                                <p className="whitespace-nowrap" align="left"> Wars Lost </p>
+                                <p align="right">{clan.warLosses || "?"}</p>
+                                <p className="whitespace-nowrap" align="left"> War Ties: </p>
+                                <p align="right">{clan.warTies || "?"}</p>
+                                <p className="whitespace-nowrap" align="left"> War Win Streak: </p>
+                                <p align="right">{clan.warWinStreak}</p>
+                                <p className="whitespace-nowrap" align="left"> Clan Leader: </p>
+                                <p className="whitespace-nowrap" align="right">{clan.memberList.find(player => player.role == "leader")?.name}</p>
+                                <p className="whitespace-nowrap" align="left"> War Frequency: </p>
+                                <p align="right">{
+                                    clan.warFrequency == "always" ? "Always" : (
+                                        clan.warFrequency == "lessThanOncePerWeek" ? "Rarely" : 
+                                        (
+                                            clan.warFrequency == "moreThanOncePerWeek" ? "Twice a week" : 
+                                            (
+                                                clan.warFrequency == "oncePerWeek" ? "Once a week" : (
+                                                    clan.warFrequency == "never" ? "Never" : "Not Set"
+                                                )
+                                            )
+                                        )
+                                    )
+                                }</p>
+                                <p className="whitespace-nowrap" align="left"> Public War Log </p>
+                                <p align="right">{clan.isWarLogPublic ? "Yes" : "No"}</p>
+                            </Grid>
+                        </div>
+                        <div>
+                            <p>Clan Perks</p>
+                            <Grid className="grid-cols-2 coc-description">
+                                <p className="whitespace-nowrap" align="left"> Donation request wait time: </p>
+                                <p className="whitespace-nowrap" align="right">{clanPerks.donationRequestWaitTime} minutes </p>
+                                <p className="whitespace-nowrap" align="left"> Donation limit: </p>
+                                <p className="whitespace-nowrap" align="right">{clanPerks.donationLimit[0]} troops, {clanPerks.donationLimit[1]} spells </p>
+                                <p className="whitespace-nowrap" align="left"> Donation refund: </p>
+                                <p align="right">{clanPerks.donationRefund}% cost </p>
+                                <p className="whitespace-nowrap" align="left"> Donation upgrade: </p>
+                                <p align="right">{clanPerks.donationUpgrade} levels </p>
+                                <p className="whitespace-nowrap" align="left"> Treasury extra storage: </p>
+                                <p align="right">{clanPerks.treasuryExtraStorage}% </p>
+                                <p className="whitespace-nowrap" align="left"> War bonus extra loot: </p>
+                                <p align="right">{clanPerks.warBonusExtraLoot}% </p>
+                            </Grid>
+                        </div>
+                    </Grid>
+                )
+            }}/>
+            <Tabs tabs={{
+                "Home Village": <ClashOfClansMemberList memberList={clan.memberList} village="home"/>,
+                "Builder Base": <ClashOfClansMemberList memberList={clan.memberList} village="builder"/>
+            }}/>
+        </>
+    );
+};
+
+const ClashOfClansMemberList: FC<{
+    memberList: Array<APIClanMember>,
+    village: "home" | "builder"
+}> = ({ memberList, village }) => {
+    const [members, setMembers] = useState(memberList);
     const [sortBy, setSortBy] = useState("Most Trophies");
-    const [members, setMembers] = useState(clan.memberList);
     const sortMethods = ["Most Trophies", "Highest Town Hall", "By Role", "Most Troops Donated", "Moost Troops Received", "Highest XP Level"];
     if (village == "builder") sortMethods.splice(sortMethods.findIndex(method => method == "Highest Town Hall"), 1);
     function sortArray(sortType: string) {
@@ -33,199 +145,24 @@ const ClashOfClansClanProfile: FC<{
         setMembers(members.sort(compareFunction));
     };
     return (
-        <>
-            <Tabs tabs={{
-                "Info": (
-                    <Grid className="grid-cols-1 lg:grid-cols-3 gap-1">
-                        <div className="flex items-center justify-center">
-                            <img className="w-36 md:w-52" src={clan.badgeUrls.large}/>
-                        </div>
-                        <div>
-                            <div className="mb-2">
-                                <p className=" font-bold text-[#FDFDCA]">{clan.name}</p>
-                                <p className=" text-white coc-description font-bold">{clan.tag}</p>
-                                <p className=" coc-description">{clan.description}</p>
-                            </div>
-                            <div className="flex items-center justify-start">
-                                {clan.labels ? clan.labels.map((label) => 
-                                <Tooltip className="mr-1" key={label.id} toolTipNode={label.name}>
-                                    <Button className="p-0">
-                                        <img className="w-12" title={label.name} src={label.iconUrls.small}/>
-                                    </Button>
-                                </Tooltip>
-                                ) : undefined}
-                                <Button className="w-12"><FontAwesomeIcon icon={faShare} size="2x"/></Button>
-                            </div>
-                        </div>
-                        <Grid className="grid-cols-3 coc-description">
-                            <p className="whitespace-nowrap" align="left"> Clan War League </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.warLeague ? clan.warLeague.name : "Unranked"}</p>
-                            <p className="whitespace-nowrap" align="left"> Total Points: </p>
-                            <p className="whitespace-nowrap" align="right">{clan.clanPoints}<FontAwesomeIcon icon={faTrophy} color="yellow"/></p>
-                            <p className="whitespace-nowrap" align="right">{clan.clanVersusPoints}<FontAwesomeIcon icon={faTrophy} color="yellow"/></p>
-                            <p className="whitespace-nowrap" align="left"> Clan Location: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.location ? clan.location.name : "Not Set"}</p>
-                            <p className="whitespace-nowrap" align="left"> Chat Language </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.chatLanguage ? clan.chatLanguage : "Not Set"}</p>
-                            <p className="whitespace-nowrap" align="left"> Type: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.type == "open" ? "Anyone can join" : (clan.type == "inviteOnly" ? "Invite only" : "Closed")}</p>
-                            <p className="whitespace-nowrap" align="left"> Required Trophies: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.requiredTrophies}<FontAwesomeIcon icon={faTrophy} color="yellow"/></p>
-                            <p className="whitespace-nowrap" align="left"> Required Town Hall level: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.requiredTownhallLevel}</p>
-                        </Grid>
-                    </Grid>
-                ),
-                "Stats": (
-                    <div className="rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext p-3">
-                        <div>
-                            <p className=""> War Stats </p>
-                            <Grid className="coc-description">
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Wars Won </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clan.warWins}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Wars Lost </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clan.warLosses || "?"}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> War Ties: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clan.warTies || "?"}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> War Win Streak: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clan.warWinStreak}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Clan Leader: </p>
-                                    </div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="right">{clan.memberList.find(player => player.role == "leader")?.name}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> War Frequency: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{
-                                            clan.warFrequency == "always" ? "Always" : (
-                                                clan.warFrequency == "lessThanOncePerWeek" ? "Rarely" : 
-                                                (
-                                                    clan.warFrequency == "moreThanOncePerWeek" ? "Twice a week" : 
-                                                    (
-                                                        clan.warFrequency == "oncePerWeek" ? "Once a week" : (
-                                                            clan.warFrequency == "never" ? "Never" : "Not Set"
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        }</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Public War Log </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clan.isWarLogPublic ? "Yes" : "No"}</p>
-                                    </div>
-                                </div>
-                            </Grid>
-                        </div>
-                        <div>
-                            <p className="">Clan Perks</p>
-                            <Grid className="coc-description">
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Donation request wait time: </p>
-                                    </div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="right">{clanPerks.donationRequestWaitTime} minutes </p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Donation limit: </p>
-                                    </div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="right">{clanPerks.donationLimit[0]} troops, {clanPerks.donationLimit[1]} spells </p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Donation refund: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clanPerks.donationRefund}% cost </p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Donation upgrade: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clanPerks.donationUpgrade} levels </p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> Treasury extra storage: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clanPerks.treasuryExtraStorage}% </p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <p className=" whitespace-nowrap" align="left"> War bonus extra loot: </p>
-                                    </div>
-                                    <div>
-                                        <p className="" align="right">{clanPerks.warBonusExtraLoot}% </p>
-                                    </div>
-                                </div>
-                            </Grid>
-                        </div>
-                    </div>
-                )
-            }}/>
-            <div className="p-1">
-                <Grid className="grid-cols-5 sm:grid-cols-2">
-                    <div className="flex sm:justify-end items-center">
-                        <p className="coc-description text-sm text-[#5D5E5A] mr-2 whitespace-nowrap"> {clan.members}/50 </p>
-                    </div>
-                    <div className="flex sm:justify-start items-center col-span-4 sm:col-span-1">
-                        <Button className="bg-blue-500 w-7 h-7 p-0" onClick={() => {
-                            sortArray(sortMethods[sortMethods.indexOf(sortBy) + 1] || sortMethods[0]);
-                        }}><img className="w-6 h-6" src="/Images/Clash of Clans/Order.png"/></Button>
-                        <p className="coc-description text-sm text-white ml-2 whitespace-nowrap">{sortBy}</p>
-                    </div>
-                </Grid>
-                <Grid className="grid-cols-1">
-                    {members.map((member, i) => (
-                        <ClashOfClansClanMember member={member} iterationIndex={i}/>
-                    ))}
-                </Grid>
-            </div>
-        </>
+        <div className="p-1">
+            <Grid className="grid-cols-5 sm:grid-cols-2">
+                <div className="flex sm:justify-end items-center">
+                    <p className="coc-description text-sm text-[#5D5E5A] mr-2 whitespace-nowrap"> {members.length}/50 </p>
+                </div>
+                <div className="flex sm:justify-start items-center col-span-4 sm:col-span-1">
+                    <Button className="bg-blue-500 w-7 h-7 p-0" onClick={() => {
+                        sortArray(sortMethods[sortMethods.indexOf(sortBy) + 1] || sortMethods[0]);
+                    }}><img className="w-6 h-6" src="/Images/Clash of Clans/Order.png"/></Button>
+                    <p className="coc-description text-sm text-white ml-2 whitespace-nowrap">{sortBy}</p>
+                </div>
+            </Grid>
+            <Grid className="grid-cols-1">
+                {memberList.map((member, i) => (
+                    <ClashOfClansClanMember member={member} iterationIndex={i}/>
+                ))}
+            </Grid>
+        </div>
     );
 };
 
@@ -237,9 +174,9 @@ const ClashOfClansClanMember: FC<{
     return (
         <a href={`/stats-tracker/clashofclans/players/${member.tag.replace(/#/g, "")}`} target="_blank">
             <Grid className={Util.classNames(ClashOfClansAchievementStyles.achievement, "grid-cols-1")}>
-                <p className=" mr-2">{rank}.</p>
+                <p className="mr-2">{rank}.</p>
                 <div className={ClashOfClansPlayerProfileStyles.xp}>{member.expLevel}</div>
-                <p className="">{member.name}</p>
+                <p>{member.name}</p>
             </Grid>
         </a>
     );

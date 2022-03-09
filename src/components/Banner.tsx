@@ -1,6 +1,7 @@
 import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
 import Link from "@components/Link";
 import { FC } from "react";
+import Center from "@components/Center";
 
 const Banner: FC<{
     desktopText: string;
@@ -10,7 +11,7 @@ const Banner: FC<{
     return (
         <div className="bg-primary">
             <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between flex-wrap">
+                <Center className="justify-between flex-wrap">
                     <div className="w-0 flex-1 flex items-center">
                         <span className="flex p-2 rounded-lg bg-indigo-800">
                             <SpeakerphoneIcon
@@ -31,7 +32,7 @@ const Banner: FC<{
                             <XIcon className="h-6 w-6 text-white" aria-hidden="true"/>
                         </button>
                     </div>
-                </div>
+                </Center>
             </div>
         </div>
     );

@@ -8,6 +8,7 @@ import NavbarHeader from "@components/Navbar/NavbarHeader";
 import { FC } from "react";
 import NavbarToggler from "@components/Navbar/NavbarToggler";
 import Motion from "@components/Motion";
+import Center from "@components/Center";
 
 const upgradeTrackers: Array<{
     name: string,
@@ -88,11 +89,10 @@ const Navbar: FC = () => {
     return ( 
         <Popover id="navbar" className="z-50 sticky bg-lightmodeprimary dark:bg-darkmodeprimary border-b-2 border-primary transition-[1.4s] top-0">
             <div className="px-4 sm:px-6">
-                <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+                <Center className="justify-between py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">
                         <NavbarHeader></NavbarHeader>
                     </div>
-                    
                     {/*DESKTOP SCREEN*/}
                     <Popover.Group as="nav" className="hidden md:flex">
                         <NavbarPopover categoryName="Upgrade Tracker" subCategories={upgradeTrackers}></NavbarPopover>
@@ -109,25 +109,14 @@ const Navbar: FC = () => {
                             </Popover.Button>
                         </div>
                     </Motion>
-                </div>
+                </Center>
             </div>
             {/*MOBILE SCREEN*/}
-            <Transition
-                as={Fragment}
-                enter="duration-200 ease-out"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="duration-100 ease-in"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-            >
-                <Popover.Panel
-                    focus
-                    className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right z-50 md:hidden"
-                >
+            <Transition as={Fragment} enter="duration-200 ease-out" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="duration-100 ease-in" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
+                <Popover.Panel focus className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right z-50 md:hidden">
                     <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-lightmodeprimary dark:bg-darkmodeprimary divide-y-2 divide-lightmodetext dark:divide-darkmodetext">
                         <div className="pt-5 pb-6 px-5">
-                            <div className="flex items-center justify-between">
+                            <Center className="justify-between">
                                 <div>
                                     <NavbarHeader></NavbarHeader>
                                 </div>
@@ -138,7 +127,7 @@ const Navbar: FC = () => {
                                         </Popover.Button>
                                     </div>
                                 </Motion>
-                            </div>
+                            </Center>
                         </div>
                         <div className="py-6 px-5 space-y-6">
                             <div className="grid grid-cols-1 gap-y-4 gap-x-8">

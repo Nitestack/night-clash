@@ -1,6 +1,7 @@
 import { NextPageWithConfiguration } from "@util/types";
 import { ComponentProps } from "react";
 import { AdjustmentsIcon  } from "@heroicons/react/outline";
+import Center from "@components/Center";
 
 const features: Array<{
     name: string,
@@ -33,12 +34,12 @@ const HomePage: NextPageWithConfiguration = () => {
             {features.map((feature) => (
                 <div key={feature.name} className="relative">
                     <dt>
-                        <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <Center className="absolute h-12 w-12 rounded-md bg-indigo-500 text-white">
                             <feature.icon
                                 className="h-6 w-6"
                                 aria-hidden="true"
                             />
-                        </div>
+                        </Center>
                         <p className="ml-16 text-lg leading-6 font-medium text-lightmodetext dark:text-darkmodetext">
                             {feature.name}
                         </p>

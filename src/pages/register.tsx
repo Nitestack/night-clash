@@ -2,6 +2,7 @@ import { NextPageWithConfiguration } from "@util/types";
 import { ChangeEvent, useState } from "react";
 import Link from "@components/Link";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import Center from "@components/Center";
 
 const RegisterPage: NextPageWithConfiguration = () => {
     const [state, setState] = useState<{ password: string, errorMessage: string }>({ password: "", errorMessage: "" });
@@ -16,7 +17,7 @@ const RegisterPage: NextPageWithConfiguration = () => {
         setState({ ...state, password: ev.target.value });
     };
     return (
-        <div className="min-h-full flex items-center justify-center p-4 sm:px-6 lg:px-8">
+        <Center className="min-h-full p-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <form className="mt-8 space-y-6" action="/api/auth/register" method="POST">
                     <div className="rounded-md shadow-sm -space-y-px coc-description">
@@ -34,14 +35,14 @@ const RegisterPage: NextPageWithConfiguration = () => {
                             <p className="coc-description text-red-600 mt-2 text-lg" align="center">{state.errorMessage}</p>
                         </div>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <Center className="justify-between">
                         <div className="flex items-center">
                             <div className="ml-2 block text-sm text-gray-900"> Have an account? </div>
                         </div>
                         <div className="text-sm">
                             <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign In </Link>
                         </div>
-                    </div>
+                    </Center>
                     <div>
                         <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <span className="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -52,7 +53,7 @@ const RegisterPage: NextPageWithConfiguration = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </Center>
     );
 };
 
