@@ -1,32 +1,9 @@
 import Image from "next/image";
 import Link from "@components/Link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import Util from "@util/index";
-import { faDiscord, faFacebook, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import Center from "@components/Center";
 
-const socialNetworks: Array<{
-    name: string,
-    icon: IconProp
-}> = [{
-    name: "Discord",
-    //@ts-ignore
-    icon: faDiscord
-}, {
-    name: "Twitter",
-    //@ts-ignore
-    icon: faTwitter
-}, {
-    name: "Facebook",
-    //@ts-ignore
-    icon: faFacebook
-}, {
-    name: "Instagram",
-    //@ts-ignore
-    icon: faInstagram
-}];
 const links: Array<{
     name: string,
     href: string

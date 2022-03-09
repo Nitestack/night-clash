@@ -1,5 +1,3 @@
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState, FC } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Util from "@util/index";
@@ -21,7 +19,7 @@ const Accordion: FC<{
                     setRotate(active ? "transform duration-500 ease" : "transform duration-500 ease rotate-180");
                 }}>
                 <p className={Util.classNames("inline-block", active ? "text-blue-600" : "")}>{title}</p>
-                <ChevronDownIcon className={Util.classNames(rotate, "inline-block")}/>
+                <ChevronDownIcon className={Util.classNames(rotate, "inline-block w-6")}/>
             </button>
             <div ref={contentSpace} style={{ maxHeight: `${height}` }} className="overflow-hidden transition-max-height duration-500 ease-in-out">
                 <div className="py-4">{children}</div>

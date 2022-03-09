@@ -10,8 +10,7 @@ import Center from "@components/Center";
 import Grid from "@components/Grid";
 import Base from "@database/Clash of Clans/Base";
 import Button from "@components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faLock } from "@fortawesome/free-solid-svg-icons";
+import { LockClosedIcon, CheckIcon } from "@heroicons/react/outline";
 
 const ClashOfClansTable: FC<{
     type: "Defense" | "Trap" | "Resource" | "Army" | "Hero" | "Troop",
@@ -143,8 +142,8 @@ const ClashOfClansTable: FC<{
                             </Column> : undefined}
                             <Column className="flex justify-end">
                                 {hallItemMaxLevel == lvl ? 
-                                <Button disabled className="bg-green-500"><FontAwesomeIcon icon={faCheck}/></Button> : (laboratoryArray.includes(item) ? (lvl == 0 || element.levels[lvl - 1].requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0) ? 
-                                <Button disabled className="bg-red-600"><FontAwesomeIcon icon={faLock}/></Button> : 
+                                <Button disabled className="bg-green-500"><CheckIcon className="w-6"/></Button> : (laboratoryArray.includes(item) ? (lvl == 0 || element.levels[lvl - 1].requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0) ? 
+                                <Button disabled className="bg-red-600"><LockClosedIcon className="w-6"/></Button> : 
                                 <Button className="lab-button"/>) : 
                                 <Button className="builder-button"/>)}
                             </Column>

@@ -3,10 +3,6 @@ import "@styles/brawlstars.scss";
 import "@public/prism/prism.css";
 import "@styles/main.scss";
 import "@styles/loader.scss";
-import { config, dom } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
-dom.watch();
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout";
 import { StrictMode, useEffect, useState, FC } from "react";
