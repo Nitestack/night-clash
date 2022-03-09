@@ -7,9 +7,7 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { home } from "@database/Clash of Clans/home";
 import { builder } from "@database/Clash of Clans/builder";
 import Center from "@components/Center";
-import Container from "@components/Grid/Container";
-import Row from "@components/Grid/Row";
-import Column from "@components/Grid/Column";
+import Grid from "@components/Grid";
 import Input from "@components/Input";
 import Button from "@components/Button";
 
@@ -40,7 +38,7 @@ const ClashOfClansWallTable: FC<{
                 <h1 className="coc-description text-5xl" align="center">{dataBaseItem[item.toString()] || 0}</h1>
             </td>,
             <td className="align-middle">
-                <Container>
+                <Grid>
                     <Row>
                         {item != hallItemMaxLevel ? 
                         <>
@@ -68,7 +66,7 @@ const ClashOfClansWallTable: FC<{
                             </Column>
                         </> : undefined}
                     </Row>
-                </Container>
+                </Grid>
             </td>
         ]);
     };

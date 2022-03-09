@@ -7,9 +7,7 @@ import { builder } from "@database/Clash of Clans/builder";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import Center from "@components/Center";
-import Container from "@components/Grid/Container";
-import Row from "@components/Grid/Row";
-import Column from "@components/Grid/Column";
+import Grid from "@components/Grid";
 import Base from "@database/Clash of Clans/Base";
 import Button from "@components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -82,7 +80,7 @@ const ClashOfClansTable: FC<{
         } else if (homePetsArray.includes(name) || homeSpellsArray.includes(name)) source = `${imagePath}.png`;
         else if (village == "builder" && name == "Army Camp") source = `${imagePath}/1.png`;
         else source = `${imagePath}/${lvl}.png`;
-        return <img src={source} className={`w-auto max-h-full ${small ? "h-5 sm:h-8" : "h-12 sm:h-16"} ${homeSpellsArray.includes(name) ? "border border-solid border-[#3E4251] rounded-lg" : ""}`}/>
+        return <img src={source} className={Util.classNames("w-auto max-h-full", small ? "h-5 sm:h-8" : "h-12 sm:h-16", homeSpellsArray.includes(name) ? "border border-solid border-[#3E4251] rounded-lg" : "")}/>
     };
     const rows: Array<Array<JSX.IntrinsicElements["td"]>> = [];
     function getPriceListItem(level: number, item: string, index: number, element?: Base) {
@@ -131,7 +129,7 @@ const ClashOfClansTable: FC<{
         const builder = building || lab || otto ? building || lab || otto : false;
         return (
             <td className={"align-middle"}>
-                <Container>
+                <Grid>
                     <Row>
                         <Column xs="2">
                             {getImage(item, lvl, imagePath, true)}
@@ -152,7 +150,7 @@ const ClashOfClansTable: FC<{
                             </Column>
                         </>}
                     </Row>
-                </Container>
+                </Grid>
             </td>
         );
     };
@@ -192,7 +190,7 @@ const ClashOfClansTable: FC<{
                 </td>,
                 <>{displayLevel(item, levels[0], 0, hallItemMaxLevel, imagePath, element)}</>,
                 <td className="align-middle" rowSpan={hallItemAmount}>
-                    <Container>
+                    <Grid>
                         {level == hallItemMaxLevel ? 
                         <>
                             {village == "builder" && item == "Army Camp" ? 
@@ -205,7 +203,7 @@ const ClashOfClansTable: FC<{
                                     Maximum level reached for your {village == "home" ? "T" : "B"}H level!
                                 </p>)}</> : 
                             <>{getPriceList(item, hallItemAmount, hallItemMaxLevel, level, element)}</>}
-                    </Container>
+                    </Grid>
                 </td>
             ]);
             let index = 1;

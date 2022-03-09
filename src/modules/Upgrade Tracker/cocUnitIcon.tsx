@@ -28,7 +28,7 @@ const ClashOfClansUnitIcon: FC<{
     return (
         <div className="unit-icon" style={backgroundImage} title={`${name} Level ${level} (Max for TH: ${hall[Util.toCamelCase(name)].maxLevel})`}>
             {level == 1 && ![...Util.Constants.CoC.homeHeroesArray, "Battle Machine"].includes(name) ? undefined : 
-            <div className={`[font-size:_17px;] unit-icon-level coc-description ${level == maxLevel ? "max" : (hall[Util.toCamelCase(name)].maxLevel == level) ? "maxTH" : ""}`}>{level}</div>}
+            <div className={Util.classNames("[font-size:_17px;] unit-icon-level coc-description", level == maxLevel ? "max" : (hall[Util.toCamelCase(name)].maxLevel == level) ? "maxTH" : "")}>{level}</div>}
         </div>
     );
 };

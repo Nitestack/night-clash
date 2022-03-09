@@ -10,9 +10,7 @@ import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Button";
 import Link from "@components/Link";
-import Container from "@components/Grid/Container";
-import Row from "@components/Grid/Row";
-import Column from "@components/Grid/Column";
+import Grid from "@components/Grid";
 import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/ClashOfClansOverview";
 import Table from "@modules/Upgrade Tracker/cocTable";
@@ -118,7 +116,7 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
             header={`${name} - ${village == "home" ? "Home Village" : "Builder Base"}`}
             description={tag}
             title={`${name} - ${village == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`}>
-            <Container className="p-0 max-w-none">
+            <Grid className="max-w-none">
                 <PlayerProfile player={player} village={village}/>
                 <Row>
                     <Center>
@@ -171,14 +169,14 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                         <Center>
                             <Link href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/${village == "home" ? "builder" : "home"}`}>
                                 <Button className="bg-blue-700">
-                                    <Container className="p-0">
+                                    <Grid>
                                         <Row>
                                             <Column className="inline-flex">
                                                 <img className="w-10 pr-1" src={village == "home" ? Util.getBuilderHallImage(builderHallLevel) : Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
-                                                <p className="p-0 sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
+                                                <p className=" sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
                                             </Column>
                                         </Row>
-                                    </Container>
+                                    </Grid>
                                 </Button>
                             </Link>
                         </Center>
@@ -241,7 +239,7 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                     ) : undefined}
                     </Column>
                 </Row>
-            </Container>
+            </Grid>
             <Tabs tabs={tabs}></Tabs>
         </Layout>
     );

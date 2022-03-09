@@ -1,7 +1,5 @@
 import { FC } from "react";
-import Container from "@components/Grid/Container";
-import Row from "@components/Grid/Row";
-import Column from "@components/Grid/Column";
+import Grid from "@components/Grid";
 import Util from "@util/index";
 import UnitIcon from "@modules/Upgrade Tracker/cocUnitIcon";
 import { APIPlayer } from "clashofclans.js";
@@ -23,13 +21,13 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
         return(
             <>
                 <h5 className="pt-[10px]">{item} {item.toLowerCase() == "home" ? "Village" : "Base"} Achievements</h5>
-                <Container className="p-0 ml-3 mt-3">
+                <Grid className="ml-3 mt-3">
                     <Row>
-                        <Column className="p-0">
+                        <Column>
                             <Progress percentage={overAllPercentage}>{overAllPercentage}%</Progress>
                         </Column>
                         <Column>
-                            <p className="p-0">{completedAchievements}/{achievements.length}</p>
+                            <p className="">{completedAchievements}/{achievements.length}</p>
                         </Column>
                         <Column>
                             <p className="pt-0 inline-flex">
@@ -38,7 +36,7 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
                             </p>
                         </Column>
                     </Row>
-                </Container>
+                </Grid>
                 {achievements.map((achievementElement, index) => 
                 <Achievement key={index} achievement={achievementElement}/>)}
             </>
@@ -46,7 +44,7 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
     };
     return (
         <>
-            <Container className="bg-[linear-gradient(#8A94AD,_#6A7798)] p-3 rounded-lg border border-solid border-lightmodetext dark:border-darkmodetext">
+            <Grid className="bg-[linear-gradient(#8A94AD,_#6A7798)] p-3 rounded-lg border border-solid border-lightmodetext dark:border-darkmodetext">
                 <Row>
                     <Column>
                         <h5>Troops</h5>
@@ -81,7 +79,7 @@ const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer 
                         <UnitIcon key={index} village={village} name={item} path="Pets" type="pet" player={player}/>)}
                     </Column> : undefined}
                 </Row>
-            </Container>
+            </Grid>
             {displayAchievements("Home")}
             {displayAchievements("Builder")}
         </>

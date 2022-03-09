@@ -1,20 +1,18 @@
 import { APIPlayerAchievement } from "clashofclans.js";
 import { FC } from "react";
-import Container from "@components/Grid/Container";
-import Row from "@components/Grid/Row";
+import Grid from "@components/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Progress from "@components/Progress";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import Center from "@components/Center";
 import styles from "@modules/ClashOfClansAchievement.module.scss";
-import Column from "@components/Grid/Column";
 
 const ClashOfClansAchievement: FC<{
     achievement: APIPlayerAchievement
 }> = ({ achievement }) => {
     return (
-        <div className={`${styles.achievement} mt-3 p-2 border border-solid border-[#EEEFED] rounded-md h-[60px]`}>
-            <Container className="p-0">
+        <div className={styles.achievement}>
+            <Grid>
                 <Row>
                     <Column xs="2">
                         <img className="w-24" src={`/Images/Clash of Clans/Achievement-${achievement.stars}.png`}/>
@@ -31,7 +29,7 @@ const ClashOfClansAchievement: FC<{
                         </Center>
                     </div>
                 </Row>
-            </Container>
+            </Grid>
         </div>
     );
 };

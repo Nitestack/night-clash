@@ -4,6 +4,7 @@ import Footer from "src/components/Footer";
 import Navbar from "src/components/Navbar/Navbar";
 import Script from "next/script";
 import Util from "src/configuration/Util/index";
+import $ from "jquery";
 
 export interface LayoutProps {
     title?: string;
@@ -30,7 +31,7 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <link rel="icon" type="image/png" href="/Images/profile.png"/>
             </Head>
             <div>
-                <Navbar></Navbar>
+                <Navbar/>
                 <main>
                     {/*JQUERY*/}
                     <Script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossOrigin="anonymous"/>
@@ -43,8 +44,8 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                         <Script key={index} type="text/javascript" src={scriptSRC} crossOrigin="anonymous"/>
                     )) : undefined}
                     <div className="py-12 bg-transparent min-h-screen">
-                        <div className="mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="lg:text-center">
+                        <div className="mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+                            <div className="text-center">
                                 <h2 className="text-base text-primary font-semibold tracking-wide uppercase">{Util.Constants.websiteApplicationName}</h2>
                                 <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-lightmodeprimary dark:text-darkmodeprimary sm:text-4xl">
                                     {header ? header : title}
