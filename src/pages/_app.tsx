@@ -35,6 +35,10 @@ const CustomProvider: FC<{
     const isUser = !!user;
     const router = useRouter();
     useEffect(() => {
+        if (!Component.authenticationRequired &&
+            !Component.adminRoleRequired &&
+            !Component.noAuthenticationRequired &&
+            !Component.fetchData) setDone(true);
         if ($.isEmptyObject(router.query) && Component.queryRequired) return;
         if (status == "loading") return; // Do nothing while loading
         if (Component.authenticationRequired) {
@@ -64,10 +68,6 @@ const CustomProvider: FC<{
         )
     ) : <LoadingScreen/>;
     function handleAuthentication(session?: UserSession) {
-        if (!Component.authenticationRequired &&
-            !Component.adminRoleRequired &&
-            !Component.noAuthenticationRequired &&
-            !Component.fetchData) return setDone(true);
         if (Component.afterAuthentication) {
             //@ts-ignore
             const returnValue = Component.afterAuthentication(session, router);
