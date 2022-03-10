@@ -34,10 +34,7 @@ const CustomProvider: FC<{
     const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
-    if (!Component.authenticationRequired &&
-        !Component.adminRoleRequired &&
-        !Component.noAuthenticationRequired &&
-        !Component.fetchData) setDone(true);
+    if (!Component.authenticationRequired && !Component.adminRoleRequired && !Component.noAuthenticationRequired && !Component.fetchData) setDone(true);
     useEffect(() => {
         if (!done) {
             if ($.isEmptyObject(router.query) && Component.queryRequired) return;
