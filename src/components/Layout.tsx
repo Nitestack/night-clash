@@ -4,7 +4,7 @@ import Footer from "src/components/Footer";
 import Navbar from "src/components/Navbar/Navbar";
 import Script from "next/script";
 import Util from "src/configuration/Util/index";
-import $ from "jquery";
+import Banner from "./Banner";
 
 export interface LayoutProps {
     title?: string;
@@ -31,6 +31,9 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <link rel="icon" type="image/png" href="/Images/profile.png"/>
             </Head>
             <div>
+                <Banner 
+                desktopText="This website is currently in BETA! Help us by giving feedback, reporting bugs or suggesting features!"
+                mobileText="This website is in BETA!"/>
                 <Navbar/>
                 <main>
                     {/*JQUERY*/}

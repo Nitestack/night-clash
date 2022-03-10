@@ -11,7 +11,7 @@ const BBUpgradeTrackerPage: NextPageWithConfiguration = () => {
                         <p className="text-3xl xl:text-4xl font-semibold leading-9 text-lightmodeprimary dark:text-darkmodeprimary">Keep your island on track</p>
                     </div>
                     <div className="mt-4 lg:w-4/5 xl:w-3/5">
-                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your island. You'll see, when your builder(s) or the armory is available and what is left to upgrade for your Headquarters level. Schedule your builder(s) and your armory and get notified whether an upgrade has finished!</p>
+                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your island. You&apos;ll see, when your builder(s) or the armory is available and what is left to upgrade for your Headquarters level. Schedule your builder(s) and your armory and get notified whether an upgrade has finished!</p>
                         <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext mt-6">In order to get started you must have a {Util.Constants.websiteApplicationName} account to save the village!</p>
                     </div>
                 </div>

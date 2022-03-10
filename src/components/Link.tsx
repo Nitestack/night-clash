@@ -1,5 +1,5 @@
 import { FC, AnchorHTMLAttributes, DetailedHTMLProps } from "react";
-import NextLink from 'next/link';
+import NextLink from "next/link";
 import omit from "omit";
 import Motion, { MotionProps } from "@components/Motion";
 

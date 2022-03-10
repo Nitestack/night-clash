@@ -1,7 +1,7 @@
-import type { NextApiHandler } from 'next';
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import bcrypt from "bcryptjs";
-import DatabaseManager from '@util/databaseManager';
+import DatabaseManager from "@util/databaseManager";
 
 //@ts-ignore
 const Register: NextApiHandler = async (req, res) => {

@@ -8,7 +8,7 @@ export default class HeroAbility extends Base {
             upgradeDuration: i == 0 ? "8h" : (i == 1 ? "16h" : (i == 2 ? "1d 8h" : (i == 3 ? "2d 16h" : "5d 8h"))),
             expPoints: 0,
             costType: "heroToken",
-            costs: i == 0 ? 8 : (i == 1 ? 16 : (i == 2 ? 32 : (i == 3 ? 64 : 128))),
+            costs: [i == 0 ? 8 : (i == 1 ? 16 : (i == 2 ? 32 : (i == 3 ? 64 : 128)))],
             imageUrl: `/Images/Boom Beach/${basicImageUrl}.png`
         });
         super({

@@ -1,5 +1,5 @@
-import { FC, Fragment, useState, MouseEvent } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { FC, Fragment, useState, MouseEvent } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 import Button, { ButtonProps } from "@components/Button";
 import Spinner from "@components/Spinner";
 

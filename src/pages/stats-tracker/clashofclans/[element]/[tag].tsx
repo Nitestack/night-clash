@@ -38,6 +38,9 @@ const ClashOfClansStatsTracker: NextPageWithConfiguration<{}, {}, {
             <ClashOfClansClanProfile clan={clan}/>
         </Layout>
     );
+    else return (
+        <></>
+    );
 };
 ClashOfClansStatsTracker.disableLayout = true;
 ClashOfClansStatsTracker.queryRequired = true;

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "@components/Link";
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import Util from "@util/index";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";

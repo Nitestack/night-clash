@@ -13,7 +13,6 @@ import Link from "@components/Link";
 import Grid from "@components/Grid";
 import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/ClashOfClansOverview";
-import ClashOfClansWallTable from "@modules/Upgrade Tracker/cocWallTable";
 import ClashOfClansModule from "@modules/Upgrade Tracker/ClashOfClansModule";
 import ClashOfClansWallModule from "@modules/Upgrade Tracker/ClashOfClansWallModule";
 

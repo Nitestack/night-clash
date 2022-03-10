@@ -1,4 +1,4 @@
-import type { NextApiHandler } from 'next';
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
@@ -10,7 +10,7 @@ const GetAllUsers: NextApiHandler = async (req, res) => {
     const users = await DatabaseManager.User.find().exec();
     if (!users) return Util.ApiHandler.sendError(res, 1);
     res.status(200).json({
-        usersHTMLCode: prism.highlight(JSON.stringify(users, null, 2), prism.languages.json, 'json')
+        usersHTMLCode: prism.highlight(JSON.stringify(users, null, 2), prism.languages.json, "json")
     });
 };
 

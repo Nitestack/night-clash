@@ -6,7 +6,7 @@ import Center from "@components/Center";
 const Banner: FC<{
     desktopText: string;
     mobileText: string;
-    href: string;
+    href?: string;
 }> = ({ desktopText, mobileText, href }) => {
     return (
         <div className="bg-primary">
@@ -24,14 +24,16 @@ const Banner: FC<{
                             <span className="hidden md:inline"> {desktopText} </span>
                         </p>
                     </div>
-                    <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-                        <Link href={href} className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50"> Learn More </Link>
-                    </div>
-                    <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
-                        <button type="button" className="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
-                            <XIcon className="h-6 w-6 text-white" aria-hidden="true"/>
-                        </button>
-                    </div>
+                    {href ? <>
+                        <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+                            <Link href={href} className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50"> Learn More </Link>
+                        </div>
+                        <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+                            <button type="button" className="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
+                                <XIcon className="h-6 w-6 text-white" aria-hidden="true"/>
+                            </button>
+                        </div>
+                    </> : undefined}
                 </Center>
             </div>
         </div>

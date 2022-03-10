@@ -31,6 +31,8 @@ export default class Base {
                 };
                 return convertTime(time);
             },
+            //Default fallback
+            costType: "gold",
             ...level
         });
         this.levels = convertedLevels;

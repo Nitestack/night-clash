@@ -3,9 +3,12 @@ import Util from "@util/index";
 import Layout from "@components/Layout";
 import { BoomBeachIsland } from "@models/boombeach";
 
-const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, BoomBeachIsland> = ({ data }) => {
+const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
+    island: BoomBeachIsland
+}> = ({ data }) => {
+    const { island } = data;
     return (
-        <Layout description={data}>
+        <Layout description={island.playerTag}>
 
         </Layout>
     );

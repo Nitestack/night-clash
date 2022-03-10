@@ -22,7 +22,9 @@ const links: Array<{
     }
 ];
 
-const socialNetworks = [];
+const socialNetworks: Array<{
+    name: string
+}> = [];
 
 const Footer: FC = () => {
     return (

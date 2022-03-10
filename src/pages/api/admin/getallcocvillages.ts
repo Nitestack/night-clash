@@ -10,7 +10,7 @@ const GetAllCoCVillages: NextApiHandler = async (req, res) => {
     const villages = await DatabaseManager.ClashOfClansVillage.find().exec();
     if (!villages) return Util.ApiHandler.sendError(res, 1);
     Util.ApiHandler.sendSuccess<{ cocVillagesHTMLCode: string }>(res, {
-        cocVillagesHTMLCode: prism.highlight(JSON.stringify(villages, null, 2), prism.languages.json, 'json')
+        cocVillagesHTMLCode: prism.highlight(JSON.stringify(villages, null, 2), prism.languages.json, "json")
     });
 };
 
