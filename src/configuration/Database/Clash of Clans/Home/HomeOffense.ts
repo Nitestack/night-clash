@@ -17,7 +17,7 @@ export default class HomeOffense extends Base {
             text: infos.levels[i].text ? required(infos.levels[i].text) : null,
             //@ts-ignore
             requiredLabLevel: i == 0 ? null : infos.levels[i].requiredLabLevel,
-            imageUrl: `/Images/${basicImageUrl}${infos.type == "spell" ? ".png" :  `/${i + 1}.png`}`
+            imageUrl: `/Images/Clash of Clans/${basicImageUrl}${infos.type == "spell" ? ".png" :  `/${i + 1}.png`}`
         });
         super({
             id: infos.id,
@@ -25,7 +25,8 @@ export default class HomeOffense extends Base {
             type: infos.type,
             village: "home",
             levels: easyArray,
-            baseImageUrl: basicImageUrl
+            baseImageUrl: basicImageUrl,
+            levelNullImagePath: `/Images/Clash of Clans/${basicImageUrl}${infos.type == "spell" ? ".png" :  "/0.png"}`
         });
     };
 };
@@ -39,8 +40,8 @@ interface OffenseInfo {
     id?: string;
     name: string;
     levels: Array<ClashOfClansLevel & {
-        text: string;
-        requiredLabLevel: number;
+        text?: string;
+        /*requiredLabLevel: number;*/
     }>;
     costType?: "elixir" | "darkElixir";
     type: "troop" | "spell" | "siegeMachine" | "darkTroop"

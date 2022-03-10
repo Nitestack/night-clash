@@ -1,0 +1,12 @@
+.builder-button,
+.lab-button {
+    @apply border border-black border-solid rounded-md bg-no-repeat bg-cover bg-center;
+}
+
+.builder-button {
+    background-image: url("/Images/Clash of Clans/Upgrade.png");
+}
+
+.lab-button {
+    background-image: url("/Images/Clash of Clans/Research.png");
+}

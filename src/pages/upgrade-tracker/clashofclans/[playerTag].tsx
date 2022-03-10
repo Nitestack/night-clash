@@ -5,7 +5,7 @@ import { ClashOfClansVillage } from "@models/clashofclans";
 import Modal from "@components/Modal";
 import $ from "jquery";
 import Select from "@components/Select";
-import { OptionHTMLAttributes, useState } from "react";
+import { FC, OptionHTMLAttributes, useState } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Button";
@@ -13,61 +13,88 @@ import Link from "@components/Link";
 import Grid from "@components/Grid";
 import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/ClashOfClansOverview";
-import Table from "@modules/Upgrade Tracker/cocTable";
 import ClashOfClansWallTable from "@modules/Upgrade Tracker/cocWallTable";
+import ClashOfClansModule from "@modules/Upgrade Tracker/ClashOfClansModule";
+import ClashOfClansWallModule from "@modules/Upgrade Tracker/ClashOfClansWallModule";
 
 const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
     playerSchema: ClashOfClansVillage & { _id: any };
-    village: "home" | "builder";
 }> = ({ data }) => {
-    const { playerSchema, village } = data;
-    const [statePlayerSchema, setPlayerSchema] = useState(playerSchema);
-    const { player, builderSeasonBoost, researchSeasonBoost, homeVillage } = statePlayerSchema;
-    const { name, tag, townHallLevel, builderHallLevel, townHallWeaponLevel } = player;
-
+    //Player Data
+    const { playerSchema } = data;
+    //Page Info
+    const villages = ["home", "builder"];
+    if (!villages.includes(location.hash.replace(/#/g, ""))) location.hash = `#${villages[0]}`;
+    const initialVillage = location.hash.replace(/#/g, "");
+    const [header, setHeader] = useState(`${playerSchema.player.name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
+    const [title, setTitle] = useState(`${playerSchema.player.name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+    //Village Tabs
+    const villageTabs: {
+        [key: string]: JSX.Element;
+    } = {
+        "Home Village": <CocUpgradeTrackerPlayerVillage village="home" playerSchema={playerSchema}/>
+    };
+    if (playerSchema.player.builderHallLevel) villageTabs["Builder Base"] = <CocUpgradeTrackerPlayerVillage village="builder" playerSchema={playerSchema}/>;
+    function changeVillage(index: number) {
+        setHeader(`${playerSchema.player.name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"}`);
+        setTitle(`${playerSchema.player.name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+        location.href = `#${villages[index]}`;
+    };
+    return (
+        <Layout header={header} description={playerSchema.playerTag} title={title}>
+            <Tabs tabs={villageTabs} initialTabIndex={villages.indexOf(initialVillage)} 
+            onTabChange={(index) => changeVillage(index)}/>
+        </Layout>
+    );
+};
+const CocUpgradeTrackerPlayerVillage: FC<{
+    village: "home" | "builder",
+    playerSchema: ClashOfClansVillage
+}> = ({ village, playerSchema }) => {
+    const { player, builderSeasonBoost, researchSeasonBoost, homeVillage } = playerSchema;
+    const { tag, townHallLevel, builderHallLevel, townHallWeaponLevel } = player;
     //Season Boost
     const [researchBoost, setResearchBoost] = useState<number>(researchSeasonBoost);
     const [builderBoost, setBuilderBoost] = useState<number>(builderSeasonBoost);
-
     //Tabs
     const tabs: { [key: string]: JSX.Element; } = {};
     tabs.Overview = <Overview village={village} player={player}/>;
     tabs.Defenses = (
-        <Table playerSchema={statePlayerSchema} type="Defense" village={village}/>
+        <ClashOfClansModule playerSchema={playerSchema} type="Defense" village={village}/>
     );
     //@ts-ignore
     if ((village == "home" && townHallLevel >= 3) || (village == "builder" && builderHallLevel >= 2)) {
         tabs.Traps = (
-            <Table playerSchema={statePlayerSchema} type="Trap" village={village}/>
+            <ClashOfClansModule playerSchema={playerSchema} type="Trap" village={village}/>
         );
     };
     tabs.Resources = (
-        <Table playerSchema={statePlayerSchema} type="Resource" village={village}/>
+        <ClashOfClansModule playerSchema={playerSchema} type="Resource" village={village}/>
     );
     tabs.Walls = (
-        <ClashOfClansWallTable playerSchema={statePlayerSchema} village={village}></ClashOfClansWallTable>
+        <ClashOfClansWallModule playerSchema={playerSchema} village={village}/>
     );
     tabs.Army = (
-        <Table playerSchema={statePlayerSchema} type="Army" village={village}/>
+        <ClashOfClansModule playerSchema={playerSchema} type="Army" village={village}/>
     );
     if ((village == "home" && townHallLevel >= 3) || (village == "builder")) {
         tabs.Troops = (
-            <Table playerSchema={statePlayerSchema} type="Troop" village={village}/>
+            <ClashOfClansModule playerSchema={playerSchema} type="Troop" village={village}/>
         );
         if (village == "home") {
             if (townHallLevel >= 7) {
                 tabs["Dark Troops"] = (
-                    <Table playerSchema={statePlayerSchema} type="Dark Troop" village={village}/>
+                    <ClashOfClansModule playerSchema={playerSchema} type="Dark Troop" village={village}/>
                 );
             };
             if (townHallLevel >= 5) {
                 tabs.Spells = (
-                    <Table playerSchema={statePlayerSchema} type="Spell" village={village}/>
+                    <ClashOfClansModule playerSchema={playerSchema} type="Spell" village={village}/>
                 );
             };
             if (townHallLevel >= 12) {
                 tabs["Siege Machines"] = (
-                    <Table playerSchema={statePlayerSchema} type="Siege Machine" village={village}/>
+                    <ClashOfClansModule playerSchema={playerSchema} type="Siege Machine" village={village}/>
                 );
             };
         };
@@ -75,12 +102,12 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
     //@ts-ignore
     if ((village == "home" && townHallLevel >= 7) || (village == "builder" && builderHallLevel >= 5)) {
         tabs.Heroes = (
-            <Table playerSchema={statePlayerSchema} type="Hero" village={village}/>
+            <ClashOfClansModule playerSchema={playerSchema} type="Hero" village={village}/>
         );
     };
     if (village == "home" && townHallLevel >= 14) {
         tabs.Pets = (
-            <Table playerSchema={statePlayerSchema} type="Pet" village={village}/>
+            <ClashOfClansModule playerSchema={playerSchema} type="Pet" village={village}/>
         );
     };
     tabs.Builder = (
@@ -111,96 +138,77 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
         };
         return seasonBoosts;
     };
+
     return (
-        <Layout
-            header={`${name} - ${village == "home" ? "Home Village" : "Builder Base"}`}
-            description={tag}
-            title={`${name} - ${village == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`}>
-            <Grid className="max-w-none">
-                <PlayerProfile player={player} village={village}/>
-                <Row>
+        <Grid className="max-w-none grid-cols-3">
+            <div className="col-span-3">
+                <PlayerProfile player={player} village={village}/>    
+            </div>
+            <div className="col-span-3">
+                {village == "home" || (village == "builder" && builderHallLevel && builderHallLevel >= 4) ? <>
+                {village == "home" ? 
+                <Center>
                     <Center>
-                        {village == "home" || (village == "builder" && builderHallLevel && builderHallLevel >= 4) ? <>
-                        {village == "home" ? 
-                        <>
-                            <Button>
-                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Builder Potion Button.png"/>
-                            </Button>
-                            {homeVillage.Laboratory1 ? <Button>
-                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Research Potion Button.png"/>
-                            </Button> : undefined}
-                        </> : 
-                        <>
-                            <Button>
-                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Boost.png"/>
-                            </Button>
-                            <Button>
-                                <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Potion Button.png"/>
-                            </Button>
-                        </>}
-                        </> : undefined}
+                        <Button>
+                            <img className="w-28" src="/Images/Clash of Clans/Magic Items/Builder Potion Button.png"/>
+                        </Button>
                     </Center>
-                </Row>
-                <Row>
-                    <Column>
-                        <Center>
-                            <Button className="bg-green-500" onClick={() => {
-                                Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
-                                    method: "POST",
-                                    data: {
-                                        playerTag: tag,
-                                        village: village
-                                    },
-                                    success: ({ newPlayerSchema }) => {
-                                        setPlayerSchema(newPlayerSchema);
-                                    }
-                                });
-                            }}>API Update</Button>
-                        </Center>
-                    </Column>
-                    <Column>
-                        <Center>
-                            <Link>
-                                <Button className="bg-red-600"> Edit Structures</Button>
-                            </Link> 
-                        </Center>
-                    </Column>
-                    {builderHallLevel ? <Column>
-                        <Center>
-                            <Link href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/${village == "home" ? "builder" : "home"}`}>
-                                <Button className="bg-blue-700">
-                                    <Grid>
-                                        <Row>
-                                            <Column className="inline-flex">
-                                                <img className="w-10 pr-1" src={village == "home" ? Util.getBuilderHallImage(builderHallLevel) : Util.getTownHallImage(townHallLevel, townHallWeaponLevel)}/>
-                                                <p className="sm:text-xs">Switch to {village == "home" ? "Builder Base" : "Home Village"}</p>
-                                            </Column>
-                                        </Row>
-                                    </Grid>
-                                </Button>
-                            </Link>
-                        </Center>
-                    </Column> : undefined}
-                </Row>
-                <Row>
-                    <Column className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
+                    <Center>
+                        {homeVillage.Laboratory1 ? <Button>
+                            <img className="w-28" src="/Images/Clash of Clans/Magic Items/Research Potion Button.png"/>
+                        </Button> : undefined}
+                    </Center>
+                </Center> : 
+                <Center>
+                    <Center>
+                        <Button>
+                            <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Boost.png"/>
+                        </Button>
+                    </Center>
+                    <Center>
+                        <Button>
+                            <img className="w-28" src="/Images/Clash of Clans/Magic Items/Clock Tower Potion Button.png"/>
+                        </Button>
+                    </Center>
+                </Center>}
+                </> : undefined}
+            </div>
+            <Grid className="col-span-3 grid-cols-1 sm:grid-cols-2 justify-items-center">
+                <div>
+                    <Button className="bg-green-500" onClick={() => {
+                        Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
+                            method: "POST",
+                            data: {
+                                playerTag: tag,
+                                village: village
+                            },
+                            success: ({ success }) => {
+                                if (success) location.reload();
+                            }
+                        });
+                    }}>API Update</Button>
+                </div>
+                <Link>
+                    <Button className="bg-red-600"> Edit Structures</Button>
+                </Link>
+            </Grid>
+            {townHallLevel >= 7 ? (
+                <Grid className="grid-cols-2 col-span-3">
+                    <div className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
                         <Center>
                             <img src="/Images/Clash of Clans/Season Boost Builder.png"/>
                         </Center>
                         <h5 align="center"> Builder Boost </h5>
                         <h1 align="center" className="coc-description"> {builderBoost}% </h1>
-                    </Column>
-                    <Column className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
+                    </div>
+                    <div className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
                         <Center>
                             <img src="/Images/Clash of Clans/Season Boost Research.png"/>
                         </Center>
                         <h5 align="center"> Research Boost </h5>
                         <h1 align="center" className="coc-description"> {researchBoost}% </h1>
-                    </Column>
-                </Row>
-                <Row>
-                    <Column>
-                    {townHallLevel >= 7 ? (
+                    </div>
+                    <div className="col-span-2">
                         <Modal
                             openButtonOptions={{ children: "Set Season Boosts", style: { backgroundColor: "blue", width: "100%" } }}
                             title="Season Boosts"
@@ -236,33 +244,24 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
                                 </div>
                             </div>
                         </Modal>
-                    ) : undefined}
-                    </Column>
-                </Row>
-            </Grid>
-            <Tabs tabs={tabs}></Tabs>
-        </Layout>
+                    </div>
+                </Grid>
+            ) : undefined}
+            <div className="col-span-3">
+                <Tabs tabs={tabs}/>
+            </div>
+        </Grid>
     );
 };
+
 CocUpgradeTrackerPlayerVillagePage.disableLayout = true;
 CocUpgradeTrackerPlayerVillagePage.authenticationRequired = true;
 CocUpgradeTrackerPlayerVillagePage.queryRequired = true;
 CocUpgradeTrackerPlayerVillagePage.afterAuthentication = function (session, router) {
     const playerTag = router.query.playerTag as string;
-    const village = router.query.village as string;
     //Ensures the player tag parameter was given
     if (!playerTag) {
         router.push("/upgrade-tracker/clashofclans");
-        return false;
-    };
-    const resolvedTag = Util.validateTag(playerTag);
-    //Ensures the village parameter was given and is valid
-    if (!village) {
-        router.push(`/upgrade-tracker/${resolvedTag.replace(/#/g, "")}`);
-        return false;
-    };
-    if (!["home", "builder"].includes(village)) {
-        router.push(`/upgrade-tracker/${resolvedTag.replace(/#/g, "")}`);
         return false;
     };
 };
@@ -271,17 +270,16 @@ CocUpgradeTrackerPlayerVillagePage.fetchData = {
     data: (data) => {
         return {
             playerTag: data.resolvedTag,
-            village: data.village,
             user: data.user
         };
     },
     parseData: (router, user) => {
         return {
             resolvedTag: Util.validateTag(router.query.playerTag as string),
-            village: router.query.village,
             user: user
         };
     },
     method: "post"
 };
+
 export default CocUpgradeTrackerPlayerVillagePage;

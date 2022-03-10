@@ -35,15 +35,14 @@ export default class Base {
         });
         this.levels = convertedLevels;
         this.maxLevel = infos.levels.length;
+        this.levelNullImagePath = infos.levelNullImagePath ? infos.levelNullImagePath : `/Images/Clash of Clans/${infos.baseImageUrl}/0.png`;
     };
     public name: string;
     public type: Type;
     public village: Village;
     public maxLevel: number;
-    public levels: Array<ClashOfClansConvertedLevel | ClashOfClansConvertedLevel & {
-        text: string;
-        requiredLabLevel: number;
-    }>;
+    public levels: Array<ClashOfClansConvertedLevel>;
+    public levelNullImagePath: string;
 };
 
 type Type = "defense" | "resource" | "army" | "trap" | "troop" | "spell" | "hero" | "pet" | "siegeMachine" | "darkTroop" | "wall";
@@ -56,14 +55,20 @@ interface BaseInfo {
     type: Type;
     levels: Array<ClashOfClansLevel>;
     baseImageUrl: string;
+    levelNullImagePath?: string;
 };
 
 interface ClashOfClansConvertedLevel {
-    convertedPrice?: string;
-    upgradeDurationInSeconds?: number;
-    calculateSeasonBoostCosts?: (percentage: number) => number;
-    calculateSeasonBoostTimeInSeconds?: (percentage: number) => number;
+    convertedPrice: string;
+    upgradeDurationInSeconds: number;
+    calculateSeasonBoostCosts: (percentage: number) => number;
+    calculateSeasonBoostTimeInSeconds: (percentage: number) => number;
     imageUrl: string;
+    text?: string;
+    requiredLabLevel?: number;
+    costType: "gold" | "elixir" | "darkElixir" | "builderGold" | "builderElixir" | "goldAndElixir" | "builderGoldAndElixir" | "gem";
+    upgradeDuration: string;
+    costs: number;
 };
 
 export interface ClashOfClansLevel {

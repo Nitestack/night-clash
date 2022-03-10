@@ -29,7 +29,8 @@ export default class HomeHero extends Base {
             type: "hero",
             village: "home",
             levels: easyArray,
-            baseImageUrl: basicImageUrl
+            baseImageUrl: basicImageUrl,
+            levelNullImagePath: `/Images/Clash of Clans/${basicImageUrl}/0.png`
         });
     };
 };

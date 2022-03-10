@@ -1,7 +1,6 @@
 import { NextApiHandler } from "next";
 import Util from "@util/index";
 import DatabaseManager from "@util/databaseManager";
-import { ClashOfClansVillage } from "@models/clashofclans";
 
 const Example: NextApiHandler = async (req, res) => {
     const { playerTag, village } = req.body;
@@ -16,11 +15,7 @@ const Example: NextApiHandler = async (req, res) => {
     playerSchema.homeVillage = Util.CocUpgradeTracker.createVillageStructureObject(playerSchema.homeVillage, player, village);
     playerSchema.builderBase = Util.CocUpgradeTracker.createVillageStructureObject(playerSchema.builderBase, player, village);
     await playerSchema.save();
-    Util.ApiHandler.sendSuccess<{
-        newPlayerSchema: ClashOfClansVillage
-    }>(res, {
-        newPlayerSchema: playerSchema
-    });
+    Util.ApiHandler.sendSuccess(res, {});
 };
 
 export default Example;

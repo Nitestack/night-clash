@@ -16,7 +16,7 @@ export default class HomePet extends Base {
             upgradeDuration: infos.levels[i].text ? "0s" : infos.levels[i].upgradeDuration,
             //@ts-ignore
             text: infos.levels[i].text ? required(infos.levels[i].text) : null,
-            imageUrl: `/Images/${basicImageUrl}.png`
+            imageUrl: `/Images/Clash of Clans/${basicImageUrl}.png`
         });
         super({
             id: infos.id,
@@ -24,7 +24,8 @@ export default class HomePet extends Base {
             type: "pet",
             village: "home",
             levels: easyArray,
-            baseImageUrl: basicImageUrl
+            baseImageUrl: basicImageUrl,
+            levelNullImagePath: `/Images/Clash of Clans/${basicImageUrl}.png`
         });
     };
 };
@@ -33,7 +34,6 @@ interface HeroInfo {
     id?: string;
     name: string;
     levels: Array<ClashOfClansLevel & {
-        text: string,
-        requiredLabLevel: number
+        text?: string
     }>;
 };
