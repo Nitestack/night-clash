@@ -78,8 +78,8 @@ const Footer: FC = () => {
                 <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.websiteApplicationName}. All rights reserved.</p>
             </Center>
             <div className="coc-description py-8 px-3">
-                <p className="text-lightmodetext dark:text-darkmodetext" align="center"> This website is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for the operation or content of this site/application. Use of the trademarks and other intellectual property of Supercell is subject to Supercell&apos;s Fan Kit Agreement. </p>
-                <p className="text-lightmodetext dark:text-darkmodetext" align="center"> 
+                <p className="text-lightmodetext dark:text-darkmodetext text-center"> This website is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for the operation or content of this site/application. Use of the trademarks and other intellectual property of Supercell is subject to Supercell&apos;s Fan Kit Agreement. </p>
+                <p className="text-lightmodetext dark:text-darkmodetext text-center"> 
                 For more information about Supercell, please visit their website 
                 <Link rel="noreferrer" disablemotion="true" className="text-primary" href="https://supercell.com/" target="_blank"> here </Link>
                 .

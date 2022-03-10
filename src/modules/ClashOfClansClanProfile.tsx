@@ -44,21 +44,21 @@ const ClashOfClansClanProfile: FC<{
                             </Center>
                         </div>
                         <Grid className="lg:col-span-2 grid-cols-3 coc-description">
-                            <p className="whitespace-nowrap" align="left"> Clan War League </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.warLeague ? clan.warLeague.name : "Unranked"}</p>
-                            <p className="whitespace-nowrap" align="left"> Total Points: </p>
+                            <p className="whitespace-nowrap text-left"> Clan War League </p>
+                            <p className="whitespace-nowrap col-span-2 text-right">{clan.warLeague ? clan.warLeague.name : "Unranked"}</p>
+                            <p className="whitespace-nowrap text-left"> Total Points: </p>
                             <ClashOfClansTrophyCount className="justify-end" trophyCount={clan.clanPoints}/>
                             <ClashOfClansTrophyCount className="justify-end" trophyCount={clan.clanVersusPoints} village="builder"/>
-                            <p className="whitespace-nowrap" align="left"> Clan Location: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.location ? clan.location.name : "Not Set"}</p>
-                            <p className="whitespace-nowrap" align="left"> Chat Language </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.chatLanguage ? clan.chatLanguage : "Not Set"}</p>
-                            <p className="whitespace-nowrap" align="left"> Type: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.type == "open" ? "Anyone can join" : (clan.type == "inviteOnly" ? "Invite only" : "Closed")}</p>
-                            <p className="whitespace-nowrap" align="left"> Required Trophies: </p>
+                            <p className="whitespace-nowrap text-left"> Clan Location: </p>
+                            <p className="whitespace-nowrap col-span-2 text-right">{clan.location ? clan.location.name : "Not Set"}</p>
+                            <p className="whitespace-nowrap text-left"> Chat Language </p>
+                            <p className="whitespace-nowrap col-span-2 text-right">{clan.chatLanguage ? clan.chatLanguage : "Not Set"}</p>
+                            <p className="whitespace-nowrap text-left"> Type: </p>
+                            <p className="whitespace-nowrap col-span-2 text-right">{clan.type == "open" ? "Anyone can join" : (clan.type == "inviteOnly" ? "Invite only" : "Closed")}</p>
+                            <p className="whitespace-nowrap text-left"> Required Trophies: </p>
                             <ClashOfClansTrophyCount className="justify-end col-span-2"trophyCount={clan.requiredTrophies}/>
-                            <p className="whitespace-nowrap" align="left"> Required Town Hall level: </p>
-                            <p className="whitespace-nowrap col-span-2" align="right">{clan.requiredTownhallLevel}</p>
+                            <p className="whitespace-nowrap text-left"> Required Town Hall level: </p>
+                            <p className="whitespace-nowrap col-span-2 text-right">{clan.requiredTownhallLevel}</p>
                         </Grid>
                     </Grid>
                 ),
@@ -67,18 +67,18 @@ const ClashOfClansClanProfile: FC<{
                         <div className="pb-2 md:pb-2">
                             <p> War Stats </p>
                             <Grid className="grid-cols-2 coc-description">
-                                <p className="whitespace-nowrap" align="left"> Wars Won </p>
-                                <p align="right">{clan.warWins}</p>
-                                <p className="whitespace-nowrap" align="left"> Wars Lost </p>
-                                <p align="right">{clan.warLosses || "?"}</p>
-                                <p className="whitespace-nowrap" align="left"> War Ties: </p>
-                                <p align="right">{clan.warTies || "?"}</p>
-                                <p className="whitespace-nowrap" align="left"> War Win Streak: </p>
-                                <p align="right">{clan.warWinStreak}</p>
-                                <p className="whitespace-nowrap" align="left"> Clan Leader: </p>
-                                <p className="whitespace-nowrap" align="right">{clan.memberList.find(player => player.role == "leader")?.name}</p>
-                                <p className="whitespace-nowrap" align="left"> War Frequency: </p>
-                                <p align="right">{
+                                <p className="whitespace-nowrap text-left"> Wars Won </p>
+                                <p className="text-right">{clan.warWins}</p>
+                                <p className="whitespace-nowrap text-left"> Wars Lost </p>
+                                <p className="text-right">{clan.warLosses || "?"}</p>
+                                <p className="whitespace-nowrap text-left"> War Ties: </p>
+                                <p className="text-right">{clan.warTies || "?"}</p>
+                                <p className="whitespace-nowrap text-left"> War Win Streak: </p>
+                                <p className="text-right">{clan.warWinStreak}</p>
+                                <p className="whitespace-nowrap text-left"> Clan Leader: </p>
+                                <p className="whitespace-nowrap text-right">{clan.memberList.find(player => player.role == "leader")?.name}</p>
+                                <p className="whitespace-nowrap text-left"> War Frequency: </p>
+                                <p className="text-right">{
                                     clan.warFrequency == "always" ? "Always" : (
                                         clan.warFrequency == "lessThanOncePerWeek" ? "Rarely" : 
                                         (
@@ -91,25 +91,25 @@ const ClashOfClansClanProfile: FC<{
                                         )
                                     )
                                 }</p>
-                                <p className="whitespace-nowrap" align="left"> Public War Log </p>
-                                <p align="right">{clan.isWarLogPublic ? "Yes" : "No"}</p>
+                                <p className="whitespace-nowrap text-left"> Public War Log </p>
+                                <p className="text-right">{clan.isWarLogPublic ? "Yes" : "No"}</p>
                             </Grid>
                         </div>
                         <div>
                             <p>Clan Perks</p>
                             <Grid className="grid-cols-2 coc-description">
-                                <p className="whitespace-nowrap" align="left"> Donation request wait time: </p>
-                                <p className="whitespace-nowrap" align="right">{clanPerks.donationRequestWaitTime} minutes </p>
-                                <p className="whitespace-nowrap" align="left"> Donation limit: </p>
-                                <p className="whitespace-nowrap" align="right">{clanPerks.donationLimit[0]} troops, {clanPerks.donationLimit[1]} spells </p>
-                                <p className="whitespace-nowrap" align="left"> Donation refund: </p>
-                                <p align="right">{clanPerks.donationRefund}% cost </p>
-                                <p className="whitespace-nowrap" align="left"> Donation upgrade: </p>
-                                <p align="right">{clanPerks.donationUpgrade} levels </p>
-                                <p className="whitespace-nowrap" align="left"> Treasury extra storage: </p>
-                                <p align="right">{clanPerks.treasuryExtraStorage}% </p>
-                                <p className="whitespace-nowrap" align="left"> War bonus extra loot: </p>
-                                <p align="right">{clanPerks.warBonusExtraLoot}% </p>
+                                <p className="whitespace-nowrap text-left"> Donation request wait time: </p>
+                                <p className="whitespace-nowrap text-right">{clanPerks.donationRequestWaitTime} minutes </p>
+                                <p className="whitespace-nowrap text-left"> Donation limit: </p>
+                                <p className="whitespace-nowrap text-right">{clanPerks.donationLimit[0]} troops, {clanPerks.donationLimit[1]} spells </p>
+                                <p className="whitespace-nowrap text-left"> Donation refund: </p>
+                                <p className="text-right">{clanPerks.donationRefund}% cost </p>
+                                <p className="whitespace-nowrap text-left"> Donation upgrade: </p>
+                                <p className="text-right">{clanPerks.donationUpgrade} levels </p>
+                                <p className="whitespace-nowrap text-left"> Treasury extra storage: </p>
+                                <p className="text-right">{clanPerks.treasuryExtraStorage}% </p>
+                                <p className="whitespace-nowrap text-left"> War bonus extra loot: </p>
+                                <p className="text-right">{clanPerks.warBonusExtraLoot}% </p>
                             </Grid>
                         </div>
                     </Grid>

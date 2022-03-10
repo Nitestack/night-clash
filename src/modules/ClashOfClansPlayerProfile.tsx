@@ -30,13 +30,13 @@ const ClashOfClansPlayerProfile: FC<{
                     </Center>
                 </div>
                 <div className="pb-2 lg:pb-0">
-                    <p className="whitespace-nowrap flex items-center justify-center mb-2 text-lightmodetext dark:text-darkmodetext font-bold" align="center">{village == "home" ? "Town Hall" : "Builder Hall"} Level {village == "home" ? player.townHallLevel : player.builderHallLevel} {player.townHallWeaponLevel && village == "home" ? <span className="flex items-center justify-center"><img className="w-6" src="/Images/Clash of Clans/Achievement Star.png"/>{player.townHallWeaponLevel}</span> : undefined}</p>
+                    <p className="whitespace-nowrap flex items-center justify-center mb-2 text-lightmodetext dark:text-darkmodetext font-bold text-center">{village == "home" ? "Town Hall" : "Builder Hall"} Level {village == "home" ? player.townHallLevel : player.builderHallLevel} {player.townHallWeaponLevel && village == "home" ? <span className="flex items-center justify-center"><img className="w-6" src="/Images/Clash of Clans/Achievement Star.png"/>{player.townHallWeaponLevel}</span> : undefined}</p>
                     <Center>
                         <img className="w-40" src={village == "home" ? Util.getTownHallImage(player.townHallLevel, player.townHallWeaponLevel) : Util.getBuilderHallImage(player.builderHallLevel)}/>
                     </Center>
                 </div>
                 <div className="pb-2 lg:pb-0">
-                    <p className={Util.classNames(player.clan ? "text-lightmodetext dark:text-darkmodetext font-bold" : "text-[#FFFFCC]", "p-0 mb-2")} align="center">{player.clan ? player.clan.name : "No Clan"}</p>
+                    <p className={Util.classNames(player.clan ? "text-lightmodetext dark:text-darkmodetext font-bold" : "text-[#FFFFCC]", "p-0 mb-2 text-center")}>{player.clan ? player.clan.name : "No Clan"}</p>
                     <Center>
                         <img className="w-40" src={player.clan ? player.clan.badgeUrls.medium : "/Images/Clash of Clans/Home/no-clan.png"}/>
                     </Center>
@@ -62,15 +62,15 @@ const ClashOfClansPlayerProfile: FC<{
                         </Center>
                         <Center>
                             <div>
-                                <span className="coc-description text-sm" align="center">All time best:</span>
+                                <span className="coc-description text-sm text-center">All time best:</span>
                                 <ClashOfClansTrophyCount cursed className={Util.classNames(styles["text-bg"], "font-bold justify-center")} trophyCount={village == "home" ? player.bestTrophies : player.bestVersusTrophies} village={village}/>
                             </div>
                         </Center>
                         {village == "home" ? <Center>
                             <div>
-                                <span className="coc-description text-sm" align="center">War Stars Won:</span>
+                                <span className="coc-description text-sm text-center">War Stars Won:</span>
                                 <Grid className={Util.classNames(styles["text-bg"], "grid-cols-3")}>
-                                    <img className="w-6" src="/Images/Clash of Clans/star.png" align="left"/>
+                                    <img className="w-6 text-left" src="/Images/Clash of Clans/star.png"/>
                                     <p className="font-bold col-span-2">{player.warStars}</p>
                                 </Grid>
                             </div>
@@ -102,7 +102,7 @@ const ClashOfClansPlayerProfile: FC<{
                 </Center> : undefined}
             </Grid>
             {player.legendStatistics && ((village == "home" && player.legendStatistics.bestSeason) || (village == "builder" && player.legendStatistics.bestVersusSeason)) ? <div className="rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext px-3">
-                <p align="center">{village == "home" ? "Legend League Tournament" : "Versus Battle Tournament"}</p>
+                <p className="text-center">{village == "home" ? "Legend League Tournament" : "Versus Battle Tournament"}</p>
                 <Grid>
                     <div>
                         <div>
