@@ -115,7 +115,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, }: ComponentWi
                 730,
                 "/"
             );
-            mode = "light";
+            mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         };
         if (mode == "dark") $(document.documentElement).addClass("dark");
         else $(document.documentElement).removeClass("dark");
