@@ -42,8 +42,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                 <h5>Troops</h5>
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeTroopsArray.map((troop, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${troop}.png')`
                         }} title={troop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / troopSpace[i])}/>
@@ -53,8 +53,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
             <div className="pb-4">
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeSuperTroopsArray.map((superTroop, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superTroop}.png')`
                         }} title={superTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / superTroopSpace[i])}/>
@@ -64,8 +64,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
             <div className="pb-4">
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeDarkTroopsArray.map((darkTroop, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${darkTroop}.png')`
                         }} title={darkTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkTroopSpace[i])}/>
@@ -75,8 +75,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
             <div className="pb-4">
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeDarkSuperTroopsArray.map((superDarkTroop, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superDarkTroop}.png')`
                         }} title={superDarkTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkSuperTroopSpace[i])}/>
@@ -87,8 +87,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                 <h5>Spells</h5>
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeSpellsArray.map((spell, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Spells/${spell}.png')`
                         }} title={spell}/>
                         <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={Math.floor(11 / spellSpace[i])}/>
@@ -99,8 +99,8 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                 <h5>Siege Machines</h5>
                 <Grid className="grid-cols-12 justify-items-center">
                     {homeSiegeMachinesArray.map((siegeMachine, i) => 
-                    <div>
-                        <div className={styles["unit-icon"]} key={i} style={{ 
+                    <div key={i}>
+                        <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Siege Machines/${siegeMachine}.png')`
                         }} title={siegeMachine}/>
                         <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={1}/>
