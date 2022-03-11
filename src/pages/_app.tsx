@@ -28,31 +28,29 @@ const CustomProvider: FC<{
     Component: CustomComponentType;
     pageProps: any;
 }> = ({ Component, pageProps }) => {
-    const [done, setDone] = useState(false);
+    const [done, setDone] = useState(!Component.authenticationRequired && !Component.adminRoleRequired && !Component.noAuthenticationRequired && !Component.fetchData ? true : false);
     const [data, setData] = useState<any>(undefined);
     const { data: session, status } = useSession() as SessionObject;
     const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
-    if (!Component.authenticationRequired && !Component.adminRoleRequired && !Component.noAuthenticationRequired && !Component.fetchData) setDone(true);
     useEffect(() => {
-        if (!done) {
-            if ($.isEmptyObject(router.query) && Component.queryRequired) return;
-            if (status == "loading") return; // Do nothing while loading
-            if (Component.authenticationRequired) {
-                if (isUser) handleAuthentication(session);
-                else if (!isUser && !isDevelopment) signIn(); // If not authenticated, force log in
-            } else if (Component.adminRoleRequired) {
-                if (!isUser && !isDevelopment) signIn();
-                else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) router.push("/404");
-                else handleAuthentication();
-            } else if (Component.noAuthenticationRequired) {
-                // If authenticated, redirect to /account
-                if (isUser) router.push("/account");
-                else setDone(true);
-            } else {
-                handleAuthentication();
-            };
+        if (done) return; //Do nothing if everything is done
+        if ($.isEmptyObject(router.query) && Component.queryRequired) return;
+        if (status == "loading") return; // Do nothing while loading
+        if (Component.authenticationRequired) {
+            if (isUser) handleAuthentication(session);
+            else if (!isUser && !isDevelopment) signIn(); // If not authenticated, force log in
+        } else if (Component.adminRoleRequired) {
+            if (!isUser && !isDevelopment) signIn();
+            else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) router.push("/404");
+            else handleAuthentication();
+        } else if (Component.noAuthenticationRequired) {
+            // If authenticated, redirect to /account
+            if (isUser) router.push("/account");
+            else setDone(true);
+        } else {
+            handleAuthentication();
         };
     }, Component.queryRequired ? [status, router.query] : [status]);
     return done ? (
