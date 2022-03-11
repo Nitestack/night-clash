@@ -110,7 +110,6 @@ const requiredNumber: SchemaDefinitionProperty = {
     required: true
 };
 
-//@ts-ignore
 export default mongoose.models.clashofclansvillage as Model<ClashOfClansVillage> || mongoose.model<ClashOfClansVillage>("clashofclansvillage", new mongoose.Schema({
     playerTag: {
         type: String,

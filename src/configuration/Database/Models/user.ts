@@ -23,7 +23,6 @@ type DocumentUser = ActualUser & {
 
 export type UserDocument = Document & DocumentUser;
 
-//@ts-ignore
 export default mongoose.models.user as Model<UserDocument> || mongoose.model<UserDocument>("user", new mongoose.Schema({
     username: {
         type: String,

@@ -44,7 +44,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeTroopsArray.map((troop, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${troop}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${troop}.png')`
                         }} title={troop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / troopSpace[i])}/>
                     </div>)}   
@@ -55,7 +55,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeSuperTroopsArray.map((superTroop, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superTroop}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superTroop}.png')`
                         }} title={superTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / superTroopSpace[i])}/>
                     </div>)}    
@@ -66,7 +66,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeDarkTroopsArray.map((darkTroop, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${darkTroop}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${darkTroop}.png')`
                         }} title={darkTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkTroopSpace[i])}/>
                     </div>)}    
@@ -77,7 +77,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeDarkSuperTroopsArray.map((superDarkTroop, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superDarkTroop}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superDarkTroop}.png')`
                         }} title={superDarkTroop}/>
                         <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkSuperTroopSpace[i])}/>
                     </div>)}    
@@ -89,7 +89,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeSpellsArray.map((spell, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Spells/${spell}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Spells/${spell}.png')`
                         }} title={spell}/>
                         <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={Math.floor(11 / spellSpace[i])}/>
                     </div>)}   
@@ -101,7 +101,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                     {homeSiegeMachinesArray.map((siegeMachine, i) => 
                     <div>
                         <div className={styles["unit-icon"]} key={i} style={{ 
-                            backgroundImage: `url('/Images/Clash of Clans/Home/Siege Machines/${siegeMachine}.png');`
+                            backgroundImage: `url('/Images/Clash of Clans/Home/Siege Machines/${siegeMachine}.png')`
                         }} title={siegeMachine}/>
                         <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={1}/>
                     </div>)}   
