@@ -3,7 +3,7 @@ import Util from "@util/index";
 import { APIClan, APIPlayer } from "clashofclans.js";
 
 const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
-    const tag = req.body.tag as string;
+    const tag = Util.validateTag(req.body.tag);
     const element = req.body.element as "clans" | "players";
     const client = await Util.getCoCAPI();
     if (element == "players") {

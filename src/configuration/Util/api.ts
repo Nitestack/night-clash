@@ -26,13 +26,13 @@ async function getAPI(api: "coc" | "cr" | "bs"): Promise<Client | any> {
     else if (cached.CRClient && api == "cr") return cached.CRClient;
     else if (cached.BSClient && api == "bs") return cached.BSClient;
     if (api == "coc" && !cached.CoCClient) {
-        await client.login({ email: "night.clash.tracker@gmail.com", password: process.env.PASSWORD as string });
+        await client.login({ email: process.env.EMAIL as string, password: process.env.PASSWORD as string });
         cached.CoCClient = client;
     } else if (api == "cr" && !cached.CRClient) {
-        const token = await new Token("clashroyale", "night.clash.tracker@gmail.com", process.env.PASSWORD).init();
+        const token = await new Token("clashroyale", process.env.EMAIL, process.env.PASSWORD).init();
         cached.CRClient = new ClashRoyale(token);
     } else if (api == "bs" && !cached.BSClient) {
-        const token = await new Token("brawlstars", "night.clash.tracker@gmail.com", process.env.PASSWORD).init();
+        const token = await new Token("brawlstars", process.env.EMAIL, process.env.PASSWORD).init();
         cached.BSClient = new BrawlStars(token);
     };
     if (api == "coc") return cached.CoCClient;

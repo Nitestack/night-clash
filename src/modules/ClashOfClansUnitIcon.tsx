@@ -3,7 +3,6 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { CSSProperties, FC } from "react";
 import { APIPlayer } from "clashofclans.js";
 import Util from "@util/index";
-import Tooltip from "@components/Tooltip";
 
 const ClashOfClansUnitIcon: FC<{
     name: string,
@@ -32,12 +31,10 @@ const ClashOfClansUnitIcon: FC<{
         <div className="unit-icon locked" style={backgroundImage} title={`${name} Level 0 (Max for TH: ${maxedLevel})`}></div>  
     );
     return (
-        <Tooltip toolTipNode={`${name} Level ${level} (Max for TH: ${maxedLevel})`}>
-            <div className="unit-icon" style={backgroundImage}>
-                {level == 1 && ![...Util.Constants.CoC.homeHeroesArray, "Battle Machine"].includes(name) ? undefined : 
-                <div className={Util.classNames("[font-size:_17px;] unit-icon-level coc-description", level == maxLevel ? "max" : (maxedLevel == level ? "maxTH" : ""))}>{level}</div>}
-            </div>
-        </Tooltip>
+        <div className="unit-icon" style={backgroundImage} title={`${name} Level ${level} (Max for TH: ${maxedLevel})`}>
+            {level == 1 && ![...Util.Constants.CoC.homeHeroesArray, "Battle Machine"].includes(name) ? undefined : 
+            <div className={Util.classNames("[font-size:_17px;] unit-icon-level coc-description", level == maxLevel ? "max" : (maxedLevel == level ? "maxTH" : ""))}>{level}</div>}
+        </div>
     );
 };
 export default ClashOfClansUnitIcon;

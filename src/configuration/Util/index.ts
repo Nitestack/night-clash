@@ -201,6 +201,15 @@ export default class Util {
         return textArray.slice(0, text.toLowerCase().includes("d") ? 3 : (!text.toLowerCase().includes("h") ? 1 : 2)).join(" ");
     };
     /**
+     * Adds spaces between a number (`1000` => `1 000`)
+     * @param {number} number The number to convert
+     */
+    public static numberWithSpaces(number: number | string) {
+        let parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        return parts.join(".");
+    };
+    /**
      * Gets the percentage between two dates compared to today
      * @param {number} start The start date in milliseconds
      * @param {number} end The end date in milliseconds

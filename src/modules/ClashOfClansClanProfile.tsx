@@ -159,7 +159,7 @@ const ClashOfClansMemberList: FC<{
             </Grid>
             <Grid className="grid-cols-1">
                 {memberList.map((member, i) => (
-                    <ClashOfClansClanMember member={member} iterationIndex={i}/>
+                    <ClashOfClansClanMember member={member} iterationIndex={i} key={i} village={village}/>
                 ))}
             </Grid>
         </div>
@@ -168,15 +168,42 @@ const ClashOfClansMemberList: FC<{
 
 const ClashOfClansClanMember: FC<{
     member: APIClanMember,
-    iterationIndex: number
-}> = ({ member, iterationIndex }) => {
+    iterationIndex: number,
+    village: "home" | "builder"
+}> = ({ member, iterationIndex, village }) => {
     const rank = iterationIndex + 1;
     return (
         <a href={`/stats-tracker/clashofclans/players/${member.tag.replace(/#/g, "")}`} target="_blank">
-            <Grid className={Util.classNames(ClashOfClansAchievementStyles.achievement, "grid-cols-1")}>
-                <p className="mr-2">{rank}.</p>
-                <div className={ClashOfClansPlayerProfileStyles.xp}>{member.expLevel}</div>
-                <p>{member.name}</p>
+            <Grid className={Util.classNames(ClashOfClansAchievementStyles.achievement, 
+                village == "home" ? "grid-cols-8" : "grid-cols-12")}>
+                <Center className="justify-self-center">
+                    <p className="mr-2">{rank}.</p>
+                </Center>
+                <Center>
+                    <div className={Util.classNames(ClashOfClansPlayerProfileStyles.xp, "justify-self-center")}>{member.expLevel}</div>
+                    {village == "home" ? <img className="w-14" src={member.league ? member.league.iconUrls.medium : "/Images/Clash of Clans/Home/no-league.png"}/> : undefined}
+                </Center>
+                <div className={Util.classNames("justify-self-left", village == "home" ? "col-span-2" : "col-span-4")}>
+                    <p>{member.name}</p>
+                    <p className="coc-description text-[#49463D]">{member.role == "member" ? "" : Util.CocUpgradeTracker.convertClanRole(member.role)}</p>
+                </div>
+                <Center className={Util.classNames("justify-between coc-description", village == "home" ? "col-span-2" : "col-span-4")}>
+                    <div>
+                        <span className="coc-description text-sm text-center text-[#6F6F6D]">Troops donated:</span>
+                        <p className="bg-[#EEEFEA] rounded-md text-[#393939] text-center">{Util.numberWithSpaces(member.donations)}</p>
+                    </div>
+                    <div>
+                        <span className="coc-description text-sm text-center text-[#6F6F6D]">Troops received:</span>
+                        <p className="bg-[#EEEFEA] rounded-md text-[#393939] text-center">{Util.numberWithSpaces(member.donationsReceived)}</p>
+                    </div>
+                </Center>
+                <Center className={Util.classNames("justify-self-end", village == "home" ? "" : "col-span-2")}>
+                    <ClashOfClansTrophyCount trophyCountProps={{
+                        className: "text-lg"
+                    }} imgClassName="w-6" 
+                    trophyCount={village == "home" ? member.trophies : member.versusTrophies}
+                    village={village}/>
+                </Center>
             </Grid>
         </a>
     );
