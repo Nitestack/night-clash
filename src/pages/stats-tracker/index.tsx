@@ -11,7 +11,7 @@ const StatsTracker: NextPageWithConfiguration = () => {
     useEffect(() => {
         if (!location.hash) location.hash = `#${tracker[0]}`;
         setDefaultIndex(tracker.includes(location.hash.replace(/#/g, "")) ? tracker.indexOf(location.hash.replace(/#/g, "")) : 0);
-    });
+    }, []);
     return (
         <>
             <Tabs initialTabIndex={defaultIndex} tabs={{
