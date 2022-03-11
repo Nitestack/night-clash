@@ -1,6 +1,6 @@
 import Coc from "@constants/clashOfClans";
-import { APIPlayer, APISeason } from "clashofclans.js";
-import { VillageType } from "@models/clashofclans";
+import type { APIPlayer, APISeason } from "clashofclans.js";
+import type { VillageType } from "@models/clashofclans";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { toCamelCase } from "@util/functions";

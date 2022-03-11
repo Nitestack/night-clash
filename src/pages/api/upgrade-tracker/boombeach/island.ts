@@ -1,7 +1,7 @@
-import { ClashOfClansVillage } from "@models/clashofclans";
-import { UserWithoutPassword } from "@models/user";
+import type { ClashOfClansVillage } from "@models/clashofclans";
+import type { UserWithoutPassword } from "@models/user";
 import Util from "@util/index";
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import DatabaseManager from "@util/databaseManager";
  
 //@ts-ignore

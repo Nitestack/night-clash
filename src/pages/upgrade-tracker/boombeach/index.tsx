@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import Center from "@components/Center";
 
 const BBUpgradeTrackerPage: NextPageWithConfiguration = () => {

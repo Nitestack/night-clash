@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { ClashOfClansVillage } from "@models/clashofclans";
 import Grid from "@components/Grid";
 import Util from "@util/index";
@@ -9,7 +9,7 @@ import { home } from "@database/Clash of Clans/home";
 import { builder } from "@database/Clash of Clans/builder";
 import Input from "@components/Input";
 import Button from "@components/Button";
-import Base from "@database/Clash of Clans/Base";
+import type Base from "@database/Clash of Clans/Base";
 import styles from "@modules/Upgrade Tracker/ClashOfClansModule.module.scss";
 
 const ClashOfClansWallModule: FC<{

@@ -1,7 +1,9 @@
-import { FilterQuery } from "mongoose";
-import userModel, { UserDocument } from "@models/user";
+import type { FilterQuery } from "mongoose";
+import userModel from "@models/user";
+import type { UserDocument } from "@models/user";
 import roleModel from "@models/role";
-import cocVillageModel, { ClashOfClansVillage } from "@models/clashofclans";
+import cocVillageModel from "@models/clashofclans";
+import type { ClashOfClansVillage } from "@models/clashofclans";
 
 export default class DatabaseManager {
     public static User = userModel;

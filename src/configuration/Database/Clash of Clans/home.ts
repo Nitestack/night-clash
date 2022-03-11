@@ -4,7 +4,7 @@ import HomeTrap from "@database/Clash of Clans/Home/HomeTrap";
 import HomeResource from "@database/Clash of Clans/Home/HomeResource";
 import HomeHero from "@database/Clash of Clans/Home/HomeHero";
 import HomePet from "@database/Clash of Clans/Home/HomePet";
-import Base from "@database/Clash of Clans/Base";
+import type Base from "@database/Clash of Clans/Base";
 import HomeOffense from "@database/Clash of Clans/Home/HomeOffense";
 
 //---------DEFENSE-----------\\

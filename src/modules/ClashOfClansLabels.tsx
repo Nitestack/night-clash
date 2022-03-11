@@ -1,5 +1,5 @@
-import { APILabel } from "clashofclans.js";
-import { FC } from "react";
+import type { APILabel } from "clashofclans.js";
+import type { FC } from "react";
 import Tooltip from "@components/Tooltip";
 import Button from "@components/Button";
 import ClashOfClansShareButton from "./ClashOfClansShareButton";

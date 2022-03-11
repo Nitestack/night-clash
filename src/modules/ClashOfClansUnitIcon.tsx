@@ -1,7 +1,7 @@
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
-import { CSSProperties, FC } from "react";
-import { APIPlayer } from "clashofclans.js";
+import type { CSSProperties, FC } from "react";
+import type { APIPlayer } from "clashofclans.js";
 import Util from "@util/index";
 import styles from "@modules/ClashOfClansUnitIcon.module.scss";
 

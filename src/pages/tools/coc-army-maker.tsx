@@ -1,5 +1,5 @@
 import Grid from "@components/Grid";
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import styles from "@modules/ClashOfClansUnitIcon.module.scss";
 import Input from "@components/Input";

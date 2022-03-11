@@ -1,5 +1,6 @@
-import { APIClan, APIClanMember } from "clashofclans.js";
-import { FC, useState } from "react";
+import type { APIClan, APIClanMember } from "clashofclans.js";
+import type { FC } from "react";
+import { useState } from "react";
 import Grid from "@components/Grid";
 import Tabs from "@components/Tabs";
 import Button from "@components/Button";

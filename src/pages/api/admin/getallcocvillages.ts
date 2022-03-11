@@ -1,7 +1,7 @@
 import Util from "@util/index";
 import prism from "prismjs";
 import loadLanguages from "prismjs/components/index";
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import DatabaseManager from "@util/databaseManager";
 loadLanguages("json");
 

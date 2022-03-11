@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "@components/Link";
-import { FC } from "react";
+import type { FC } from "react";
 import Util from "@util/index";
 import Center from "@components/Center";
 

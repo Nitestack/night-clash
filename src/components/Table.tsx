@@ -1,4 +1,4 @@
-import { FC, DetailedHTMLProps, TdHTMLAttributes } from "react";
+import type { FC } from "react";
 
 const Table: FC<{ 
     headings: Array<string>,

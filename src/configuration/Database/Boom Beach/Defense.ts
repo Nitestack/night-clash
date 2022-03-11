@@ -1,4 +1,5 @@
-import Base, { BoomBeachLevel } from "@database/Boom Beach/Base";
+import Base from "@database/Boom Beach/Base";
+import { BoomBeachLevel } from "@database/Boom Beach/Base";
 
 export default class Defense extends Base {
     constructor(infos: DefenseInfo) {

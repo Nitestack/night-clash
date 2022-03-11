@@ -1,5 +1,6 @@
 import Util from "@util/index";
-import { FC, ReactNode, useState } from "react";
+import type { FC, ReactNode } from "react";
+import { useState } from "react";
 
 const Tooltip: FC<{ 
     toolTipNode: ReactNode,

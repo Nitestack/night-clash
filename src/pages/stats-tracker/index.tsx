@@ -1,5 +1,6 @@
-import { NextPageWithConfiguration } from "@util/types";
-import { FC, useEffect, useState } from "react";
+import type { NextPageWithConfiguration } from "@util/types";
+import type { FC } from "react";
+import { useEffect, useState } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Util from "@util/index";

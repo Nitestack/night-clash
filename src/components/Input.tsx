@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
+import type { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 
 const Input: FC<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>> = (props) => {
     return (

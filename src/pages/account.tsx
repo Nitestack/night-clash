@@ -1,4 +1,4 @@
-import { NextPageWithConfiguration, UserSession } from "@util/types";
+import type { NextPageWithConfiguration, UserSession } from "@util/types";
 import { useSession } from "next-auth/react";
 import Util from "@util/index";
 

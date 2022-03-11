@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 import omit from "omit";
 
 const Grid: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {

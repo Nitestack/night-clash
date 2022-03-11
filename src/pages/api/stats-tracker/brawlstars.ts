@@ -1,6 +1,6 @@
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
-import { BSClan, BSProfile } from "@interfaces/brawlStars";
+import type { BSClan, BSProfile } from "@interfaces/brawlStars";
 
 const BrawlStarsStatsTracker: NextApiHandler = async (req, res) => {
     const tag = req.body.tag as string;

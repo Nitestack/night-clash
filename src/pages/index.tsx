@@ -1,6 +1,6 @@
-import { NextPageWithConfiguration } from "@util/types";
-import { ComponentProps } from "react";
-import { AdjustmentsIcon  } from "@heroicons/react/outline";
+import type { NextPageWithConfiguration } from "@util/types";
+import type { ComponentProps } from "react";
+import { AdjustmentsIcon } from "@heroicons/react/outline";
 import Center from "@components/Center";
 
 const features: Array<{

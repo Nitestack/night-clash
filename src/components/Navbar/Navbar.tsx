@@ -1,11 +1,11 @@
-import { ComponentProps, Fragment } from "react";
+import type { ComponentProps, FC } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon, AdjustmentsIcon, InformationCircleIcon } from "@heroicons/react/outline";
 import NavbarLink from "@components/Navbar/NavbarLink";
 import NavbarPopover from "@components/Navbar/NavbarPopover";
 import NavbarAccount from "@components/Navbar/NavbarAccount";
 import NavbarHeader from "@components/Navbar/NavbarHeader";
-import { FC } from "react";
+import { Fragment } from "react";
 import NavbarToggler from "@components/Navbar/NavbarToggler";
 import Motion from "@components/Motion";
 import Center from "@components/Center";

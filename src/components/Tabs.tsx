@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+import type { FC } from "react";
+import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import Util from "@util/index";
 

@@ -1,4 +1,5 @@
-import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
+import Base from "@database/Clash of Clans/Base"; 
+import type { ClashOfClansLevel } from "@database/Clash of Clans/Base";
 
 export default class BuilderDefense extends Base {
     constructor(infos: DefenseInfo) {

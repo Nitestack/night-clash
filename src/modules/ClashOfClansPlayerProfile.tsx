@@ -1,5 +1,5 @@
-import { APIPlayer } from "clashofclans.js";
-import { FC } from "react";
+import type { APIPlayer } from "clashofclans.js";
+import type { FC } from "react";
 import Grid from "@components/Grid";
 import Button from "@components/Button";
 import Util from "@util/index";

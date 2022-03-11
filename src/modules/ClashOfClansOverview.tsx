@@ -1,8 +1,8 @@
-import { FC } from "react";
+import type { FC } from "react";
 import Grid from "@components/Grid";
 import Util from "@util/index";
 import UnitIcon from "@modules/ClashOfClansUnitIcon";
-import { APIPlayer } from "clashofclans.js";
+import type { APIPlayer } from "clashofclans.js";
 import Progress from "@components/Progress";
 import Achievement from "@modules/ClashOfClansAchievement";
 import Image from "next/image";

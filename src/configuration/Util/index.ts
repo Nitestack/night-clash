@@ -1,14 +1,14 @@
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
-import { CRCard } from "@interfaces/clashRoyale";
+import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
 import getDatabaseConnection from "@util/databaseConnection";
 import getAPI from "@util/api";
-import { Client } from "clashofclans.js";
+import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
 import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@util/functions";
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";

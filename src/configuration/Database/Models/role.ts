@@ -1,4 +1,5 @@
-import mongoose, { Document, Model } from "mongoose";
+import mongoose from "mongoose";
+import type { Document, Model } from "mongoose";
 
 export default mongoose.models.role as Model<Document & { 
     /**

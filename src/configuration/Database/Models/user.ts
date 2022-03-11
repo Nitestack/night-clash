@@ -1,5 +1,6 @@
 import Util from "@util/index";
-import mongoose, { Model, Document } from "mongoose";
+import mongoose from "mongoose";
+import type { Model, Document } from "mongoose";
 
 interface ActualUser {
     //The user's name

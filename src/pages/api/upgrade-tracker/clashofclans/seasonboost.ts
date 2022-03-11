@@ -1,6 +1,6 @@
-import { ClashOfClansVillage } from "@models/clashofclans";
+import type { ClashOfClansVillage } from "@models/clashofclans";
 import Util from "@util/index";
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import DatabaseManager from "@util/databaseManager"; 
 
 const SeasonBoost: NextApiHandler = async (req, res) => {

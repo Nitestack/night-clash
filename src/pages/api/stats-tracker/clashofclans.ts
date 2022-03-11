@@ -1,6 +1,6 @@
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
-import { APIClan, APIPlayer } from "clashofclans.js";
+import type { APIClan, APIPlayer } from "clashofclans.js";
 
 const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
     const tag = Util.validateTag(req.body.tag);

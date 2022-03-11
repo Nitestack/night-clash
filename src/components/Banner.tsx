@@ -1,6 +1,6 @@
 import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
 import Link from "@components/Link";
-import { FC } from "react";
+import type { FC } from "react";
 import Center from "@components/Center";
 
 const Banner: FC<{

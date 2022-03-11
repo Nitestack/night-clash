@@ -1,5 +1,6 @@
-import { FC } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import type { FC } from "react";
+import { motion } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import Util from "@util/index";
 
 export type ButtonProps = HTMLMotionProps<"button">;

@@ -1,5 +1,5 @@
 import Link from "@components/Link";
-import { FC } from "react";
+import type { FC } from "react";
 
 const NavbarLink: FC<{ href: string }> = ({ href, children }) => {
     return ( 

@@ -1,15 +1,15 @@
-import { FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
+import type { FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
 import Input from "@components/Input";
 import Util from "@util/index";
 import Button from "@components/Button";
-import { HTMLMotionProps } from "framer-motion";
+import type { ButtonProps } from "@components/Button";
 import { HashtagIcon, SearchIcon } from "@heroicons/react/outline";
 
 const PlayerTagInput: FC<{
     element: string;
     club?: boolean;
     inputProps?: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
-    searchButtonProps?: HTMLMotionProps<"button">;
+    searchButtonProps?: ButtonProps;
 }> = ({ inputProps, element, club, searchButtonProps }) => {
     return (
         <div className="relative flex flex-wrap [align-items:_stretch;] w-full">

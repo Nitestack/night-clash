@@ -1,4 +1,4 @@
-import Base from "@database/Boom Beach/Base";
+import type Base from "@database/Boom Beach/Base";
 import Defense from "@database/Boom Beach/Defense";
 import Support from "@database/Boom Beach/Support";
 import Economy from "@database/Boom Beach/Economy";

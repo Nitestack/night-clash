@@ -1,4 +1,4 @@
-import { ComponentProps, FC } from "react";
+import type { ComponentProps, FC } from "react";
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";

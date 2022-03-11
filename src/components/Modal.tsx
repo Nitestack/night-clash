@@ -1,6 +1,8 @@
-import { FC, Fragment, useState, MouseEvent } from "react";
+import type { FC, MouseEvent } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Button, { ButtonProps } from "@components/Button";
+import Button from "@components/Button";
+import type { ButtonProps } from "@components/Button";
 import Spinner from "@components/Spinner";
 
 const Modal: FC<{

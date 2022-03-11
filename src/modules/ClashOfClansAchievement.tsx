@@ -1,5 +1,5 @@
-import { APIPlayerAchievement } from "clashofclans.js";
-import { FC } from "react";
+import type { APIPlayerAchievement } from "clashofclans.js";
+import type { FC } from "react";
 import Grid from "@components/Grid";
 import Progress from "@components/Progress";
 import Center from "@components/Center";

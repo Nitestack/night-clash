@@ -1,7 +1,7 @@
 import Layout from "@components/Layout";
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
-import { APIClan, APIPlayer } from "clashofclans.js";
+import type { APIClan, APIPlayer } from "clashofclans.js";
 import ClashOfClansPlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import ClashOfClansOverview from "@modules/ClashOfClansOverview";
 import Tabs from "@components/Tabs";

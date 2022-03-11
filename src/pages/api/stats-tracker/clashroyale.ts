@@ -1,6 +1,6 @@
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
-import { CRProfile, CRClan } from "@interfaces/clashRoyale";
+import type { CRProfile, CRClan } from "@interfaces/clashRoyale";
 
 const ClashRoyaleStatsTracker: NextApiHandler = async (req, res) => {
     const tag = req.body.tag as string;

@@ -1,10 +1,11 @@
-import { NextPageContext, NextComponentType, NextPage } from "next";
-import { AppInitialProps, AppProps } from "next/app";
-import { Session } from "next-auth";
-import { UserWithoutPassword } from "@models/user";
-import { LayoutProps } from "@components/Layout";
-import axios, { AxiosRequestConfig } from "axios";
-import { NextRouter } from "next/router";
+import type { NextPageContext, NextComponentType, NextPage } from "next";
+import type { AppInitialProps, AppProps } from "next/app";
+import type { Session } from "next-auth";
+import type { UserWithoutPassword } from "@models/user";
+import type { LayoutProps } from "@components/Layout";
+import type axios from "axios";
+import type { AxiosRequestConfig } from "axios";
+import type { NextRouter } from "next/router";
 
 /**
  * A session with custom props

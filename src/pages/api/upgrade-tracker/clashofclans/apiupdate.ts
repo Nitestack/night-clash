@@ -1,4 +1,4 @@
-import { NextApiHandler } from "next";
+import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import DatabaseManager from "@util/databaseManager";
 

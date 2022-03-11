@@ -1,4 +1,4 @@
-import { User } from "@models/user";
+import type { User } from "@models/user";
 import Util from "@util/index";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";

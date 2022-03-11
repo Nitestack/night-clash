@@ -1,4 +1,4 @@
-import Base from "@database/Clash of Clans/Base";
+import type Base from "@database/Clash of Clans/Base";
 import BuilderArmy from "@database/Clash of Clans/Builder/BuilderArmy";
 import BuilderDefense from "@database/Clash of Clans/Builder/BuilderDefense";
 import BuilderHero from "@database/Clash of Clans/Builder/BuilderHero";

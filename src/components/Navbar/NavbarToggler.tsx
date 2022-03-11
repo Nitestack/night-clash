@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import Toggler from "@components/Toggler";
 import Util from "@util/index";
 

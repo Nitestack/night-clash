@@ -1,7 +1,7 @@
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import Link from "@components/Link";
 import { getCsrfToken } from "next-auth/react";
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Center from "@components/Center";
 

@@ -1,5 +1,5 @@
 import omit from "omit";
-import { FC, DetailedHTMLProps, OptionHTMLAttributes, SelectHTMLAttributes } from "react";
+import type { FC, DetailedHTMLProps, OptionHTMLAttributes, SelectHTMLAttributes } from "react";
 import Util from "@util/index";
 const Select: FC<DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & { 
     options: Array<OptionHTMLAttributes<HTMLOptionElement>>;

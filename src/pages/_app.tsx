@@ -5,8 +5,9 @@ import "@styles/main.scss";
 import "@styles/loader.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout";
-import { StrictMode, useEffect, useState, FC } from "react";
-import {
+import { StrictMode, useEffect, useState } from "react";
+import type { FC } from "react";
+import type {
     ComponentWithConfigurationProps,
     SessionObject,
     UserSession,

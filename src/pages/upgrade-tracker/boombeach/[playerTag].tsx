@@ -1,7 +1,7 @@
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import Layout from "@components/Layout";
-import { BoomBeachIsland } from "@models/boombeach";
+import type { BoomBeachIsland } from "@models/boombeach";
 
 const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
     island: BoomBeachIsland

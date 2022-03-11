@@ -2,7 +2,7 @@ import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import bcrypt from "bcryptjs";
 import DatabaseManager from "@util/databaseManager";
-import { User } from "@models/user";
+import type { User } from "@models/user";
 
 const Authorize: NextApiHandler = async (req, res) => {
     await Util.getConnection();

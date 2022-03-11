@@ -1,7 +1,8 @@
-import { FC, AnchorHTMLAttributes, DetailedHTMLProps } from "react";
+import type { FC, AnchorHTMLAttributes, DetailedHTMLProps } from "react";
 import NextLink from "next/link";
 import omit from "omit";
-import Motion, { MotionProps } from "@components/Motion";
+import Motion from "@components/Motion";
+import type { MotionProps } from "@components/Motion";
 
 const Link: FC<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
 & MotionProps & { href?: string }> = (props) => {

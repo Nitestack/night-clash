@@ -1,10 +1,10 @@
-import { FC } from "react";
+import type { FC } from "react";
 import Head from "next/head";
 import Footer from "src/components/Footer";
 import Navbar from "src/components/Navbar/Navbar";
 import Script from "next/script";
 import Util from "src/configuration/Util/index";
-import Banner from "./Banner";
+import Banner from "@components/Banner";
 
 export interface LayoutProps {
     title?: string;

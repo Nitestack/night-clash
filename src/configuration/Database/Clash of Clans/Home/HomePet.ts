@@ -1,4 +1,5 @@
-import Base, { ClashOfClansLevel } from "@database/Clash of Clans/Base";
+import Base from "@database/Clash of Clans/Base"; 
+import type { ClashOfClansLevel } from "@database/Clash of Clans/Base";
 import { required } from "@database/Clash of Clans/Home/HomeOffense";
 
 export default class HomePet extends Base {

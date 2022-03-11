@@ -1,4 +1,4 @@
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 
 interface AboutPageProps {
     

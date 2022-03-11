@@ -1,5 +1,5 @@
-import { NextApiResponse } from "next";
-import { NextApiCustomHandlerProps } from "@util/types";
+import type { NextApiResponse } from "next";
+import type { NextApiCustomHandlerProps } from "@util/types";
 
 export default class ApiHandler {
     private static setStatusCode(res: NextApiResponse<NextApiCustomHandlerProps & any>, code: number) {

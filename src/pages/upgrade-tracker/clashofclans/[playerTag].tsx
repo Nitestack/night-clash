@@ -1,11 +1,12 @@
 import Layout from "@components/Layout";
-import { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
-import { ClashOfClansVillage } from "@models/clashofclans";
+import type { ClashOfClansVillage } from "@models/clashofclans";
 import Modal from "@components/Modal";
 import $ from "jquery";
 import Select from "@components/Select";
-import { FC, OptionHTMLAttributes, useState } from "react";
+import type { FC, OptionHTMLAttributes } from "react";
+import { useState } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Button";

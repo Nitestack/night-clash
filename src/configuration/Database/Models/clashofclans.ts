@@ -1,5 +1,6 @@
-import mongoose, { Document, Model, SchemaDefinitionProperty } from "mongoose";
-import { APIPlayer } from "clashofclans.js";
+import mongoose from "mongoose";
+import type { Document, Model, SchemaDefinitionProperty } from "mongoose";
+import type { APIPlayer } from "clashofclans.js";
 
 export type VillageType = { [key: string]: string | { [key: string]: string; } };
 

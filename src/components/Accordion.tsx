@@ -1,4 +1,5 @@
-import { useRef, useState, FC } from "react";
+import { useRef, useState } from "react";
+import type { FC } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Util from "@util/index";
 

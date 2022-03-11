@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
+import type { FC, Dispatch, SetStateAction } from "react";
 import Motion from "@components/Motion";
 import { Switch } from "@headlessui/react";
 import Util from "@util/index";

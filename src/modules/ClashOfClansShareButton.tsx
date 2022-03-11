@@ -1,6 +1,7 @@
-import Button, { ButtonProps } from "@components/Button";
+import Button from "@components/Button";
+import type { ButtonProps } from "@components/Button";
 import Util from "@util/index";
-import { FC } from "react";
+import type { FC } from "react";
 
 const ClashOfClansShareButton: FC<ButtonProps> = (props) => {
     return (
