@@ -35,7 +35,10 @@ module.exports = {
         hovertext: "#d1d5db"
       },
       fontFamily: {
-        'coc-description': ["CCBackBeat"] 
+        'coc-description': ["CCBackBeat"],
+        'cr-description': ["Clash Text"],
+        'bs': ["Lilita One", "cursive"],
+        "bb": ["BadaBoom BB"]
       }
     }
   },
