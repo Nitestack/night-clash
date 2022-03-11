@@ -23,7 +23,7 @@ export default class CocConstants {
     public static homeDarkSpellsArray = ["Poison Spell", "Earthquake Spell", "Haste Spell", "Skeleton Spell", "Bat Spell"];
     public static homeSpellsArray = [...CocConstants.homeNormalSpellsArray, ...CocConstants.homeDarkSpellsArray];
     public static homeResourcesArray = ["Elixir Collector", "Elixir Storage", "Gold Mine", "Gold Storage", "Dark Elixir Drill", "Dark Elixir Storage"];
-    public static homeSuperTroopsArray = ["Super Barbarian", "Super Archer", "Super Giant", "Sneaky Goblin", "Super Wall Breaker", "Rocket Balloon", "Super Wizard", "Inferno Dragon", "Super Dragon"];
+    public static homeSuperTroopsArray = ["Super Barbarian", "Super Archer", "Super Giant", "Sneaky Goblin", "Super Wall Breaker", "Rocket Balloon", "Super Wizard", "Super Dragon", "Inferno Dragon"];
     public static homeDarkSuperTroopsArray = ["Super Minion", "Super Valkyrie", "Super Witch", "Ice Hound", "Super Bowler"];
 
     public static builderTroopsArray = ["Raged Barbarian", "Sneaky Archer", "Boxer Giant", "Beta Minion", "Bomber", "Baby Dragon", "Cannon Cart", "Night Witch", "Drop Ship", "Super P.E.K.K.A", "Hog Glider"];

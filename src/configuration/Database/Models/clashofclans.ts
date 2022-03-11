@@ -3,6 +3,15 @@ import { APIPlayer } from "clashofclans.js";
 
 export type VillageType = { [key: string]: string | { [key: string]: string; } };
 
+type NewVillageType = {
+    [key: string]: {
+        [key: number]: number
+    },
+    "walls": {
+        [key: number]: number
+    }
+};
+
 /**
  * The Clash of Clans Village Document
  */

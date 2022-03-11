@@ -7,12 +7,12 @@ import styles from "@modules/ClashOfClansUnitIcon.module.scss";
 
 const ClashOfClansUnitIcon: FC<{
     name: string,
-    village: "home" | "builder",
+    village?: "home" | "builder",
     player: APIPlayer,
     path: string,
     type: "troop" | "pet" | "siegeMachine" | "hero" | "spell"
-}> = ({ village, name, path, type, player }) => {
-    console.log(styles)
+}> = ({ village: initialVillage, name, path, type, player }) => {
+    let village = initialVillage || "home";
     const hallLevel = village == "home" ? player.townHallLevel : (player.builderHallLevel || 1);
     const hall = village == "home" ? townHall[hallLevel - 1] : builderHall[hallLevel - 1];
     const unitElement = player[(type == "troop" || type == "pet" || type == "siegeMachine" ? "troops" : (type == "hero" ? "heroes" : "spells"))].find(element => element.name.toLowerCase() == name.toLowerCase() && element.village.toLowerCase().includes(village.toLowerCase()));
