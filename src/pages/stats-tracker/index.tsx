@@ -1,5 +1,5 @@
 import { NextPageWithConfiguration } from "@util/types";
-import { FC, useRef } from "react";
+import { FC, useEffect, useState } from "react";
 import Center from "@components/Center";
 import Tabs from "@components/Tabs";
 import Util from "@util/index";
@@ -7,8 +7,11 @@ import PlayerTagInput from "@modules/PlayerTagInput";
 
 const StatsTracker: NextPageWithConfiguration = () => {
     const tracker = ["clashofclans", "clashroyale", "brawlstars"];
-    if (!location.hash) location.hash = `#${tracker[0]}`;
-    const defaultIndex = tracker.includes(location.hash.replace(/#/g, "")) ? tracker.indexOf(location.hash.replace(/#/g, "")) : 0;
+    const [defaultIndex, setDefaultIndex] = useState(0);
+    useEffect(() => {
+        if (!location.hash) location.hash = `#${tracker[0]}`;
+        setDefaultIndex(tracker.includes(location.hash.replace(/#/g, "")) ? tracker.indexOf(location.hash.replace(/#/g, "")) : 0);
+    });
     return (
         <>
             <Tabs initialTabIndex={defaultIndex} tabs={{
