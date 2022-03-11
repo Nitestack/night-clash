@@ -3,6 +3,7 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { CSSProperties, FC } from "react";
 import { APIPlayer } from "clashofclans.js";
 import Util from "@util/index";
+import styles from "@modules/ClashOfClansUnitIcon.module.scss";
 
 const ClashOfClansUnitIcon: FC<{
     name: string,
@@ -11,11 +12,10 @@ const ClashOfClansUnitIcon: FC<{
     path: string,
     type: "troop" | "pet" | "siegeMachine" | "hero" | "spell"
 }> = ({ village, name, path, type, player }) => {
+    console.log(styles)
     const hallLevel = village == "home" ? player.townHallLevel : (player.builderHallLevel || 1);
-    console.log(hallLevel);
     const hall = village == "home" ? townHall[hallLevel - 1] : builderHall[hallLevel - 1];
     const unitElement = player[(type == "troop" || type == "pet" || type == "siegeMachine" ? "troops" : (type == "hero" ? "heroes" : "spells"))].find(element => element.name.toLowerCase() == name.toLowerCase() && element.village.toLowerCase().includes(village.toLowerCase()));
-    console.log(Util.toCamelCase(name));
     //@ts-ignore
     const maxedLevel: number = hall[Util.toCamelCase(name)]?.maxLevel || 0;
     let level = 0;
@@ -28,12 +28,12 @@ const ClashOfClansUnitIcon: FC<{
         backgroundImage: `url("/Images/Clash of Clans/${Util.toCapitalize(village)}/${path}/${name}${type == "pet" ? "_Icon" : ""}.png")`
     };
     if (level == 0) return (
-        <div className="unit-icon locked" style={backgroundImage} title={`${name} Level 0 (Max for TH: ${maxedLevel})`}></div>  
+        <div className={Util.classNames(styles["unit-icon"], styles["locked"])} style={backgroundImage} title={`${name} Level 0 (Max for TH: ${maxedLevel})`}></div>  
     );
     return (
-        <div className="unit-icon" style={backgroundImage} title={`${name} Level ${level} (Max for TH: ${maxedLevel})`}>
+        <div className={styles["unit-icon"]} style={backgroundImage} title={`${name} Level ${level} (Max for TH: ${maxedLevel})`}>
             {level == 1 && ![...Util.Constants.CoC.homeHeroesArray, "Battle Machine"].includes(name) ? undefined : 
-            <div className={Util.classNames("[font-size:_17px;] unit-icon-level coc-description", level == maxLevel ? "max" : (maxedLevel == level ? "maxTH" : ""))}>{level}</div>}
+            <div className={Util.classNames("[font-size:_17px;] [-webkit-text-stroke:_1px_black;]", styles["unit-icon-level"], level == maxLevel ? styles["max"] : (maxedLevel == level ? styles["maxTH"] : ""))}>{level}</div>}
         </div>
     );
 };

@@ -32,7 +32,7 @@ const Modal: FC<{
                                                 {title}
                                             </Dialog.Title>
                                             <div className="mt-2">
-                                                <p className="text-base text-lightmodetext dark:text-darkmodetext coc-description text-center">
+                                                <p className="text-base text-lightmodetext dark:text-darkmodetext font-coc-description text-center">
                                                     {description}
                                                 </p>
                                                 {children}

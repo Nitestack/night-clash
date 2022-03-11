@@ -20,7 +20,7 @@ const RegisterPage: NextPageWithConfiguration = () => {
         <Center className="min-h-full p-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <form className="mt-8 space-y-6" action="/api/auth/register" method="POST">
-                    <div className="rounded-md shadow-sm -space-y-px coc-description">
+                    <div className="rounded-md shadow-sm -space-y-px font-coc-description">
                         <div>
                             <input name="username" type="text" autoComplete="username" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg rounded-t-md" placeholder="Username"/>
                         </div>
@@ -32,7 +32,7 @@ const RegisterPage: NextPageWithConfiguration = () => {
                         </div>
                         <div>
                             <input id="confirmpassword" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg rounded-b-md" placeholder="Confirm Password" onChange={(ev) => onConfirm(ev)}></input>
-                            <p className="coc-description text-red-600 mt-2 text-lg text-center">{state.errorMessage}</p>
+                            <p className="font-coc-description text-red-600 mt-2 text-lg text-center">{state.errorMessage}</p>
                         </div>
                     </div>
                     <Center className="justify-between">

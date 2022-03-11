@@ -33,11 +33,11 @@ const ClashOfClansWallModule: FC<{
                 <Center className="justify-self-center flex-col">
                     <img className="h-8 sm:h-12 md:h-16 max-h-full w-auto" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/Defenses/Wall/${item}.png`}/>
                     <Center>
-                        <p className="coc-description text-green-500 sm:text-lg md:text-xl whitespace-nowrap text-center">Level {item}</p>
+                        <p className="font-coc-description text-green-500 sm:text-lg md:text-xl whitespace-nowrap text-center">Level {item}</p>
                     </Center>
                 </Center>
                 <Center className="justify-self-end sm:justify-self-center">
-                    <h1 className="coc-description text-2xl sm:text-4xl md:text-5xl text-right sm:text-center">{dataBaseItem[item.toString()] || 0}</h1>
+                    <h1 className="font-coc-description text-2xl sm:text-4xl md:text-5xl text-right sm:text-center">{dataBaseItem[item.toString()] || 0}</h1>
                 </Center>
                 <Grid className={Util.classNames("col-span-4", (parseInt(dataBaseItem[item.toString()]) || 0) != 0 ? "grid-cols-2 md:grid-cols-5" : "")} >
                     {item != maxedLevel ? 

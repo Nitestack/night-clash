@@ -32,7 +32,7 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                         <div className="text-base font-medium leading-none text-lightmodetext dark:text-darkmodetext">
                             {user.username}
                         </div>
-                        <div className="text-sm font-medium leading-none text-lightmodetext dark:text-darkmodetext coc-description">
+                        <div className="text-sm font-medium leading-none text-lightmodetext dark:text-darkmodetext font-coc-description">
                             {user.email}
                         </div>
                     </div>

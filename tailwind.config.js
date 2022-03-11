@@ -33,6 +33,9 @@ module.exports = {
         //Some global colors for hovers regardless of light or dark mode
         hoverbackground: "#374151",
         hovertext: "#d1d5db"
+      },
+      fontFamily: {
+        'coc-description': ["CCBackBeat"] 
       }
     }
   },

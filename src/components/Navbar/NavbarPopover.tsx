@@ -63,7 +63,7 @@ const NavbarPopover: FC<{
                                                 <p className="text-base font-medium text-lightmodetext dark:text-darkmodetext">
                                                     {item.name}
                                                 </p>
-                                                {item.description ? <p className="mt-1 text-lg text-lightmodetext dark:text-darkmodetext coc-description">{item.description}</p> : undefined}
+                                                {item.description ? <p className="mt-1 text-lg text-lightmodetext dark:text-darkmodetext font-coc-description">{item.description}</p> : undefined}
                                             </div>
                                         </Link>
                                     ))}

@@ -195,7 +195,7 @@ const ClashOfClansModule: FC<{
                             <p className="text-center text-xs sm:text-lg md:text-xl">{item.includes("Giga") && item.includes("Giga Inferno") ? item.replace(/1/g, "").replace(/2/g, "") : item}</p>
                             <Center>
                                 {!(item == "Army Camp" && village == "builder") ? 
-                                <p className="coc-description text-green-500 text-xl whitespace-nowrap text-center">Level {maxedLevel}</p> : undefined}
+                                <p className="font-coc-description text-green-500 text-xl whitespace-nowrap text-center">Level {maxedLevel}</p> : undefined}
                             </Center>
                             <Center>
                                 <img className="w-auto max-h-full h-12 sm:h-16 md:h-20 lg:h-24" src={itemCosts.levels[maxedLevel - 1].imageUrl}/>
@@ -208,12 +208,12 @@ const ClashOfClansModule: FC<{
                             {lowestLevel == maxedLevel ? 
                             <>
                                 {village == "builder" && item == "Army Camp" ? 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl coc-description">{builderHallLevel || 1 >= 8 ? "Maximum amount of buildings reached" : "Maximum amount of buildings reached for your BH level"}</p>
+                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">{builderHallLevel || 1 >= 8 ? "Maximum amount of buildings reached" : "Maximum amount of buildings reached for your BH level"}</p>
                                 : ((lowestLevel == maxedLevel && item.includes("Giga")) || lowestLevel == ultimateMaxedLevel ? 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl coc-description">
+                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">
                                         Maximum level reached
                                     </p> : 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl coc-description">
+                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">
                                         Maximum level reached for your {village == "home" ? "T" : "B"}H level!
                                     </p>)
                                 }

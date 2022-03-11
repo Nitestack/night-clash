@@ -11,7 +11,7 @@ const LoginPage: NextPageWithConfiguration<{ csrfToken: string }> = ({ csrfToken
             <div className="max-w-md w-full space-y-8">
                 <form className="mt-8 space-y-6" action="/api/auth/callback/credentials" method="POST">
                     <input name="csrfToken" type="hidden" defaultValue={csrfToken}/>
-                    <div className="rounded-md shadow-sm -space-y-px coc-description">
+                    <div className="rounded-md shadow-sm -space-y-px font-coc-description">
                         <div>
                             <input name="emailOrUsername" type="text" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg" placeholder="E-Mail or Username"/>
                         </div>

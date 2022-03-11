@@ -53,7 +53,7 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                                 <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-lightmodeprimary dark:text-darkmodeprimary sm:text-4xl">
                                     {header ? header : title}
                                 </p>
-                                <p className="mt-4 text-3xl text-gray-700 lg:mx-auto coc-description">
+                                <p className="mt-4 text-3xl text-gray-700 lg:mx-auto font-coc-description">
                                     {description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}
                                 </p>
                             </div>

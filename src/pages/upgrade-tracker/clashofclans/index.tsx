@@ -11,8 +11,8 @@ const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
                         <p className="text-3xl xl:text-4xl font-semibold leading-9 text-lightmodeprimary dark:text-darkmodeprimary">Keep your village on track</p>
                     </div>
                     <div className="mt-4 lg:w-4/5 xl:w-3/5">
-                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your village. You&apos;ll see, when your next builder or the laboratory is available and what is left to upgrade for your Town Hall and Builder Hall level. Schedule your builders and your laboratory and get notified whether an upgrade has finished!</p>
-                        <p className="text-xl coc-description leading-6 text-lightmodetext dark:text-darkmodetext mt-6">In order to get started you must have a {Util.Constants.websiteApplicationName} account to save the village!</p>
+                        <p className="text-xl font-coc-description leading-6 text-lightmodetext dark:text-darkmodetext">The upgrade tracker helps keeping track of your village. You&apos;ll see, when your next builder or the laboratory is available and what is left to upgrade for your Town Hall and Builder Hall level. Schedule your builders and your laboratory and get notified whether an upgrade has finished!</p>
+                        <p className="text-xl font-coc-description leading-6 text-lightmodetext dark:text-darkmodetext mt-6">In order to get started you must have a {Util.Constants.websiteApplicationName} account to save the village!</p>
                     </div>
                 </div>
                 <Center className="flex-col sm:flex-row sm:space-x-5 xl:space-x-8 space-y-4 sm:space-y-0">

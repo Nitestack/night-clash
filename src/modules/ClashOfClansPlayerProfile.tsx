@@ -21,8 +21,8 @@ const ClashOfClansPlayerProfile: FC<{
                         <div className={Util.classNames(styles.xp, "my-2 mr-2")}>{player.expLevel}</div>
                         <div>
                             <p className="font-bold">{player.name}</p>
-                            <p className="text-[#BBBBBD] coc-description font-bold">{player.tag}</p>
-                            {player.role ? <p className="p-0 coc-description">{Util.CocUpgradeTracker.convertClanRole(player.role)}</p> : undefined}
+                            <p className="text-[#BBBBBD] font-coc-description font-bold">{player.tag}</p>
+                            {player.role ? <p className="p-0 font-coc-description">{Util.CocUpgradeTracker.convertClanRole(player.role)}</p> : undefined}
                         </div>
                     </Center>
                     <Center>
@@ -62,13 +62,13 @@ const ClashOfClansPlayerProfile: FC<{
                         </Center>
                         <Center>
                             <div>
-                                <span className="coc-description text-sm text-center">All time best:</span>
+                                <span className="font-coc-description text-sm text-center">All time best:</span>
                                 <ClashOfClansTrophyCount cursed className={Util.classNames(styles["text-bg"], "font-bold justify-center")} trophyCount={village == "home" ? player.bestTrophies : player.bestVersusTrophies} village={village}/>
                             </div>
                         </Center>
                         {village == "home" ? <Center>
                             <div>
-                                <span className="coc-description text-sm text-center">War Stars Won:</span>
+                                <span className="font-coc-description text-sm text-center">War Stars Won:</span>
                                 <Grid className={Util.classNames(styles["text-bg"], "grid-cols-3")}>
                                     <img className="w-6 text-left" src="/Images/Clash of Clans/star.png"/>
                                     <p className="font-bold col-span-2">{player.warStars}</p>
@@ -80,25 +80,25 @@ const ClashOfClansPlayerProfile: FC<{
             </Grid>
             <Grid className={Util.classNames("grid-cols-1 rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext p-1", player.donationsReceived >= 100000 || player.donations >= 100000 ? "md:grid-cols-3" : "md:grid-cols-5")}>
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Troops donated:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donations}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Troops donated:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donations}</span></p>
                 </Center>
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Troops received:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donationsReceived}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Troops received:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donationsReceived}</span></p>
                 </Center>
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Donation Ratio:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donations > player.donationsReceived ? Math.round(player.donations / player.donationsReceived) : 1} : {player.donationsReceived > player.donations ? Math.round(player.donationsReceived / player.donations) : 1}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Donation Ratio:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.donations > player.donationsReceived ? Math.round(player.donations / player.donationsReceived) : 1} : {player.donationsReceived > player.donations ? Math.round(player.donationsReceived / player.donations) : 1}</span></p>
                 </Center>
                 {player.attackWins && village == "home" ? 
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Attacks Won:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.attackWins || 0}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Attacks Won:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.attackWins || 0}</span></p>
                 </Center> : undefined}
                 {player.defenseWins && village == "home" ? 
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Defenses Won:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.defenseWins || 0}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Defenses Won:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.defenseWins || 0}</span></p>
                 </Center> : undefined}
                 {village == "builder" ? 
                 <Center className="md:justify-start">
-                    <p className="coc-description whitespace-nowrap">Versus Battle Wins:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.versusBattleWins}</span></p>
+                    <p className="font-coc-description whitespace-nowrap">Versus Battle Wins:{" "}<span className={Util.classNames(styles["text-bg"], styles["text-bg-small"],"text-center font-bold p-1")}>{player.versusBattleWins}</span></p>
                 </Center> : undefined}
             </Grid>
             {player.legendStatistics && ((village == "home" && player.legendStatistics.bestSeason) || (village == "builder" && player.legendStatistics.bestVersusSeason)) ? <div className="rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext px-3">
@@ -112,7 +112,7 @@ const ClashOfClansPlayerProfile: FC<{
                                         <div className={Util.classNames(styles["legend-league"], village == "home" ? styles["legend-league-home"] : styles["legend-league-builder"])}>{village == "home" ? player.legendStatistics.bestSeason?.rank : player.legendStatistics.bestVersusSeason?.rank}</div>
                                     </div>
                                     <div>
-                                        <p className="coc-description text-sm">Best: {Util.CocUpgradeTracker.getLeagueSeason(village == "home" ? player.legendStatistics.bestSeason : player.legendStatistics.bestVersusSeason)} Season</p>
+                                        <p className="font-coc-description text-sm">Best: {Util.CocUpgradeTracker.getLeagueSeason(village == "home" ? player.legendStatistics.bestSeason : player.legendStatistics.bestVersusSeason)} Season</p>
                                         <ClashOfClansTrophyCount className="font-bold" village={village} trophyCount={village == "home" ? player.legendStatistics.bestSeason?.trophies : player.legendStatistics.bestVersusSeason?.trophies}/>
                                     </div>
                                 </div>
@@ -127,7 +127,7 @@ const ClashOfClansPlayerProfile: FC<{
                                         <div className="legend-league small">{village == "home" ? player.legendStatistics.previousSeason?.rank : player.legendStatistics.previousVersusSeason?.rank}</div>
                                     </div>
                                     <div>
-                                        <p className="coc-description text-sm">Previous: {Util.CocUpgradeTracker.getLeagueSeason(village == "home" ? player.legendStatistics.previousSeason : player.legendStatistics.previousVersusSeason)} Season</p>
+                                        <p className="font-coc-description text-sm">Previous: {Util.CocUpgradeTracker.getLeagueSeason(village == "home" ? player.legendStatistics.previousSeason : player.legendStatistics.previousVersusSeason)} Season</p>
                                         <ClashOfClansTrophyCount className="font-bold justify-center" village={village} trophyCount={village == "home" ? player.legendStatistics.previousSeason?.trophies : player.legendStatistics.previousVersusSeason?.trophies}/>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@ const ClashOfClansPlayerProfile: FC<{
                         </div>
                     </div>
                     {village == "home" ? <div>
-                        <p className="coc-description text-sm">{village == "home" ? "Legend Trophies" : "Prestige"}</p>
+                        <p className="font-coc-description text-sm">{village == "home" ? "Legend Trophies" : "Prestige"}</p>
                         <p className="font-bold"><Image height="40px" width="40px" src="/Images/Clash of Clans/Home/Legend Trophies.png"/>{player.legendStatistics.legendTrophies}</p>
                     </div> : undefined}
                 </Grid>

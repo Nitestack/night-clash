@@ -198,14 +198,14 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                             <img src="/Images/Clash of Clans/Season Boost Builder.png"/>
                         </Center>
                         <h5 className="text-center"> Builder Boost </h5>
-                        <h1 className="text-center coc-description"> {builderBoost}% </h1>
+                        <h1 className="text-center font-coc-description"> {builderBoost}% </h1>
                     </div>
                     <div className="border border-solid border-[#281303] rounded-md bg-[linear-gradient(#C5792B,_#FAC40D)]">
                         <Center>
                             <img src="/Images/Clash of Clans/Season Boost Research.png"/>
                         </Center>
                         <h5 className="text-center"> Research Boost </h5>
-                        <h1 className="text-center coc-description"> {researchBoost}% </h1>
+                        <h1 className="text-center font-coc-description"> {researchBoost}% </h1>
                     </div>
                     <div className="col-span-2">
                         <Modal

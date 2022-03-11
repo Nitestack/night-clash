@@ -33,17 +33,17 @@ const ClashOfClansClanProfile: FC<{
                                     <p className="font-bold text-[#FDFDCA]">{clan.name}</p>
                                 </Center>
                                 <Center className="lg:justify-start">
-                                    <p className="text-white coc-description font-bold">{clan.tag}</p>
+                                    <p className="text-white font-coc-description font-bold">{clan.tag}</p>
                                 </Center>
                                 <Center className="lg:justify-start">
-                                    <p className="coc-description">{clan.description}</p>
+                                    <p className="font-coc-description">{clan.description}</p>
                                 </Center>
                             </div>
                             <Center className="lg:justify-start">
                                 <ClashOfClansLabels labels={clan.labels}/>
                             </Center>
                         </div>
-                        <Grid className="lg:col-span-2 grid-cols-3 coc-description">
+                        <Grid className="lg:col-span-2 grid-cols-3 font-coc-description">
                             <p className="whitespace-nowrap text-left"> Clan War League </p>
                             <p className="whitespace-nowrap col-span-2 text-right">{clan.warLeague ? clan.warLeague.name : "Unranked"}</p>
                             <p className="whitespace-nowrap text-left"> Total Points: </p>
@@ -66,7 +66,7 @@ const ClashOfClansClanProfile: FC<{
                     <Grid className="grid-cols-1 md:grid-cols-2 gap-2 rounded-md border-4 border-solid border-lightmodetext dark:border-darkmodetext p-3">
                         <div className="pb-2 md:pb-2">
                             <p> War Stats </p>
-                            <Grid className="grid-cols-2 coc-description">
+                            <Grid className="grid-cols-2 font-coc-description">
                                 <p className="whitespace-nowrap text-left"> Wars Won </p>
                                 <p className="text-right">{clan.warWins}</p>
                                 <p className="whitespace-nowrap text-left"> Wars Lost </p>
@@ -97,7 +97,7 @@ const ClashOfClansClanProfile: FC<{
                         </div>
                         <div>
                             <p>Clan Perks</p>
-                            <Grid className="grid-cols-2 coc-description">
+                            <Grid className="grid-cols-2 font-coc-description">
                                 <p className="whitespace-nowrap text-left"> Donation request wait time: </p>
                                 <p className="whitespace-nowrap text-right">{clanPerks.donationRequestWaitTime} minutes </p>
                                 <p className="whitespace-nowrap text-left"> Donation limit: </p>
@@ -148,13 +148,13 @@ const ClashOfClansMemberList: FC<{
         <div className="p-1">
             <Grid className="grid-cols-5 sm:grid-cols-2">
                 <div className="flex sm:justify-end items-center">
-                    <p className="coc-description text-sm text-[#5D5E5A] mr-2 whitespace-nowrap"> {members.length}/50 </p>
+                    <p className="font-coc-description text-sm text-[#5D5E5A] mr-2 whitespace-nowrap"> {members.length}/50 </p>
                 </div>
                 <div className="flex sm:justify-start items-center col-span-4 sm:col-span-1">
                     <Button className="bg-blue-500 w-7 h-7 p-0" onClick={() => {
                         sortArray(sortMethods[sortMethods.indexOf(sortBy) + 1] || sortMethods[0]);
                     }}><img className="w-6 h-6" src="/Images/Clash of Clans/Order.png"/></Button>
-                    <p className="coc-description text-sm text-white ml-2 whitespace-nowrap">{sortBy}</p>
+                    <p className="font-coc-description text-sm text-white ml-2 whitespace-nowrap">{sortBy}</p>
                 </div>
             </Grid>
             <Grid className="grid-cols-1">
@@ -185,15 +185,15 @@ const ClashOfClansClanMember: FC<{
                 </Center>
                 <div className={Util.classNames("justify-self-left", village == "home" ? "col-span-2" : "col-span-4")}>
                     <p>{member.name}</p>
-                    <p className="coc-description text-[#49463D]">{member.role == "member" ? "" : Util.CocUpgradeTracker.convertClanRole(member.role)}</p>
+                    <p className="font-coc-description text-[#49463D]">{member.role == "member" ? "" : Util.CocUpgradeTracker.convertClanRole(member.role)}</p>
                 </div>
-                <Center className={Util.classNames("justify-between coc-description", village == "home" ? "col-span-2" : "col-span-4")}>
+                <Center className={Util.classNames("justify-between font-coc-description", village == "home" ? "col-span-2" : "col-span-4")}>
                     <div>
-                        <span className="coc-description text-sm text-center text-[#6F6F6D]">Troops donated:</span>
+                        <span className="font-coc-description text-sm text-center text-[#6F6F6D]">Troops donated:</span>
                         <p className="bg-[#EEEFEA] rounded-md text-[#393939] text-center">{Util.numberWithSpaces(member.donations)}</p>
                     </div>
                     <div>
-                        <span className="coc-description text-sm text-center text-[#6F6F6D]">Troops received:</span>
+                        <span className="font-coc-description text-sm text-center text-[#6F6F6D]">Troops received:</span>
                         <p className="bg-[#EEEFEA] rounded-md text-[#393939] text-center">{Util.numberWithSpaces(member.donationsReceived)}</p>
                     </div>
                 </Center>
