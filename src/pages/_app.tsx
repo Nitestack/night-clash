@@ -93,8 +93,23 @@ const CustomProvider: FC<{
                             setDone(true);
                         }, minAnimationTime);
                     };
-                }).catch(err => {
-                    console.log(err.toJSON())
+                }).catch((error) => {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        const { data } = error.response;
+                        const redirectUrl: string | undefined = data.redirectUrl;
+                        const errorMessage: string = data.errorMessage;
+                        if (redirectUrl) router.push(redirectUrl);
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    };
                 });  
         } else setTimeout(() => {
             setDone(true);
