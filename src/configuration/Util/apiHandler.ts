@@ -11,12 +11,15 @@ export default class ApiHandler {
      * @param {number} error `0` Bad Request (`400`) | `1` Internal Server Error (`500`)
      * @param {string?} errorMessage An optional error message to pass the user
      */
-    public static sendError(res: NextApiResponse<NextApiCustomHandlerProps & any>, error?: 0 | 1, errorMessage?: string, redirectUrl?: string) {
+    public static sendError(res: NextApiResponse<NextApiCustomHandlerProps & any>, error?: 0 | 1, response?: {
+        errorMessage?: string, redirectUrl?: string
+    }) {
         if (!error) error = 0;
-        if (!errorMessage) errorMessage = error == 0 ? "Bad Request" : "Internal Server Error";
-        const response = ApiHandler.setStatusCode(res, error == 0 ? 400 : 500);
-        response.statusMessage = errorMessage;
-        return response.json({ success: false, redirectUrl: redirectUrl });
+        if (!response) response = {};
+        if (!response.errorMessage) response.errorMessage = error == 0 ? "Bad Request" : "Internal Server Error";
+        const returnResponse = ApiHandler.setStatusCode(res, error == 0 ? 400 : 500);
+        returnResponse.statusMessage = response.errorMessage;
+        return returnResponse.json({ success: false, ...response });
     };
     /**
      * Returns an successful json object to the client

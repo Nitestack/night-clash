@@ -11,9 +11,13 @@ const Village: NextApiHandler = async (req, res) => {
     //Ensures the player's village is in the database
     await Util.getConnection();
     const playerSchema = await DatabaseManager.getClashOfClansVillageById(playerTag);
-    if (!playerSchema) return Util.ApiHandler.sendError(res, 1, "Cannot fetch the player's data", "/upgrade-tracker/clashofclans");
+    /*if (!playerSchema) */return Util.ApiHandler.sendError(res, 1, {
+        redirectUrl: "/upgrade-tracker/clashofclans"
+    });
     //Ensures the village is from the session user
-    return Util.ApiHandler.sendError(res, 0, "You don't own this village!", "/upgrade-tracker/clashofclans");
+    if (!user.clashOfClansVillages?.includes(playerSchema.id)) return Util.ApiHandler.sendError(res, 0, {
+        redirectUrl: "/upgrade-tracker/clashofclans"
+    });
     console.log()
     const returnObj: {
         playerSchema: ClashOfClansVillage
