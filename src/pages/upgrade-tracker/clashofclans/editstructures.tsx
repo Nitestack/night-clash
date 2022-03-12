@@ -28,14 +28,19 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
     return (
         <Layout title={title} header={header} description={tag}>
             <Tabs initialTabIndex={villages.indexOf(initialVillage)} onTabChange={changeTab()} tabs={{
-                "Home Village": <></>,
-                "Builder Base": <></>
+                "Home Village": <EditStructuresTab village="home" playerSchema={playerSchema}/>,
+                "Builder Base": <EditStructuresTab village="builder" playerSchema={playerSchema}/>
             }}/>
         </Layout>
     );
 };
 
-const EditStructuresTab: FC<{}> = ({ }) => {
+const EditStructuresTab: FC<{ 
+    village: "home" | "builder",
+    playerSchema: ClashOfClansVillage
+}> = ({ village, playerSchema }) => {
+    const { player, homeVillage, builderBase } = playerSchema;
+    
     return (
         <></>
     );

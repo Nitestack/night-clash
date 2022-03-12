@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
-import type { Document, Model, SchemaDefinitionProperty } from "mongoose";
+import { Document, Model, SchemaDefinitionProperty, SchemaTypes } from "mongoose";
 import type { APIPlayer } from "clashofclans.js";
 
-export type VillageType = { [key: string]: string | { [key: string]: string; } };
-
-type NewVillageType = {
+export type VillageType = {
     [key: string]: {
-        [key: number]: number
+        [key: string]: number
     },
-    "walls": {
-        [key: number]: number
+    walls: {
+        [key: string]: number
+    },
+    builder: {
+        [key: string]: number
     }
 };
 
@@ -121,12 +122,23 @@ export default mongoose.models.clashofclansvillage as Model<ClashOfClansVillage>
     homeVillage: {
         type: {},
         required: true,
-        default: {}
+        default: {
+            walls: {},
+            builder: {
+                1: 1,
+                2: 1
+            }
+        }
     },
     builderBase: {
         type: {},
         required: true,
-        default: {}
+        default: {
+            walls: {},
+            builder: {
+                1: 1
+            }
+        }
     },
     builderSeasonBoost: {
         type: Number,
