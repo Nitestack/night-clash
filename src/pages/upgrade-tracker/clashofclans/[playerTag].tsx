@@ -58,6 +58,8 @@ const CocUpgradeTrackerPlayerVillage: FC<{
     //Season Boost
     const [researchBoost, setResearchBoost] = useState<number>(researchSeasonBoost);
     const [builderBoost, setBuilderBoost] = useState<number>(builderSeasonBoost);
+    const [showSeasonBoostModal, setShowSeasonBoostModal] = useState(false);
+    const [seasonBoostModalLoading, setSeasonBoostModalLoading] = useState(false);
     //Tabs
     const tabs: { [key: string]: JSX.Element; } = {};
     tabs.Overview = <Overview village={village} player={player}/>;
@@ -141,6 +143,18 @@ const CocUpgradeTrackerPlayerVillage: FC<{
         return seasonBoosts;
     };
 
+    function openSeasonBoostModal() {
+        return () => {
+            setShowSeasonBoostModal(true);
+        };
+    };
+
+    function closeSeasonBoostModal() {
+        return () => {
+            setShowSeasonBoostModal(false);
+        };
+    };
+
     function updatePlayer() {
         return () => {
             Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
@@ -215,13 +229,17 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                         <h1 className="text-center font-coc-description"> {researchBoost}% </h1>
                     </div>
                     <div className="col-span-2">
+                        <Button className="w-full" onClick={openSeasonBoostModal()}> Set Season Boosts </Button>
                         <Modal
-                            openButtonOptions={{ children: "Set Season Boosts", style: { backgroundColor: "blue", width: "100%" } }}
+                            show={showSeasonBoostModal}
+                            loading={seasonBoostModalLoading}
+                            onModalClose={closeSeasonBoostModal()}
                             title="Season Boosts"
                             description="Set season boosts by selecting the percentage for each category"
-                            onSubmit={(ev) => {
+                            onSubmit={() => {
                                 const newBuilderBoost = $("#builderBoost").val() as string;
                                 const newResearchBoost = $("#researchBoost").val() as string;
+                                setSeasonBoostModalLoading(true);
                                 Util.jqueryAjax("/api/upgrade-tracker/clashofclans/seasonboost", {
                                     method: "POST",
                                     data: {
@@ -232,6 +250,8 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                                     success: () => {
                                         setBuilderBoost(parseInt(newBuilderBoost.replace(/%/g, "")));
                                         setResearchBoost(parseInt(newResearchBoost.replace(/%/g, "")));
+                                        setSeasonBoostModalLoading(false);
+                                        closeSeasonBoostModal();
                                     }
                                 });
                             }}>
