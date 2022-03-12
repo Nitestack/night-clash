@@ -27,8 +27,6 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <meta name="description" content={description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}/>
                 <meta name="keywords" content={`${meta?.keywords ? `${meta?.keywords}, `  : ""}coc, cr, bs, bb, clash of clans, clash royale, brawl stars, boom beach, tracker, stats, nightclash, supercell web, night clash`}/>
                 <meta name="author" content={Util.Constants.websiteApplicationName}/>
-                <meta charSet="utf-8"/>
-                <link rel="icon" type="image/png" href="/Images/profile.png"/>
             </Head>
             <div>
                 <Banner 
