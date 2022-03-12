@@ -11,7 +11,7 @@ const Custom404Page: NextPageWithConfiguration = () => {
             </div>
             <div className="w-full lg:w-1/2">
                 <h1 className="py-4 text-3xl lg:text-4xl font-extrabold text-lightmodetext dark:text-darkmodetext">
-                    Looks like you've found the doorway to the great nothing
+                    Looks like you&apos;ve found the doorway to the great nothing
                 </h1>
                 <p className="py-4 text-lg text-lightmodetext dark:text-darkmodetext font-coc-description">
                     The content you&apos;re looking for doesn&apos;t exist. Either it was
