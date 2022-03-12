@@ -13,7 +13,9 @@ const Tabs: FC<{
     const [tabsState] = useState(tabs);
     return (
         <div className="w-full sm:p-0 bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg">
-            <Tab.Group defaultIndex={initialTabIndex} onChange={onTabChange}>
+            <Tab.Group defaultIndex={initialTabIndex} onChange={(index) => {
+                if (onTabChange) onTabChange(index);
+            }}>
                 <Tab.List className="flex p-1 space-x-1 rounded-xl overflow-x-auto">
                     {Object.keys(tabsState).map((category) => (
                         <Tab

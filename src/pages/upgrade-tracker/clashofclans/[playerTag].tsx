@@ -18,30 +18,32 @@ import ClashOfClansModule from "@modules/Upgrade Tracker/ClashOfClansModule";
 import ClashOfClansWallModule from "@modules/Upgrade Tracker/ClashOfClansWallModule";
 
 const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
-    playerSchema: ClashOfClansVillage & { _id: any };
+    playerSchema: ClashOfClansVillage
 }> = ({ data }) => {
     //Player Data
     const { playerSchema } = data;
+    const { player } = playerSchema;
+    const { name, tag, builderHallLevel } = player;
     //Page Info
     const villages = ["home", "builder"];
     if (!villages.includes(location.hash.replace(/#/g, ""))) location.hash = `#${villages[0]}`;
     const initialVillage = location.hash.replace(/#/g, "");
-    const [header, setHeader] = useState(`${playerSchema.player.name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
-    const [title, setTitle] = useState(`${playerSchema.player.name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+    const [header, setHeader] = useState(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
+    const [title, setTitle] = useState(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
     //Village Tabs
     const villageTabs: {
         [key: string]: JSX.Element;
     } = {
         "Home Village": <CocUpgradeTrackerPlayerVillage village="home" playerSchema={playerSchema}/>
     };
-    if (playerSchema.player.builderHallLevel) villageTabs["Builder Base"] = <CocUpgradeTrackerPlayerVillage village="builder" playerSchema={playerSchema}/>;
+    if (builderHallLevel) villageTabs["Builder Base"] = <CocUpgradeTrackerPlayerVillage village="builder" playerSchema={playerSchema}/>;
     function changeVillage(index: number) {
-        setHeader(`${playerSchema.player.name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"}`);
-        setTitle(`${playerSchema.player.name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+        setHeader(`${name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"}`);
+        setTitle(`${name} - ${villages[index] == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
         location.href = `#${villages[index]}`;
     };
     return (
-        <Layout header={header} description={playerSchema.playerTag} title={title}>
+        <Layout header={header} description={tag} title={title}>
             <Tabs tabs={villageTabs} initialTabIndex={villages.indexOf(initialVillage)} 
             onTabChange={(index) => changeVillage(index)}/>
         </Layout>
@@ -52,7 +54,7 @@ const CocUpgradeTrackerPlayerVillage: FC<{
     playerSchema: ClashOfClansVillage
 }> = ({ village, playerSchema }) => {
     const { player, builderSeasonBoost, researchSeasonBoost, homeVillage } = playerSchema;
-    const { tag, townHallLevel, builderHallLevel, townHallWeaponLevel } = player;
+    const { tag, townHallLevel, builderHallLevel } = player;
     //Season Boost
     const [researchBoost, setResearchBoost] = useState<number>(researchSeasonBoost);
     const [builderBoost, setBuilderBoost] = useState<number>(builderSeasonBoost);
@@ -139,6 +141,21 @@ const CocUpgradeTrackerPlayerVillage: FC<{
         return seasonBoosts;
     };
 
+    function updatePlayer() {
+        return () => {
+            Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
+                method: "POST",
+                data: {
+                    playerTag: tag,
+                    village: village
+                },
+                success: ({ success }) => {
+                    if (success) location.reload();
+                }
+            });
+        };
+    };
+
     return (
         <Grid className="max-w-none grid-cols-3">
             <div className="col-span-3">
@@ -175,18 +192,7 @@ const CocUpgradeTrackerPlayerVillage: FC<{
             </div>
             <Grid className="col-span-3 grid-cols-1 sm:grid-cols-2 justify-items-center">
                 <div>
-                    <Button className="bg-green-500" onClick={() => {
-                        Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
-                            method: "POST",
-                            data: {
-                                playerTag: tag,
-                                village: village
-                            },
-                            success: ({ success }) => {
-                                if (success) location.reload();
-                            }
-                        });
-                    }}>API Update</Button>
+                    <Button className="bg-green-500" onClick={updatePlayer()}>API Update</Button>
                 </div>
                 <Link>
                     <Button className="bg-red-600"> Edit Structures</Button>

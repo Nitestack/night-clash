@@ -145,6 +145,9 @@ const ClashOfClansMemberList: FC<{
         setSortBy(sortType);
         setMembers(members.sort(compareFunction));
     };
+    function onSortMethodChange() {
+        return () => sortArray(sortMethods[sortMethods.indexOf(sortBy) + 1] || sortMethods[0]);
+    };
     return (
         <div className="p-1">
             <Grid className="grid-cols-5 sm:grid-cols-2">
@@ -152,9 +155,7 @@ const ClashOfClansMemberList: FC<{
                     <p className="font-coc-description text-sm text-[#5D5E5A] mr-2 whitespace-nowrap"> {members.length}/50 </p>
                 </div>
                 <div className="flex sm:justify-start items-center col-span-4 sm:col-span-1">
-                    <Button className="bg-blue-500 w-7 h-7 p-0" onClick={() => {
-                        sortArray(sortMethods[sortMethods.indexOf(sortBy) + 1] || sortMethods[0]);
-                    }}><img className="w-6 h-6" src="/Images/Clash of Clans/Order.png"/></Button>
+                    <Button className="bg-blue-500 w-7 h-7 p-0" onClick={onSortMethodChange}><img className="w-6 h-6" src="/Images/Clash of Clans/Order.png"/></Button>
                     <p className="font-coc-description text-sm text-white ml-2 whitespace-nowrap">{sortBy}</p>
                 </div>
             </Grid>

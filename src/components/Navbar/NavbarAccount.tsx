@@ -21,6 +21,9 @@ const userNavigation: Array<{
 const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
     const { data: session, status } = useSession() as SessionObject;
     const user = session?.user;
+    function logOut() {
+        return () => signOut({ redirect: true, callbackUrl: window.location.pathname })
+    };
     if (user) {
         if (isMobile) return (
             <div className="pt-4 pb-3 border-t border-lightmodetext dark:border-darkmodetext">
@@ -47,7 +50,7 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                     ))}
                     {user.role == Util.Constants.ADMIN_ROLE_ID ? 
                     <Link key="Admin" href="/admin" className="block px-3 py-2 rounded-md text-base font-medium text-lightmodetext dark:text-darkmodetext hover:text-hovertext hover:bg-hoverbackground"> Admin </Link> : undefined}
-                    <Link key="Logout" onClick={() => signOut({ redirect: true, callbackUrl: window.location.pathname })} className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-hoverbackground"> Sign Out </Link>
+                    <Link key="Logout" onClick={logOut()} className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-hoverbackground"> Sign Out </Link>
                 </div>
             </div>
         );
@@ -74,7 +77,7 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                         </Menu.Item> : undefined}
                         <Menu.Item key="Sign Out">
                             {({ active }) => (
-                                <Link disablehovermotion="true" onClick={() => signOut({ redirect: true, callbackUrl: window.location.pathname })} className={Util.classNames(active ? "bg-hoverbackground" : "", "block px-4 py-2 text-sm text-primary hover:text-indigo-500")}> Sign Out </Link>
+                                <Link disablehovermotion="true" onClick={logOut()} className={Util.classNames(active ? "bg-hoverbackground" : "", "block px-4 py-2 text-sm text-primary hover:text-indigo-500")}> Sign Out </Link>
                             )}
                         </Menu.Item>
                     </Menu.Items>

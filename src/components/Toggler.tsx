@@ -14,6 +14,12 @@ const Toggler: FC<{
     useEffect(() => {
         if (onLoad) onLoad(setChecked);
     }, []);
+    function changeSwitch() {
+        return (checked: boolean) => {
+            setChecked(checked);
+            if (onChange) onChange(checked);
+        };
+    };
     return (
         <Switch.Group>
             <div className="flex items-center">
@@ -23,10 +29,7 @@ const Toggler: FC<{
                 <Motion>
                     <Switch
                         checked={checked}
-                        onChange={(checked) => {
-                            setChecked(checked);
-                            if (onChange) onChange(checked);
-                        }}
+                        onChange={changeSwitch()}
                         className={Util.classNames(checked ? "bg-blue-600" : "bg-gray-200", "relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none")}>
                         <span className={Util.classNames(checked ? "translate-x-6" : "translate-x-1", "inline-block w-4 h-4 transform bg-lightmodetext dark:bg-darkmodetext rounded-full transition-transform")}/>
                     </Switch>

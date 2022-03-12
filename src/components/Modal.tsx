@@ -14,11 +14,27 @@ const Modal: FC<{
 }> = ({ title, description, children, onSubmit, justShowXButton, openButtonOptions }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    function openModal() {
+        return () => setOpen(true);
+    };
+    function closeModal() {
+        return () => setOpen(false);
+    };
+    function exitModal() {
+        return (ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+            if (onSubmit) {
+                setLoading(true);
+                onSubmit(ev);
+                setLoading(false);
+            };
+            setOpen(false);
+        };
+    };
     return (
         <>
-            <Button {...openButtonOptions} onClick={() => setOpen(true)}></Button>
+            <Button {...openButtonOptions} onClick={openModal()}></Button>
             <Transition.Root show={open} as={Fragment}>
-                <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => setOpen(false)}>
+                <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={closeModal()}>
                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0" >
                             <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
@@ -43,18 +59,11 @@ const Modal: FC<{
                                     </div>
                                 </div>
                                 <div className="bg-primary px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-center">
-                                    {justShowXButton ? <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setOpen(false)}>
+                                    {justShowXButton ? <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={closeModal()}>
                                         X
                                     </Button> : <>
-                                        <Button type="button" className="w-full inline-flex justify-center rounded-md px-4 py-2 bg-green-500 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm" onClick={(ev) => {
-                                            if (onSubmit) {
-                                                setLoading(true);
-                                                onSubmit(ev);
-                                                setLoading(false);
-                                            };
-                                            setOpen(false);
-                                        }}> {loading ? <Spinner></Spinner> : undefined} Okay </Button>
-                                        <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setOpen(false)}> 
+                                        <Button type="button" className="w-full inline-flex justify-center rounded-md px-4 py-2 bg-green-500 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm" onClick={exitModal()}> {loading ? <Spinner></Spinner> : undefined} Okay </Button>
+                                        <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={closeModal()}> 
                                             Cancel 
                                         </Button>
                                     </>}

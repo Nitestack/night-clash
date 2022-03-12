@@ -14,8 +14,11 @@ const RegisterPage: NextPageWithConfiguration = () => {
         else if (state.password != confirmedPassword) setState({ ...state, errorMessage: "Password doesn't match!" });
         else setState({ ...state, errorMessage: "" });
     };
-    function onPassword(ev: ChangeEvent<HTMLInputElement>) {
-        setState({ ...state, password: ev.target.value });
+    function savePassword() {
+        return (ev: ChangeEvent<HTMLInputElement>) => setState({ ...state, password: ev.target.value });
+    };
+    function validatePassword() {
+        return (ev: ChangeEvent<HTMLInputElement>) => onConfirm(ev);
     };
     return (
         <Center className="min-h-full p-4 sm:px-6 lg:px-8">
@@ -29,10 +32,10 @@ const RegisterPage: NextPageWithConfiguration = () => {
                             <input name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg" placeholder="E-Mail"></input>
                         </div>
                         <div>
-                            <input id="password" name="password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg" placeholder="Password" onChange={(ev) => onPassword(ev)}/>
+                            <input id="password" name="password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg" placeholder="Password" onChange={savePassword()}/>
                         </div>
                         <div>
-                            <input id="confirmpassword" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg rounded-b-md" placeholder="Confirm Password" onChange={(ev) => onConfirm(ev)}></input>
+                            <input id="confirmpassword" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg rounded-b-md" placeholder="Confirm Password" onChange={validatePassword()}></input>
                             <p className="font-coc-description text-red-600 mt-2 text-lg text-center">{state.errorMessage}</p>
                         </div>
                     </div>
