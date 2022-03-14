@@ -12,7 +12,7 @@ import type { SetStateAction, Dispatch } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";
-import { actions, AppDispatch, RootState } from "@actions/index";
+import { actions, AppDispatch, RootState } from "src/configuration/Actions/index";
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
 export default class Util {

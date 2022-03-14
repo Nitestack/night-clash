@@ -1,7 +1,7 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Center from "@components/Utilities/Center";
 

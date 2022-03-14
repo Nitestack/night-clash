@@ -1,5 +1,5 @@
 import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 import type { FC } from "react";
 import Center from "@components/Utilities/Center";
 

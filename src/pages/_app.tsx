@@ -15,11 +15,11 @@ import type {
 } from "@util/types";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
-import LoadingScreen from "@components/Loading";
+import LoadingScreen from "@components/Layout/Loading";
 import $ from "jquery";
 import Util from "@util/index";
 import { Provider } from "react-redux";
-import { store } from "@actions/index";
+import { store } from "src/configuration/Actions/index";
 import ErrorModal from "@components/ErrorModal";
 
 const isDevelopment = process.env.NODE_ENV == "development";

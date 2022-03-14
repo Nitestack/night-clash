@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import Head from "next/head";
-import Footer from "src/components/Footer";
+import Footer from "@components/Layout/Footer";
 import Navbar from "src/components/Navbar/Navbar";
 import Script from "next/script";
 import Util from "src/configuration/Util/index";

@@ -2,9 +2,9 @@ import type { ComponentProps, FC } from "react";
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 import Util from "@util/index";
-import Motion from "@components/Motion";
+import Motion from "@components/Utilities/Motion";
 
 const NavbarPopover: FC<{
     categoryName: string,

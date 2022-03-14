@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "@components/Elements/Button";
-import Spinner from "@components/Spinner";
+import Spinner from "@components/Utilities/Spinner";
 
 const Modal: FC<{
     title: string;

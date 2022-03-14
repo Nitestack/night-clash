@@ -1,5 +1,5 @@
 import type { NextPageWithConfiguration } from "@util/types";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 
 const Custom404Page: NextPageWithConfiguration = () => {
     return (

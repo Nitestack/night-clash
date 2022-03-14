@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 import type { FC } from "react";
 import Util from "@util/index";
 import Center from "@components/Utilities/Center";

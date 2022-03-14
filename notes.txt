@@ -3,6 +3,8 @@ Everytime updating React
 ---------------------------------
 Edit Boom Beach API village fetch
 
+Town Hall levels
+
 Register.tsx - Password requirements
 
 Register.tsx and Login.tsx Error Handling 

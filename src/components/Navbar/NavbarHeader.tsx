@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 
 const NavbarHeader: FC = () => {
     return ( 

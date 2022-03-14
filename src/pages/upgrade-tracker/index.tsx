@@ -1,6 +1,6 @@
 import Accordion from "@components/Accordion";
 import Center from "@components/Utilities/Center";
-import Link from "@components/Link";
+import Link from "@components/Elements/Link";
 import type { NextPageWithConfiguration } from "@util/types";
 
 const UpgradeTrackerPage: NextPageWithConfiguration = () => {
