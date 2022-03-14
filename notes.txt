@@ -3,6 +3,8 @@ Everytime updating React
 ---------------------------------
 Edit Boom Beach API village fetch
 
+need to edit _app.tsx redirecting in error
+
 Town Hall levels
 
 Register.tsx - Password requirements

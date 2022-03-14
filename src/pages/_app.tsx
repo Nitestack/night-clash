@@ -34,7 +34,6 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     const isUser = !!user;
     const router = useRouter();
     useEffect(() => {
-        console.log(status, router.query);
         if (done) return; //Do nothing if everything is done
         if ($.isEmptyObject(router.query) && Component.queryRequired) return;
         if (status == "loading") return; // Do nothing while loading
@@ -55,15 +54,10 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     }, Component.queryRequired ? [router.query, status] : (Component.authenticationRequired || Component.adminRoleRequired || Component.noAuthenticationRequired ? [status] : []));
     return done ? 
     (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
-        (
-            <Layout
-                title={Component.title}
-                header={Component.header}
-                description={Component.description}>
-                {/*See at `./configuration/Util/types.ts`*/}
-                <Component {...pageProps} data={data} session={session} />
-            </Layout>
-        )
+        <Layout title={Component.title} header={Component.header} description={Component.description}>
+            {/*See at `./configuration/Util/types.ts`*/}
+            <Component {...pageProps} data={data} session={session} />
+        </Layout>
     ) : <LoadingScreen/>;
     function handleAuthentication(session?: UserSession) {
         //Function that will be executed after handling authentication
