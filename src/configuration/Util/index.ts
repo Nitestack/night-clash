@@ -8,17 +8,27 @@ import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
 import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@util/functions";
-import type { Dispatch, SetStateAction } from "react";
+import type { SetStateAction, Dispatch } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";
-
+import { actions, AppDispatch, RootState } from "@actions/index";
+import { useDispatch, useSelector } from 'react-redux'
+import type { TypedUseSelectorHook } from 'react-redux';
 export default class Util {
     /*Classes*/
     public static ApiHandler = ApiHandler;
     public static Constants = Constants;
     public static Axios = getAxiosInstance();
     public static CocUpgradeTracker = ClashOfClansUpgradeTracker;
+    public static StateManagement: {
+        useDispatch: () => AppDispatch,
+        useSelector: TypedUseSelectorHook<RootState>
+    } & typeof actions = {
+        useDispatch: () => useDispatch<AppDispatch>(),
+        useSelector: useSelector,
+        ...actions
+    };
     /*Methods*/
     /**
      * Perform an asynchronous HTTP (Ajax) request.
@@ -33,10 +43,7 @@ export default class Util {
     public static jqueryAjax(url: string, settings?: JQuery.AjaxSettings, setErrorDescription?: Dispatch<SetStateAction<string>>, setShowErrorModal?: Dispatch<SetStateAction<boolean>>): JQuery.jqXHR {
         return $.ajax(url, {
             error: (error) => {
-                if (setErrorDescription && setShowErrorModal) {
-                    setErrorDescription(error.statusText);
-                    setShowErrorModal(true);
-                };
+                Util
             },
             method: "POST",
             ...settings

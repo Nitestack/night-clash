@@ -70,7 +70,7 @@ const Modal: FC<{
      * export default ExampleComponent;
      * ```
      */
-    onSubmit: () => void;
+    onSubmit?: () => void;
     /**
      * Attribute to indicate whether the loading spinner should be shown on the submit button
      */
@@ -106,7 +106,7 @@ const Modal: FC<{
                                 {onlyDismissButton ? <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => onModalClose()}>
                                     X
                                 </Button> : <>
-                                    <Button type="button" className="w-full inline-flex justify-center rounded-md px-4 py-2 bg-green-500 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm" onClick={() => onSubmit()}> {loading ? <Spinner></Spinner> : undefined} Okay </Button>
+                                    <Button type="button" className="w-full inline-flex justify-center rounded-md px-4 py-2 bg-green-500 text-base font-medium text-white sm:ml-3 sm:w-auto sm:text-sm" onClick={() => { if (onSubmit) onSubmit(); }}> {loading ? <Spinner></Spinner> : undefined} Okay </Button>
                                     <Button type="button" className="mt-3 w-full inline-flex justify-center rounded-md px-4 py-2 bg-red-700 text-base font-medium sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => onModalClose()}> 
                                         Cancel 
                                     </Button>

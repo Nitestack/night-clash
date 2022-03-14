@@ -18,6 +18,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import LoadingScreen from "@components/Loading";
 import $ from "jquery";
 import Util from "@util/index";
+import { Provider } from "react-redux";
+import { store } from "@actions/index";
+import ErrorModal from "@components/ErrorModal";
 
 const isDevelopment = process.env.NODE_ENV == "development";
 
@@ -35,6 +38,7 @@ const CustomProvider: FC<{
     const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
+    const dispatch = Util.StateManagement.useDispatch();
     useEffect(() => {
         if (done) return; //Do nothing if everything is done
         if ($.isEmptyObject(router.query) && Component.queryRequired) return;
@@ -54,8 +58,9 @@ const CustomProvider: FC<{
             handleAuthentication();
         };
     }, Component.queryRequired ? [status, router.query] : [status]);
-    return done ? (
-        Component.disableLayout ? (<Component {...pageProps} data={data} />) : (
+    return done ? 
+    (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
+        (
             <Layout
                 title={Component.title}
                 header={Component.header}
@@ -94,21 +99,28 @@ const CustomProvider: FC<{
                         }, minAnimationTime);
                     };
                 }).catch((error) => {
-                    if (error.response) {
+                    const { response, request } = error;
+                    if (response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        const { data } = error.response;
+                        const { data } = response;
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
                         if (redirectUrl) router.push(redirectUrl);
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                        // http.ClientRequest in node.js
-                        console.log(error.request);
+                        dispatch(Util.StateManagement.displayError({
+                            type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
+                            description: errorMessage
+                        }));
+                    } else if (request) {
+                        // Something happened in setting up the request that triggered an Error
+                        dispatch(Util.StateManagement.displayError({
+                            type: "INTERNAL_SERVER_ERROR"
+                        }));
                     } else {
                         // Something happened in setting up the request that triggered an Error
-                        console.log('Error', error.message);
+                        dispatch(Util.StateManagement.displayError({
+                            type: "INTERNAL_SERVER_ERROR"
+                        }));
                     };
                 });  
         } else setTimeout(() => {
@@ -117,7 +129,7 @@ const CustomProvider: FC<{
     }
 };
 
-function MyApp({ Component, pageProps: { session, ...pageProps }, }: ComponentWithConfigurationProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: ComponentWithConfigurationProps) {
     useEffect(() => {
         $("img").on("mousedown", function (event) {
             if (event.button == 2) return;
@@ -140,11 +152,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, }: ComponentWi
     }, []);
     return (
         <StrictMode>
-            <SessionProvider session={session}>
-                <QueryClientProvider client={queryClient}>
-                    <CustomProvider pageProps={pageProps} Component={Component}/>
-                </QueryClientProvider>
-            </SessionProvider>
+            <Provider store={store}>
+                <SessionProvider session={session}>
+                    <QueryClientProvider client={queryClient}>
+                        <ErrorModal/>
+                        <CustomProvider pageProps={pageProps} Component={Component}/>
+                    </QueryClientProvider>
+                </SessionProvider>
+            </Provider>
         </StrictMode>
     );
 };
