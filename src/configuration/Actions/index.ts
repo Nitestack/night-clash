@@ -2,7 +2,7 @@ import { errorSlicer } from "./error";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
-    devTools: true,
+    devTools: process.env.NODE_ENV == "development" ? true : false,
     reducer: {
         error: errorSlicer.reducer
     }
