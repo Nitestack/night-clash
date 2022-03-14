@@ -19,7 +19,7 @@ import $ from "jquery";
 import Util from "@util/index";
 import { Provider } from "react-redux";
 import { store } from "src/configuration/Actions/index";
-import ErrorModal from "@components/ErrorModal";
+import ErrorModal from "@components/Layout/ErrorModal";
 
 const isDevelopment = process.env.NODE_ENV == "development";
 
