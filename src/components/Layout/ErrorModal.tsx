@@ -15,8 +15,6 @@ const connector = connect((state: RootState) => {
 
 const ErrorModal: FC<ConnectedProps<typeof connector>> = (error) => {
     const { title, description, showModal } = error;
-    useEffect(() => {
-    }, [error])
     function closeModal() {
         error.clearError();
     };
