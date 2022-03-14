@@ -13,7 +13,7 @@ const initialState: ReduxError = {
     showModal: false
 };
 
-export const errorSlicer = createSlice({
+const errorSlicer = createSlice({
     name: "error",
     initialState: initialState,
     reducers: {
@@ -33,5 +33,7 @@ export const errorSlicer = createSlice({
         }
     }
 });
+
+export default errorSlicer;
 
 export const { clearError, displayError } = errorSlicer.actions;

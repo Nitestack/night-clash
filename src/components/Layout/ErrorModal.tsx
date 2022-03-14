@@ -5,24 +5,16 @@ import Modal from "@components/Modal";
 import type { RootState } from "src/configuration/Actions/index";
 import Util from "@util/index";
 
-const connector = connect((state: RootState) => state.error, (dispatch) => {
+const connector = connect((state: RootState) => {
+    return state.error;
+}, (dispatch) => {
     return {
         clearError: () => dispatch(Util.StateManagement.clearError())
     };
 });
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const ErrorModal: FC<{
-    title: string,
-    description: string
-} & PropsFromRedux> = (error) => {
-    const testError = Util.StateManagement.useSelector(state => state.error);
-    const { title, description, showModal } = error ? error : {
-        title: "",
-        description: "",
-        showModal: false
-    };
+const ErrorModal: FC<ConnectedProps<typeof connector>> = (error) => {
+    const { title, description, showModal } = error;
     useEffect(() => {
     }, [error])
     function closeModal() {
