@@ -1,4 +1,4 @@
-import Layout from "@components/Layout";
+import Layout from "@components/Layout/index";
 import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import type { APIClan, APIPlayer } from "clashofclans.js";

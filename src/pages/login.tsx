@@ -3,7 +3,7 @@ import Link from "@components/Link";
 import { getCsrfToken } from "next-auth/react";
 import type { NextPageWithConfiguration } from "@util/types";
 import { LockClosedIcon } from "@heroicons/react/solid";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const LoginPage: NextPageWithConfiguration<{ csrfToken: string }> = ({ csrfToken }) => {
     return (

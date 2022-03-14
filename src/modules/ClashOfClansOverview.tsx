@@ -1,12 +1,12 @@
 import type { FC } from "react";
-import Grid from "@components/Grid";
+import Grid from "@components/Utilities/Grid";
 import Util from "@util/index";
 import UnitIcon from "@modules/ClashOfClansUnitIcon";
 import type { APIPlayer } from "clashofclans.js";
 import Progress from "@components/Progress";
 import Achievement from "@modules/ClashOfClansAchievement";
 import Image from "next/image";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const ClashOfClansOverview: FC<{ village: "home" | "builder", player: APIPlayer }> = ({ village, player }) => {
     const { homeTroopsArray, homeDarkTroopsArray, builderTroopsArray, homeSpellsArray, homeSiegeMachinesArray, homeHeroesArray, homePetsArray } = Util.Constants.CoC;

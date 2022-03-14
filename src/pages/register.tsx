@@ -3,7 +3,7 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 import Link from "@components/Link";
 import { LockClosedIcon } from "@heroicons/react/solid";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const RegisterPage: NextPageWithConfiguration = () => {
     const [state, setState] = useState<{ password: string, errorMessage: string }>({ password: "", errorMessage: "" });

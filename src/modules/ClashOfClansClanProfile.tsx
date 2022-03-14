@@ -1,15 +1,15 @@
 import type { APIClan, APIClanMember } from "clashofclans.js";
 import type { FC } from "react";
 import { useState } from "react";
-import Grid from "@components/Grid";
+import Grid from "@components/Utilities/Grid";
 import Tabs from "@components/Tabs";
-import Button from "@components/Button";
+import Button from "@components/Elements/Button";
 import Util from "@util/index";
 import ClashOfClansPlayerProfileStyles from "@modules/ClashOfClansPlayerProfile.module.scss";
 import ClashOfClansAchievementStyles from "@modules/ClashOfClansAchievement.module.scss";
 import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
 import ClashOfClansLabels from "./ClashOfClansLabels";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const ClashOfClansClanProfile: FC<{
     clan: APIClan;

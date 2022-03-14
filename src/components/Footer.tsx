@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "@components/Link";
 import type { FC } from "react";
 import Util from "@util/index";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const links: Array<{
     name: string,

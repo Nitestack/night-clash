@@ -1,8 +1,8 @@
 import type { FC, DetailedHTMLProps, InputHTMLAttributes } from "react";
-import Input from "@components/Input";
+import Input from "@components/Elements/Input";
 import Util from "@util/index";
-import Button from "@components/Button";
-import type { ButtonProps } from "@components/Button";
+import Button from "@components/Elements/Button";
+import type { ButtonProps } from "@components/Elements/Button";
 import { HashtagIcon, SearchIcon } from "@heroicons/react/outline";
 
 const PlayerTagInput: FC<{

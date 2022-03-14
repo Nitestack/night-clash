@@ -1,14 +1,14 @@
 import type { FC } from "react";
 import { ClashOfClansVillage } from "@models/clashofclans";
-import Grid from "@components/Grid";
+import Grid from "@components/Utilities/Grid";
 import Util from "@util/index";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 import { home } from "@database/Clash of Clans/home";
 import { builder } from "@database/Clash of Clans/builder";
-import Input from "@components/Input";
-import Button from "@components/Button";
+import Input from "@components/Elements/Input";
+import Button from "@components/Elements/Button";
 import type Base from "@database/Clash of Clans/Base";
 import styles from "@modules/Upgrade Tracker/ClashOfClansModule.module.scss";
 

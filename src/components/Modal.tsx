@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import Button from "@components/Button";
+import Button from "@components/Elements/Button";
 import Spinner from "@components/Spinner";
 
 const Modal: FC<{

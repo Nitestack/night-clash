@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import Util from "@util/index";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 /**
  * [Documentation](https://codepen.io/aaroniker/pen/MWgRBdV)

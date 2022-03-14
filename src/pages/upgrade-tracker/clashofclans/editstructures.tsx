@@ -1,6 +1,6 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
-import Layout from "@components/Layout";
+import Layout from "@components/Layout/index";
 import type { ClashOfClansVillage } from "@database/Models/clashofclans";
 import { useState } from "react";
 import type { FC } from "react";
@@ -40,7 +40,6 @@ const EditStructuresTab: FC<{
     playerSchema: ClashOfClansVillage
 }> = ({ village, playerSchema }) => {
     const { player, homeVillage, builderBase } = playerSchema;
-    
     return (
         <></>
     );

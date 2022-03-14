@@ -1,6 +1,6 @@
 import Util from "@util/index";
 import type { NextPageWithConfiguration } from "@util/types";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const CoCUpgradeTrackerPage: NextPageWithConfiguration = () => {
     return (

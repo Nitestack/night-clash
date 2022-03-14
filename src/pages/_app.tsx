@@ -4,7 +4,7 @@ import "@public/prism/prism.css";
 import "@styles/main.scss";
 import "@styles/loader.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
-import Layout from "@components/Layout";
+import Layout from "@components/Layout/index";
 import { StrictMode, useEffect, useState } from "react";
 import type { FC } from "react";
 import type {

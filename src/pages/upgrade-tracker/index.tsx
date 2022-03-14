@@ -1,5 +1,5 @@
 import Accordion from "@components/Accordion";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 import Link from "@components/Link";
 import type { NextPageWithConfiguration } from "@util/types";
 

@@ -1,8 +1,8 @@
 import type { APIPlayerAchievement } from "clashofclans.js";
 import type { FC } from "react";
-import Grid from "@components/Grid";
+import Grid from "@components/Utilities/Grid";
 import Progress from "@components/Progress";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 import styles from "@modules/ClashOfClansAchievement.module.scss";
 import Util from "@util/index";
 

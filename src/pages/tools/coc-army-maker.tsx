@@ -1,9 +1,9 @@
-import Grid from "@components/Grid";
+import Grid from "@components/Utilities/Grid";
 import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import styles from "@modules/ClashOfClansUnitIcon.module.scss";
-import Input from "@components/Input";
-import Center from "@components/Center";
+import Input from "@components/Elements/Input";
+import Center from "@components/Utilities/Center";
 import { useState } from "react";
 
 const { homeTroopsArray, homeDarkTroopsArray, homeSpellsArray, homeDarkSpellsArray, homeSuperTroopsArray, homeDarkSuperTroopsArray, homeSiegeMachinesArray } = Util.Constants.CoC;

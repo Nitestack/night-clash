@@ -1,13 +1,13 @@
 import type { APIPlayer } from "clashofclans.js";
 import type { FC } from "react";
-import Grid from "@components/Grid";
-import Button from "@components/Button";
+import Grid from "@components/Utilities/Grid";
+import Button from "@components/Elements/Button";
 import Util from "@util/index";
 import Image from "next/image";
 import styles from "@modules/ClashOfClansPlayerProfile.module.scss";
 import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
 import ClashOfClansLabels from "./ClashOfClansLabels";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const ClashOfClansPlayerProfile: FC<{
     player: APIPlayer;

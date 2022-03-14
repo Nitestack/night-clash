@@ -1,5 +1,5 @@
-import Button from "@components/Button";
-import type { ButtonProps } from "@components/Button";
+import Button from "@components/Elements/Button";
+import type { ButtonProps } from "@components/Elements/Button";
 import Util from "@util/index";
 import type { FC } from "react";
 

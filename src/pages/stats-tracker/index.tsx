@@ -1,7 +1,7 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 import Tabs from "@components/Tabs";
 import Util from "@util/index";
 import PlayerTagInput from "@modules/PlayerTagInput";

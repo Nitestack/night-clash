@@ -8,7 +8,7 @@ import NavbarHeader from "@components/Navbar/NavbarHeader";
 import { Fragment } from "react";
 import NavbarToggler from "@components/Navbar/NavbarToggler";
 import Motion from "@components/Motion";
-import Center from "@components/Center";
+import Center from "@components/Utilities/Center";
 
 const upgradeTrackers: Array<{
     name: string,
