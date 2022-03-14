@@ -8,7 +8,9 @@ const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
     const client = await Util.getCoCAPI();
     if (element == "players") {
         const response = await client.rest.getPlayer(tag);
-        if (!response.ok) return Util.ApiHandler.sendError(res, 1, "Couldn't find the player!");
+        if (!response.ok) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Couldn't find the player!"
+        });
         Util.ApiHandler.sendSuccess<{
             player: APIPlayer
         }>(res, {
@@ -16,7 +18,9 @@ const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
         });
     } else {
         const response = await client.rest.getClan(tag);
-        if (!response.ok) return Util.ApiHandler.sendError(res, 1, "Couldn't find the clan!");
+        if (!response.ok) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Couldn't find the clan!"
+        });
         Util.ApiHandler.sendSuccess<{
             clan: APIClan
         }>(res, {

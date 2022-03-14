@@ -15,7 +15,9 @@ const SeasonBoost: NextApiHandler = async (req, res) => {
         upsert: false,
         new: true
     });
-    if (!playerSchema) return Util.ApiHandler.sendError(res, 1, "Couldn't set season boosts!");
+    if (!playerSchema) return Util.ApiHandler.sendError(res, 1, {
+        errorMessage: "Couldn't set season boosts!"
+    });
     Util.ApiHandler.sendSuccess<{ playerSchema: ClashOfClansVillage }>(res, {
         playerSchema: playerSchema
     });

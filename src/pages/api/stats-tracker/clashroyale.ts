@@ -8,7 +8,9 @@ const ClashRoyaleStatsTracker: NextApiHandler = async (req, res) => {
     const client = await Util.getCRAPI();
     if (element == "players") {
         const player = await client.player(tag);
-        if (!player) return Util.ApiHandler.sendError(res, 1, "Couldn't find the player!");
+        if (!player) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Couldn't find the player!"
+        });
         Util.ApiHandler.sendSuccess<{
             player: CRProfile
         }>(res, {
@@ -16,7 +18,9 @@ const ClashRoyaleStatsTracker: NextApiHandler = async (req, res) => {
         });
     } else {
         const clan = await client.clan(tag);
-        if (!clan) return Util.ApiHandler.sendError(res, 1, "Couldn't find the clan!");
+        if (!clan) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Couldn't find the clan!"
+        });
         Util.ApiHandler.sendSuccess<{
             clan: CRClan
         }>(res, {

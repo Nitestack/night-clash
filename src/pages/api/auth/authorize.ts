@@ -8,9 +8,13 @@ const Authorize: NextApiHandler = async (req, res) => {
     await Util.getConnection();
     const credentials: Record<"emailOrUsername" | "password", string> = req.body;
     const user = await DatabaseManager.getUser(Util.isEmail(credentials.emailOrUsername) ? { email: credentials.emailOrUsername } : { user: credentials.emailOrUsername });
-    if (!user) return Util.ApiHandler.sendError(res, 0, "Invalid login!");
+    if (!user) return Util.ApiHandler.sendError(res, 0, {
+        errorMessage: "Invalid login!"
+    });
     const passwordIsValid = bcrypt.compareSync(req.body.password, user.hash);
-    if (!passwordIsValid) return Util.ApiHandler.sendError(res, 0, "Invalid login!");
+    if (!passwordIsValid) return Util.ApiHandler.sendError(res, 0, {
+        errorMessage: "Invalid login!"
+    });
     Util.ApiHandler.sendSuccess<User>(res, {
         id: user._id,
         username: user.username,
