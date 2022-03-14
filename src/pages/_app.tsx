@@ -107,10 +107,12 @@ const CustomProvider: FC<{
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
                         if (redirectUrl) router.push(redirectUrl);
-                        dispatch(Util.StateManagement.displayError({
-                            type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
-                            description: errorMessage
-                        }));
+                        else {
+                            dispatch(Util.StateManagement.displayError({
+                                type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
+                                description: errorMessage
+                            }));
+                        };
                     } else if (request) {
                         // Something happened in setting up the request that triggered an Error
                         dispatch(Util.StateManagement.displayError({
