@@ -6,12 +6,7 @@ import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout/index";
 import { StrictMode, useEffect, useState } from "react";
 import type { FC } from "react";
-import type {
-    ComponentWithConfigurationProps,
-    SessionObject,
-    UserSession,
-    CustomComponentType
-} from "@util/types";
+import type { ComponentWithConfigurationProps, SessionObject, UserSession, CustomComponentType } from "@util/types";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoadingScreen from "@components/Layout/LoadingScreen";
@@ -27,18 +22,19 @@ const minAnimationTime = isDevelopment ? 0 : 1000;
 
 const queryClient = new QueryClient();
 
-const CustomProvider: FC<{
-    Component: CustomComponentType;
-    pageProps: any;
-}> = ({ Component, pageProps }) => {
-    const [done, setDone] = useState(!Component.authenticationRequired && !Component.adminRoleRequired && !Component.noAuthenticationRequired && !Component.fetchData ? true : false);
+const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = ({ Component, pageProps }) => {
+    const dispatch = Util.StateManagement.useDispatch();
+    if (Component.authenticationRequired || Component.adminRoleRequired || Component.noAuthenticationRequired || Component.fetchData) {
+        dispatch(Util.StateManagement.showLoadingScreen());
+    };
+    const done = !Util.StateManagement.useSelector((state) => state.loading);
     const [data, setData] = useState<any>(undefined);
     const { data: session, status } = useSession() as SessionObject;
     const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
-    const dispatch = Util.StateManagement.useDispatch();
     useEffect(() => {
+        console.log(status, router.query);
         if (done) return; //Do nothing if everything is done
         if ($.isEmptyObject(router.query) && Component.queryRequired) return;
         if (status == "loading") return; // Do nothing while loading
@@ -52,11 +48,11 @@ const CustomProvider: FC<{
         } else if (Component.noAuthenticationRequired) {
             // If authenticated, redirect to /account
             if (isUser) router.push("/account");
-            else setDone(true);
+            else dispatch(Util.StateManagement.hideLoadingScreen());
         } else {
             handleAuthentication();
         };
-    }, Component.queryRequired ? [status, router.query] : [status]);
+    }, Component.queryRequired ? [router.query, status] : (Component.authenticationRequired || Component.adminRoleRequired || Component.noAuthenticationRequired ? [status] : []));
     return done ? 
     (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
         (
@@ -70,19 +66,19 @@ const CustomProvider: FC<{
         )
     ) : <LoadingScreen/>;
     function handleAuthentication(session?: UserSession) {
+        //Function that will be executed after handling authentication
         if (Component.afterAuthentication) {
             //@ts-ignore
             const returnValue = Component.afterAuthentication(session, router);
+            //If the return value is `false`, it exits the function
             if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => {
-                setDone(true);
+                dispatch(Util.StateManagement.hideLoadingScreen());
             }, minAnimationTime);
         };
+        //Fetch data for displaying content
         if (Component.fetchData) {
-            const config = Component.fetchData?.config
-                ? Component.fetchData?.config
-                : undefined;
-            Util.Axios[Component.fetchData.method](
-                Component.fetchData.url,
+            const config = Component.fetchData?.config ? Component.fetchData?.config : undefined;
+            Util.Axios[Component.fetchData.method](Component.fetchData.url,
                 Component.fetchData.method != "post"
                     ? config
                     : Component.fetchData?.data
@@ -92,7 +88,7 @@ const CustomProvider: FC<{
                     if (res.status == 200) {
                         setData(res.data);
                         setTimeout(() => {
-                            setDone(true);
+                            dispatch(Util.StateManagement.hideLoadingScreen());
                         }, minAnimationTime);
                     };
                 }).catch((error) => {
@@ -104,8 +100,8 @@ const CustomProvider: FC<{
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
                         if (redirectUrl) {
+                            dispatch(Util.StateManagement.hideLoadingScreen());
                             router.push(redirectUrl);
-                            setDone(true);
                         } else {
                             dispatch(Util.StateManagement.displayError({
                                 type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
@@ -125,9 +121,9 @@ const CustomProvider: FC<{
                     };
                 });  
         } else setTimeout(() => {
-            setDone(true);
+            dispatch(Util.StateManagement.hideLoadingScreen());
         }, minAnimationTime);
-    }
+    };
 };
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: ComponentWithConfigurationProps) {
@@ -138,14 +134,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: ComponentWit
         //Light/Dark Mode
         let mode = Util.getCookie("mode");
         if (!mode || mode == "") {
-            Util.setCookie(
-                "mode",
-                window.matchMedia("(prefers-color-scheme: dark)").matches
-                    ? "dark"
-                    : "light",
-                730,
-                "/"
-            );
+            Util.setCookie("mode", window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light", 730, "/");
             mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         };
         if (mode == "dark") $(document.documentElement).addClass("dark");
