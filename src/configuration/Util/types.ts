@@ -57,18 +57,13 @@ export interface ComponentConfiguration extends LayoutProps {
      */
     fetchData?: {
         /**
-         * The url (just use full url's)
+         * The url 
          */
         url: string,
         /**
          * A configuration object
          */
         config?: AxiosRequestConfig<any>,
-        /**
-         * Function to parse into the `fetchData.config()` function
-         * @param {NextRouter} router The router object
-         */
-        parseData?: (router: NextRouter, user: UserWithoutPassword) => any,
         /**
          * The request method
          */
@@ -79,7 +74,7 @@ export interface ComponentConfiguration extends LayoutProps {
          * Will be ignored if `method` isn't `POST`
          * @param {object} data Data that can be accessed to parse into the body
          */
-        data?: (data: any) => any
+        data?: (router: NextRouter, user?: UserWithoutPassword) => any
     };
     /**
      * A function that will be called after authentication

@@ -86,9 +86,7 @@ const CustomProvider: FC<{
                 Component.fetchData.method != "post"
                     ? config
                     : Component.fetchData?.data
-                    ? Component.fetchData.data(Component.fetchData?.parseData
-                        //@ts-ignore
-                        ? Component.fetchData?.parseData(router, user) : {})
+                    ? Component.fetchData.data(router, session?.user)
                     : undefined,
                 Component.fetchData.method == "post" ? config : undefined).then(res => {
                     if (res.status == 200) {
@@ -105,8 +103,10 @@ const CustomProvider: FC<{
                         const { data } = response;
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
-                        if (redirectUrl) router.push(redirectUrl);
-                        else {
+                        if (redirectUrl) {
+                            router.push(redirectUrl);
+                            setDone(true);
+                        } else {
                             dispatch(Util.StateManagement.displayError({
                                 type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
                                 description: errorMessage

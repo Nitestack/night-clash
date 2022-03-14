@@ -66,15 +66,9 @@ ClashOfClansStatsTracker.afterAuthentication = (session, router) => {
 ClashOfClansStatsTracker.fetchData = {
     url: "/api/stats-tracker/clashofclans",
     method: "post",
-    data: (data) => {
+    data: (router, user) => {
         return {
-            tag: data.resolvedTag,
-            element: data.element
-        };
-    },
-    parseData: (router, user) => {
-        return {
-            resolvedTag: Util.validateTag(router.query.tag as string),
+            tag: Util.validateTag(router.query.tag as string),
             element: router.query.element
         };
     }

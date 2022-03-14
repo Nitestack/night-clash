@@ -26,15 +26,9 @@ BBUpgradeTrackerPlayer.afterAuthentication = function (session, router) {
 };
 BBUpgradeTrackerPlayer.fetchData = {
     url: "/api/upgrade-tracker/boombeach/island",
-    data: (data) => {
+    data: (router, user) => {
         return {
-            playerTag: data.resolvedTag,
-            user: data.user
-        };
-    },
-    parseData: (router, user) => {
-        return {
-            resolvedTag: Util.validateTag(router.query.playerTag as string),
+            playerTag: Util.validateTag(router.query.playerTag as string),
             user: user
         };
     },
