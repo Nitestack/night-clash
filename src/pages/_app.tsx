@@ -2,7 +2,6 @@ import "@styles/fonts.scss";
 import "@styles/brawlstars.scss";
 import "@public/prism/prism.css";
 import "@styles/main.scss";
-import "@styles/loader.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout/index";
 import { StrictMode, useEffect, useState } from "react";
@@ -15,7 +14,7 @@ import type {
 } from "@util/types";
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
-import LoadingScreen from "@components/Layout/Loading";
+import LoadingScreen from "@components/Layout/LoadingScreen";
 import $ from "jquery";
 import Util from "@util/index";
 import { Provider } from "react-redux";
