@@ -6,6 +6,12 @@ import type { LayoutProps } from "@components/Layout";
 import type axios from "axios";
 import type { AxiosRequestConfig } from "axios";
 import type { NextRouter } from "next/router";
+import { store } from "@actions/index";
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;
 
 /**
  * A session with custom props
