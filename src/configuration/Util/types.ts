@@ -8,10 +8,15 @@ import type { AxiosRequestConfig } from "axios";
 import type { NextRouter } from "next/router";
 import { store } from "@actions/index";
 
+/* REDUX */
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+
+/* next-auth */
 
 /**
  * A session with custom props
@@ -27,6 +32,9 @@ export type SessionObject = { data: UserSession; status: "authenticated"; }
 | { data: null; status: "loading"; } 
 | { data: UserSession; status: "authenticated"; } 
 | { data: null; status: "unauthenticated" | "loading"; }; 
+
+
+/* NextJS */
 
 /**
  * Extra utility configurations for Next pages
