@@ -1,7 +1,7 @@
 import "@styles/fonts.scss";
 import "@styles/brawlstars.scss";
-import "@public/prism/prism.css";
-import "@styles/main.scss";
+import "prismjs/themes/prism-okaidia.min.css";
+import "@styles/globals.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout/index";
 import { StrictMode, useEffect, useState } from "react";
@@ -51,7 +51,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         } else {
             handleAuthentication();
         };
-    }, Component.queryRequired ? [router.query, status] : (Component.authenticationRequired || Component.adminRoleRequired || Component.noAuthenticationRequired ? [status] : []));
+    }, Component.queryRequired ? [router.query, status] : [status]);
     return done ? 
     (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
         <Layout title={Component.title} header={Component.header} description={Component.description}>
@@ -65,9 +65,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
             //@ts-ignore
             const returnValue = Component.afterAuthentication(session, router);
             //If the return value is `false`, it exits the function
-            if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => {
-                dispatch(Util.StateManagement.hideLoadingScreen());
-            }, minAnimationTime);
+            if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => dispatch(Util.StateManagement.hideLoadingScreen()), minAnimationTime);
         };
         //Fetch data for displaying content
         if (Component.fetchData) {
@@ -81,9 +79,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                 Component.fetchData.method == "post" ? config : undefined).then(res => {
                     if (res.status == 200) {
                         setData(res.data);
-                        setTimeout(() => {
-                            dispatch(Util.StateManagement.hideLoadingScreen());
-                        }, minAnimationTime);
+                        setTimeout(() => dispatch(Util.StateManagement.hideLoadingScreen()), minAnimationTime);
                     };
                 }).catch((error) => {
                     const { response, request } = error;
@@ -94,14 +90,11 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
                         if (redirectUrl) {
-                            dispatch(Util.StateManagement.hideLoadingScreen());
                             router.push(redirectUrl);
-                        } else {
-                            dispatch(Util.StateManagement.displayError({
-                                type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
-                                description: errorMessage
-                            }));
-                        };
+                        } else dispatch(Util.StateManagement.displayError({
+                            type: response.status == 500 ? "INTERNAL_SERVER_ERROR" : "BAD_REQUEST",
+                            description: errorMessage
+                        }));
                     } else if (request) {
                         // Something happened in setting up the request that triggered an Error
                         dispatch(Util.StateManagement.displayError({
@@ -114,9 +107,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                         }));
                     };
                 });  
-        } else setTimeout(() => {
-            dispatch(Util.StateManagement.hideLoadingScreen());
-        }, minAnimationTime);
+        } else setTimeout(() => dispatch(Util.StateManagement.hideLoadingScreen()), minAnimationTime);
     };
 };
 
