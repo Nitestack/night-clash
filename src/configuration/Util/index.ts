@@ -4,6 +4,7 @@ import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
 import getDatabaseConnection from "@util/databaseConnection";
 import getAPI from "@util/api";
+import type { AppDispatch, RootState } from "@util/types";
 import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
@@ -12,7 +13,7 @@ import type { SetStateAction, Dispatch } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";
-import { actions, AppDispatch, RootState } from "src/configuration/Actions/index";
+import { actions } from "src/configuration/Actions/index";
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
 export default class Util {
