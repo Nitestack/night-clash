@@ -47,7 +47,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         } else if (Component.noAuthenticationRequired) { //If the user wants to login or register
             // If authenticated already, redirect to /account
             if (isUser) {
-                router.push("/account").then(() => setDone(true));
+                window.location.href = "/account";
             } else setDone(true);
         } else handleAuthentication();
     }, Component.queryRequired ? [router, status] : [status]);

@@ -17,7 +17,7 @@ export default class DatabaseManager {
         return await DatabaseManager.User.findOne(filter);
     };
     public static async getClashOfClansVillageById(id: string) {
-        return await DatabaseManager.ClashOfClansVillage.findOne({ playerTag: id });
+        return await DatabaseManager.ClashOfClansVillage.findById(id);
     };
     public static async getClashOfClansVillage(filter: FilterQuery<ClashOfClansVillage>) {
         return await DatabaseManager.ClashOfClansVillage.findOne(filter);

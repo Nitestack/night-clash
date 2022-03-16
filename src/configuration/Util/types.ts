@@ -36,12 +36,6 @@ export interface ComponentConfiguration extends LayoutProps {
      */
     adminRoleRequired?: boolean;
     /**
-     * Specifies to which URL the user will be redirected after signing in 
-     * 
-     * Will be ignored if {@link authenticationRequired} is `false` or `undefined`
-     */
-    returnUrl?: string;
-    /**
      * If true, you need to import the `Layout` component manually
      * 
      * Configurations {@link title}, {@link header}, {@link description} will be ignored
