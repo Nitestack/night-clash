@@ -24,11 +24,11 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <meta name="title" content={title}/>
-                <title> {title} - {Util.Constants.websiteApplicationName} </title>
+                <title> {title} - {Util.Constants.APPLICATION_NAME} </title>
                 <meta charSet="UTF-8"/>
-                <meta name="description" content={description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}/>
+                <meta name="description" content={description ? description : `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`}/>
                 <meta name="keywords" content={`${meta?.keywords ? `${meta?.keywords}, `  : ""}coc, cr, bs, bb, clash of clans, clash royale, brawl stars, boom beach, tracker, stats, nightclash, supercell web, night clash`}/>
-                <meta name="author" content={Util.Constants.websiteApplicationName}/>
+                <meta name="author" content={Util.Constants.APPLICATION_NAME}/>
             </Head>
             <div>
                 <Banner 
@@ -62,12 +62,12 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                     <div className="py-12 bg-transparent min-h-screen">
                         <div className="mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
                             <div className="text-center">
-                                <h2 className="text-base text-primary font-semibold tracking-wide uppercase">{Util.Constants.websiteApplicationName}</h2>
+                                <h2 className="text-base text-primary font-semibold tracking-wide uppercase">{Util.Constants.APPLICATION_NAME}</h2>
                                 <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-lightmodeprimary dark:text-darkmodeprimary sm:text-4xl">
                                     {header ? header : title}
                                 </p>
                                 <p className="mt-4 text-3xl text-gray-700 lg:mx-auto font-coc-description">
-                                    {description ? description : `${Util.Constants.websiteApplicationName} ${Util.Constants.websiteApplicationDescription}`}
+                                    {description ? description : `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`}
                                 </p>
                             </div>
                             <div className="mt-10 z-0 mb-0 mx-auto">
