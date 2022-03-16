@@ -75,7 +75,7 @@ const Footer: FC = () => {
                 <Link href="/">
                     <Image className="rounded-full bg-primary" src="/Images/profile.png" width="150" height="150"></Image>
                 </Link>
-                <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.websiteApplicationName}. All rights reserved.</p>
+                <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.APPLICATION_NAME}. All rights reserved.</p>
             </Center>
             <div className="font-coc-description py-8 px-3">
                 <p className="text-lightmodetext dark:text-darkmodetext text-center"> This website is not affiliated with, endorsed, sponsored, or specifically approved by Supercell. Supercell is not responsible for the operation or content of this site/application. Use of the trademarks and other intellectual property of Supercell is subject to Supercell&apos;s Fan Kit Agreement. </p>
