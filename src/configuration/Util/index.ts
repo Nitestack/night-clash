@@ -2,7 +2,6 @@ import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
-import getDatabaseConnection from "@util/databaseConnection";
 import getAPI from "@util/api";
 import type { AppDispatch, RootState } from "@util/types";
 import type { Client } from "clashofclans.js";
@@ -16,6 +15,8 @@ import { twMerge } from "tailwind-merge";
 import { actions } from "src/configuration/Actions/index";
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
+import connectDB from "@util/databaseConnection";
+import { toast } from "react-toastify";
 export default class Util {
     /*Classes*/
     public static ApiHandler = ApiHandler;
@@ -31,6 +32,7 @@ export default class Util {
         ...actions
     };
     /*Methods*/
+    public static toast = toast;
     /**
      * Perform an asynchronous HTTP (Ajax) request.
      * @param {string} url A string containing the URL to which the request is sent.
@@ -126,18 +128,10 @@ export default class Util {
         };
     };
     /**
-     * Whether the string is an email
-     * @param {string} string The string to test
-     */
-    public static isEmail(string: string) {
-        const emailRegex = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        return emailRegex.test(string);
-    };
-    /**
      * Connects to the MongoDB database or if there is an active connection it returns the cached connection
      */
-    public static async getConnection() {
-        return await getDatabaseConnection();
+    public static connectDB() {
+        return connectDB();
     };
     /**
      * Get's the Clash of Clans API Client
