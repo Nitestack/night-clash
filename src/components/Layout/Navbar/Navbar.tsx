@@ -1,12 +1,12 @@
 import type { ComponentProps, FC } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon, AdjustmentsIcon, InformationCircleIcon } from "@heroicons/react/outline";
-import NavbarLink from "@components/Navbar/NavbarLink";
-import NavbarPopover from "@components/Navbar/NavbarPopover";
-import NavbarAccount from "@components/Navbar/NavbarAccount";
-import NavbarHeader from "@components/Navbar/NavbarHeader";
+import NavbarLink from "@components/Layout/Navbar/NavbarLink";
+import NavbarPopover from "@components/Layout/Navbar/NavbarPopover";
+import NavbarAccount from "@components/Layout/Navbar/NavbarAccount";
+import NavbarHeader from "@components/Layout/Navbar/NavbarHeader";
 import { Fragment } from "react";
-import NavbarToggler from "@components/Navbar/NavbarToggler";
+import NavbarToggler from "@components/Layout/Navbar/NavbarToggler";
 import Motion from "@components/Utilities/Motion";
 import Center from "@components/Utilities/Center";
 
@@ -87,7 +87,7 @@ const tools: Array<{
 
 const Navbar: FC = () => {
     return ( 
-        <Popover id="navbar" className="z-50 sticky bg-lightmodeprimary dark:bg-darkmodeprimary border-b-2 border-primary transition-[1.4s] top-0">
+        <Popover id="navbar" className="z-40 sticky bg-lightmodeprimary dark:bg-darkmodeprimary border-b-2 border-primary transition-[1.4s] top-0">
             <div className="px-4 sm:px-6">
                 <Center className="justify-between py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">

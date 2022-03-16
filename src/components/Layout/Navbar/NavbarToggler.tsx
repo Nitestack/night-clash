@@ -3,9 +3,11 @@ import Toggler from "@components/Toggler";
 import Util from "@util/index";
 
 const NavbarToggler: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
+    const dispatch = Util.StateManagement.useDispatch();
     function changeMode() {
         return (checked: boolean) => {
             Util.setCookie("mode", checked ? "dark" : "light", 730, "/");
+            dispatch(Util.StateManagement.changeMode());
             if (checked) $(document.documentElement).addClass("dark");
             else $(document.documentElement).removeClass("dark");
         };
