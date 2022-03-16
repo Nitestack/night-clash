@@ -1,7 +1,6 @@
 import type { NextPageContext, NextComponentType, NextPage } from "next";
 import type { AppInitialProps, AppProps } from "next/app";
 import type { Session } from "next-auth";
-import type { UserWithoutPassword } from "@models/user";
 import type { LayoutProps } from "@components/Layout";
 import type axios from "axios";
 import type { AxiosRequestConfig } from "axios";
@@ -14,24 +13,6 @@ import { store } from "@actions/index";
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
-
-
-/* next-auth */
-
-/**
- * A session with custom props
- */
-export interface UserSession extends Session {
-    user?: UserWithoutPassword;
-};
-
-/**
- * The object returned of the `useSession()` function
- */
-export type SessionObject = { data: UserSession; status: "authenticated"; } 
-| { data: null; status: "loading"; } 
-| { data: UserSession; status: "authenticated"; } 
-| { data: null; status: "unauthenticated" | "loading"; }; 
 
 
 /* NextJS */
@@ -88,14 +69,14 @@ export interface ComponentConfiguration extends LayoutProps {
          * Will be ignored if `method` isn't `POST`
          * @param {object} data Data that can be accessed to parse into the body
          */
-        data?: (router: NextRouter, user?: UserWithoutPassword) => any
+        data?: (router: NextRouter, user?: any) => any
     };
     /**
      * A function that will be called after authentication
      * 
      * This function will be ignored if {@link authenticationRequired} is `false` or `undefined`
      */
-    afterAuthentication?: (session: UserSession, router: NextRouter) => void;
+    afterAuthentication?: (session: Session, router: NextRouter) => void;
     /**
      * If this is true, the loading screen will remain until the `query` object has properties
      * 
@@ -104,7 +85,7 @@ export interface ComponentConfiguration extends LayoutProps {
     queryRequired?: boolean;
 };
 
-export type CustomComponentType<InitialProps = {}, Props = {}, DataType = any> = NextComponentType<NextPageContext, InitialProps, Props & { data: DataType, session?: UserSession }> & ComponentConfiguration;
+export type CustomComponentType<InitialProps = {}, Props = {}, DataType = any> = NextComponentType<NextPageContext, InitialProps, Props & { data: DataType, session?: Session }> & ComponentConfiguration;
 
 /**
  * A component with configuration
