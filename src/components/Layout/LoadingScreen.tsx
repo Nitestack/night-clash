@@ -16,7 +16,7 @@ const LoadingScreen: FC = () => {
                 ))}
                 <div className={styles.ground}><div/></div>
             </div>
-            <small className="block absolute bottom-45 text-2xl sm:text-5xl text-lightmodetext dark:text-darkmodetext text-center"> {Util.Constants.websiteApplicationName} </small>
+            <small className="block absolute bottom-45 text-2xl sm:text-5xl text-lightmodetext dark:text-darkmodetext text-center"> {Util.Constants.APPLICATION_NAME} </small>
         </Center>
     );
 };
