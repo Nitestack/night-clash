@@ -21,7 +21,10 @@ if (!cached) {
 function getAxiosInstance() {
     if (cached.axiosInstance) return cached.axiosInstance;
     return cached.axiosInstance = axios.create({
-        baseURL: process.env.NEXTAUTH_URL
+        baseURL: process.env.NEXTAUTH_URL,
+        headers: {
+            "Content-Type": "application/json"
+        }
     });
 };
 
