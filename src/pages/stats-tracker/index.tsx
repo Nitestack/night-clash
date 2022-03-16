@@ -37,7 +37,7 @@ const Tab: FC<{
     function redirectToTracker(classID: string, element: string) {
         return () => {
             const tag = $(`#${classID}`).val() as string;
-            if (tag && tag.length < 12 && tag.length >= 7) {
+            if (tag && tag.length < Util.Constants.MAXED_TAG_LENGTH && tag.length >= Util.Constants.MIN_TAG_LENGTH) {
                 window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag.replace(/#/g, "")}${hash ? `#${hash}` : ""}`, "_blank");
             };
         };
