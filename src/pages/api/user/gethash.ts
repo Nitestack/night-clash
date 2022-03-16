@@ -5,8 +5,8 @@ import DatabaseManager from "@util/databaseManager";
 Util.connectDB();
 
 const GetHash: NextApiHandler = async (req, res) => {
+    const { email }= req.body;
     try {
-        const { email }= req.body;
         const user = await DatabaseManager.getUser({ email: email });
         if (!user) return Util.ApiHandler.sendError(res, 0, { errorMessage: "User not found!" });
         Util.ApiHandler.sendSuccess<{

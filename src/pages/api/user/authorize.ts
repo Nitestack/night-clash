@@ -6,8 +6,8 @@ import { sign } from "jsonwebtoken";
 Util.connectDB();
 
 const Authorize: NextApiHandler = async (req, res) => {
+    const credentials: Record<"email" | "hash", string> = req.body;
     try {
-        const credentials: Record<"email" | "hash", string> = req.body;
         const user = await DatabaseManager.getUser({ email: credentials.email });
         if (!user) return Util.ApiHandler.sendError(res, 0);
         //Creates a JWT token
@@ -22,6 +22,7 @@ const Authorize: NextApiHandler = async (req, res) => {
             role: user.role
         });
     } catch (err) {
+        console.log(err);
         Util.ApiHandler.sendError(res);
     };
 };
