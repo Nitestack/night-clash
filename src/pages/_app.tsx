@@ -42,14 +42,12 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         } else if (Component.adminRoleRequired) { //If admin role is required
             if (!isUser) signIn();
             else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) {
-                router.push("/404");
-                setDone(true);
+                router.push("/404").then(() => setDone(true));
             } else handleAuthentication();
         } else if (Component.noAuthenticationRequired) { //If the user wants to login or register
             // If authenticated already, redirect to /account
             if (isUser) {
-                router.push("/account");
-                setDone(true);
+                router.push("/account").then(() => setDone(true));
             } else setDone(true);
         } else handleAuthentication();
     }, Component.queryRequired ? [router, status] : [status]);
@@ -106,8 +104,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                         const redirectUrl: string | undefined = data.redirectUrl;
                         const errorMessage: string = data.errorMessage;
                         if (redirectUrl) {
-                            router.push(redirectUrl);
-                            setDone(true);
+                            router.push(redirectUrl).then(() => setDone(true));
                         } else Util.toast.error(errorMessage);
                     } else if (request) {
                         // Something happened in setting up the request that triggered an Error
