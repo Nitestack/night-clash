@@ -250,7 +250,6 @@ export default class Util {
         maxLevel: number,
         amount: number
     } | number {
-        //@ts-ignore
         return (village == "home" ? townHall : builderHall)[hallLevel - 1][this.toCamelCase(name)];
     };
     /**

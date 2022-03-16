@@ -78,7 +78,6 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     function handleAuthentication(session?: any | null) {
         //Function that will be executed after handling authentication
         if (Component.afterAuthentication) {
-            //@ts-ignore
             const returnValue = Component.afterAuthentication(session, router);
             //If the return value is `false`, it exits the function
             if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => setDone(true), minAnimationTime);

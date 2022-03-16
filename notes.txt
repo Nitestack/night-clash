@@ -1,9 +1,23 @@
 Everytime updating React
 - Go to node_modules/@types/react/index.d.ts and go to `HTMLAttributes` and add this line of code: "align?: "left" | "right" | "center" | "justify" | "char" | undefined;"
 ---------------------------------
-Edit Boom Beach API village fetch
 
-need to edit _app.tsx redirecting in error
+Register Rework
+
+
+Rework files: api/auth/update.ts, models/user.ts, actions/user
+
+Rework API files: => add try catch blocks
+
+Rework: register.tsx
+
+Error Handling for all API ROUTES (try catch block) and rework for those files
+
+
+total time or total costs with Array.reduce() or reduceRight()
+
+
+Edit Boom Beach API village fetch
 
 Town Hall levels
 
