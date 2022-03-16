@@ -1,16 +1,18 @@
-import errorSlicer from "@actions/error";
+import modeSlice from "@actions/mode";
 import { configureStore } from "@reduxjs/toolkit";
-import loadingSlice from "@actions/loading";
+import userSlice from "@actions/user";
 
 export const store = configureStore({
     devTools: process.env.NODE_ENV == "development" ? true : false,
     reducer: {
-        error: errorSlicer.reducer,
-        loading: loadingSlice.reducer
+        user: userSlice.reducer,
+        mode: modeSlice.reducer
     }
 });
 
+
+
 export const actions = {
-    ...errorSlicer.actions,
-    ...loadingSlice.actions
+    ...userSlice.actions,
+    ...modeSlice.actions
 };
