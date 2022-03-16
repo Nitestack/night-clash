@@ -155,17 +155,35 @@ const CocUpgradeTrackerPlayerVillage: FC<{
         };
     };
 
+    function setSeasonBoosts() {
+        return async () => {
+            const newBuilderBoost = $("#builderBoost").val() as string;
+            const newResearchBoost = $("#researchBoost").val() as string;
+            setSeasonBoostModalLoading(true);
+            await Util.ApiHandler.clientSideErrorHandler(async () => {
+                const response = await Util.Axios.post("/api/upgrade-tracker/clashofclans/seasonboost", {
+                    playerTag: tag,
+                    builderBoost: newBuilderBoost,
+                    researchBoost: newResearchBoost
+                });
+                if (response.status == 200) {
+                    setBuilderBoost(parseInt(newBuilderBoost.replace(/%/g, "")));
+                    setResearchBoost(parseInt(newResearchBoost.replace(/%/g, "")));
+                    setSeasonBoostModalLoading(false);
+                    closeSeasonBoostModal();
+                };
+            });
+        };
+    };
+
     function updatePlayer() {
-        return () => {
-            Util.jqueryAjax("/api/upgrade-tracker/clashofclans/apiupdate", {
-                method: "POST",
-                data: {
+        return async () => {
+            await Util.ApiHandler.clientSideErrorHandler(async () => {
+                const response = await Util.Axios.post("/api/upgrade-tracker/clashofclans/apiupdate", {
                     playerTag: tag,
                     village: village
-                },
-                success: ({ success }) => {
-                    if (success) location.reload();
-                }
+                });
+                if (response.status == 200) location.reload();
             });
         };
     };
@@ -236,25 +254,7 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                             onModalClose={closeSeasonBoostModal()}
                             title="Season Boosts"
                             description="Set season boosts by selecting the percentage for each category"
-                            onSubmit={() => {
-                                const newBuilderBoost = $("#builderBoost").val() as string;
-                                const newResearchBoost = $("#researchBoost").val() as string;
-                                setSeasonBoostModalLoading(true);
-                                Util.jqueryAjax("/api/upgrade-tracker/clashofclans/seasonboost", {
-                                    method: "POST",
-                                    data: {
-                                        playerTag: tag,
-                                        builderBoost: newBuilderBoost,
-                                        researchBoost: newResearchBoost,
-                                    },
-                                    success: () => {
-                                        setBuilderBoost(parseInt(newBuilderBoost.replace(/%/g, "")));
-                                        setResearchBoost(parseInt(newResearchBoost.replace(/%/g, "")));
-                                        setSeasonBoostModalLoading(false);
-                                        closeSeasonBoostModal();
-                                    }
-                                });
-                            }}>
+                            onSubmit={setSeasonBoosts()}>
                             <div className="grid grid-Columns-2">
                                 <div className="justify-center">
                                     <Center>
