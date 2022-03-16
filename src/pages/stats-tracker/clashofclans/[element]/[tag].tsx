@@ -58,7 +58,7 @@ ClashOfClansStatsTracker.afterAuthentication = (session, router) => {
         return false;
     };
     //Ensures element is either "players", "clans" or "clubs"
-    if (!["players", "clans", "clubs"].includes(element)) {
+    if (!["players", "clans"].includes(element)) {
         router.push("/stats-tracker");
         return false;
     };
