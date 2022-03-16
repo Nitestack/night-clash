@@ -1,9 +1,9 @@
-import type { NextPageWithConfiguration, UserSession } from "@util/types";
+import type { NextPageWithConfiguration } from "@util/types";
 import { useSession } from "next-auth/react";
 import Util from "@util/index";
 
 const AccountPage: NextPageWithConfiguration = () => {
-    const { data: session } = useSession() as { data: UserSession };
+    const { data: session } = useSession();
     return (
         <>
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -15,9 +15,9 @@ const AccountPage: NextPageWithConfiguration = () => {
                     <dl>
                         <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500"> Username </dt>
-                            <dd className="mt-1 text-lg font-coc-description text-gray-900 sm:mt-0 sm:col-span-2"> {session.user?.username} </dd>
+                            <dd className="mt-1 text-lg font-coc-description text-gray-900 sm:mt-0 sm:col-span-2"> {session?.user?.name} </dd>
                         </div>
-                        {session.user?.role == Util.Constants.ADMIN_ROLE_ID ? <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        {session?.user?.role == Util.Constants.ADMIN_ROLE_ID ? <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500">
                                 Role
                             </dt>
@@ -25,7 +25,7 @@ const AccountPage: NextPageWithConfiguration = () => {
                         </div> : undefined}
                         <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt className="text-sm font-medium text-gray-500"> E-Mail Address </dt>
-                            <dd className="mt-1 text-lg font-coc-description text-gray-900 sm:mt-0 sm:col-span-2"> {session.user?.email} </dd>
+                            <dd className="mt-1 text-lg font-coc-description text-gray-900 sm:mt-0 sm:col-span-2"> {session?.user?.email} </dd>
                         </div>
                     </dl>
                 </div>
