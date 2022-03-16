@@ -1,0 +1,31 @@
+.xp {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    -webkit-text-stroke: 0;
+    font-weight: bold;
+}
+.xp.coc {
+    background-image: url("/Images/Clash of Clans/xp.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    padding-top: 12px;
+}
+
+.xp.cr {
+    background-image: url("/Images/Clash Royale/xp.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    padding-top: 12px;
+}
+.xp.cr-max {
+    background-image: url("/Images/Clash Royale/xp.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    padding-top: 12px;
+}

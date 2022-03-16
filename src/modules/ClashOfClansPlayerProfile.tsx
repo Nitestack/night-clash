@@ -8,6 +8,7 @@ import styles from "@modules/ClashOfClansPlayerProfile.module.scss";
 import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
 import ClashOfClansLabels from "./ClashOfClansLabels";
 import Center from "@components/Utilities/Center";
+import XP from "@modules/XP";
 
 const ClashOfClansPlayerProfile: FC<{
     player: APIPlayer;
@@ -18,7 +19,7 @@ const ClashOfClansPlayerProfile: FC<{
             <Grid className="grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1">
                 <div className="pb-2 lg:pb-0">
                     <Center>
-                        <div className={Util.classNames(styles.xp, "my-2 mr-2")}>{player.expLevel}</div>
+                        <XP expLevel={player.expLevel} className="my-2 mr-2"/>
                         <div>
                             <p className="font-bold">{player.name}</p>
                             <p className="text-[#BBBBBD] font-coc-description font-bold">{player.tag}</p>

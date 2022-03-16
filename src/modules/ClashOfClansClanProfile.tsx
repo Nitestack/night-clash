@@ -5,11 +5,11 @@ import Grid from "@components/Utilities/Grid";
 import Tabs from "@components/Tabs";
 import Button from "@components/Elements/Button";
 import Util from "@util/index";
-import ClashOfClansPlayerProfileStyles from "@modules/ClashOfClansPlayerProfile.module.scss";
 import ClashOfClansAchievementStyles from "@modules/ClashOfClansAchievement.module.scss";
 import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
 import ClashOfClansLabels from "./ClashOfClansLabels";
 import Center from "@components/Utilities/Center";
+import XP from "@modules/XP";
 
 const ClashOfClansClanProfile: FC<{
     clan: APIClan;
@@ -182,7 +182,7 @@ const ClashOfClansClanMember: FC<{
                     <p className="mr-2">{rank}.</p>
                 </Center>
                 <Center>
-                    <div className={Util.classNames(ClashOfClansPlayerProfileStyles.xp, "justify-self-center")}>{member.expLevel}</div>
+                    <XP expLevel={member.expLevel} className="justify-self-center"/>
                     {village == "home" ? <img className="w-14" src={member.league ? member.league.iconUrls.medium : "/Images/Clash of Clans/Home/no-league.png"}/> : undefined}
                 </Center>
                 <div className={Util.classNames("justify-self-left", village == "home" ? "col-span-2" : "col-span-4")}>
