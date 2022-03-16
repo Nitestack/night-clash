@@ -10,7 +10,7 @@ const Example: NextApiHandler = async (req, res) => {
         errorMessage: "Couldn't fetch the player in the Clash of Clans API!"
     });
     const player = response.data;
-    await Util.getConnection();
+    await Util.connectDB();
     const playerSchema = await DatabaseManager.ClashOfClansVillage.findOne({ playerTag: playerTag });
     if (!playerSchema) return Util.ApiHandler.sendError(res, 1, {
         errorMessage: "Couldn't save player's new data in the database!"

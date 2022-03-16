@@ -5,7 +5,7 @@ import DatabaseManager from "@util/databaseManager";
 
 const SeasonBoost: NextApiHandler = async (req, res) => {
     const { playerTag, builderBoost, researchBoost } = req.body;
-    await Util.getConnection();
+    await Util.connectDB();
     const playerSchema = await DatabaseManager.ClashOfClansVillage.findOneAndUpdate({ 
         playerTag: playerTag
     }, {
