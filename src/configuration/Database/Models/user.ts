@@ -1,31 +1,34 @@
 import Util from "@util/index";
 import mongoose from "mongoose";
 import type { Model, Document } from "mongoose";
+import validator from "validator";
 
 interface ActualUser {
     //The user's name
-    username: string;
+    name: string;
     //The user's email
     email: string;
     //The user's role: `user` | `admin`
     role: string;
     //The user's Clash of Clans villages
     clashOfClansVillages?: Array<string>;
+    //The jwt token => cookie
+    emailToken?: string;
 };
 
-export type User = ActualUser & { id: string; hash: string; };
-
-export type UserWithoutPassword = ActualUser & { _id: string; };
-
-type DocumentUser = ActualUser & { 
+export type UserDocument = Document & ActualUser & { 
     //The user's password encrypted
     hash: string; 
+    //
+    resetToken?: string;
+    //
+    updates?: string;
+    //
+    validEmail: "not" | string;
 };
 
-export type UserDocument = Document & DocumentUser;
-
 export default mongoose.models.user as Model<UserDocument> || mongoose.model<UserDocument>("user", new mongoose.Schema({
-    username: {
+    name: {
         type: String,
         required: true,
         unique: true
@@ -33,7 +36,8 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: [validator.isEmail, "Please enter a valid E-Mail adress"]
     },
     hash: {
         type: String,
@@ -46,5 +50,13 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
     },
     clashOfClansVillages: [{
         type: String
-    }]
+    }],
+    resetToken: {
+        type: String
+    },
+    updates: {
+        type: String
+    },
+    validEmail: { type: String, default: "not" },
+    emailToken: { type: String }
 }));
