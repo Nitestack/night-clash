@@ -9,12 +9,12 @@ const Register: NextApiHandler = async (req, res) => {
         //Check for User validaty
         const userCheck = await DatabaseManager.getUser({ name: req.body.name });
         if (userCheck) return Util.ApiHandler.sendError(res, 0, {
-            errorMessage: "Username already taken"
+            errorMessage: "Username already taken!"
         });
         //Check for Email validaty
         const emailCheck = await DatabaseManager.getUser({ email: req.body.email });
         if (emailCheck) return Util.ApiHandler.sendError(res, 0, {
-            errorMessage: "E-Mail already taken"
+            errorMessage: "E-Mail already taken!"
         });
         //Creates new user
         const newUser = new DatabaseManager.User({
