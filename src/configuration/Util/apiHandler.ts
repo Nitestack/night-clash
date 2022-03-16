@@ -13,15 +13,15 @@ export default class ApiHandler {
      * @param {number} error `0` Bad Request (`400`) | `1` Internal Server Error (`500`)
      */
     public static sendError(res: NextApiResponse, error?: 0 | 1, response?: { errorMessage?: string, redirectUrl?: string }) {
-        if (!error) error = 0;
+        if (!error) error = 1;
         if (!response) response = {};
-        if (!response.errorMessage) response.errorMessage = error == 0 ? "Bad Request" : "Internal Server Error";
+        if (!response.errorMessage) response.errorMessage = error == 1 ? "An error happened on the server! Please try again!" : "Something wrent wrong! Please try again!";
         const returnResponse = ApiHandler.setStatusCode<{
             errorMessage?: string,
             redirectUrl?: string
-        }>(res, error == 0 ? 400 : 500);
+        }>(res, error == 1 ? 500 : 400);
         returnResponse.statusMessage = response.errorMessage;
-        return returnResponse.json({ success: false });
+        return returnResponse.json({ success: false, ...response });
     };
     /**
      * Returns an successful json object to the client
