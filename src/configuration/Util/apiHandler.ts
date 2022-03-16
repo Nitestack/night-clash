@@ -1,5 +1,7 @@
 import type { NextApiResponse } from "next";
 import type { NextApiCustomHandlerProps } from "@util/types";
+import { toast } from "react-toastify";
+import type { NextRouter } from "next/router";
 
 export default class ApiHandler {
     private static setStatusCode<T = any>(res: NextApiResponse<NextApiCustomHandlerProps & T>, code: number) {
@@ -31,5 +33,35 @@ export default class ApiHandler {
             success: true,
             ...sendObject
         });
+    };
+    /**
+     * Handles errors of requests on the client side
+     * 
+     * Edit the error handler in `src/pages/_app.tsx` too  
+     * @param {Function} exeCute The function to execute (asynchronously) 
+     * @param {NextRouter} router The Next Router object 
+     */
+    public static async clientSideErrorHandler(exeCute: Function, router?: NextRouter) {
+        try {
+            await exeCute();
+        } catch (error: any) {
+            const { response, request } = error;
+            if (response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                const { data } = response;
+                const redirectUrl: string | undefined = data.redirectUrl;
+                const errorMessage: string = data.errorMessage;
+                if (redirectUrl && router) {
+                    router.push(redirectUrl);
+                } else toast.error(errorMessage);
+            } else if (request) {
+                // Something happened in setting up the request that triggered an Error
+                toast.error("An error happened on the server! Please try again!");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                toast.error("An error happened on the server! Please try again!");
+            };
+        };
     };
 };
