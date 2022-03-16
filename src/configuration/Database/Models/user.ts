@@ -1,7 +1,6 @@
 import Util from "@util/index";
 import mongoose from "mongoose";
 import type { Model, Document } from "mongoose";
-import validator from "validator";
 
 interface ActualUser {
     //The user's name
@@ -12,8 +11,6 @@ interface ActualUser {
     role: string;
     //The user's Clash of Clans villages
     clashOfClansVillages?: Array<string>;
-    //The jwt token => cookie
-    emailToken?: string;
 };
 
 export type UserDocument = Document & ActualUser & { 
@@ -23,8 +20,6 @@ export type UserDocument = Document & ActualUser & {
     resetToken?: string;
     //
     updates?: string;
-    //
-    validEmail: "not" | string;
 };
 
 export default mongoose.models.user as Model<UserDocument> || mongoose.model<UserDocument>("user", new mongoose.Schema({
@@ -36,8 +31,7 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
     email: {
         type: String,
         required: true,
-        unique: true,
-        validate: [validator.isEmail, "Please enter a valid E-Mail adress"]
+        unique: true
     },
     hash: {
         type: String,
@@ -49,14 +43,13 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
         default: Util.Constants.USER_ROLE_ID
     },
     clashOfClansVillages: [{
-        type: String
+        type: String,
+        unique: true
     }],
     resetToken: {
         type: String
     },
     updates: {
         type: String
-    },
-    validEmail: { type: String, default: "not" },
-    emailToken: { type: String }
+    }
 }));

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
 import connectDB from "@util/databaseConnection";
 import { toast } from "react-toastify";
+import { hashSync, compareSync } from "bcryptjs";
 export default class Util {
     /*Classes*/
     public static ApiHandler = ApiHandler;
@@ -33,6 +34,17 @@ export default class Util {
     };
     /*Methods*/
     public static toast = toast;
+    /**
+     * Encryptes a password
+     * @param {string} password The password 
+     */
+    public static encryptPassword(password: string) {
+        return hashSync(password, 8);
+    };
+    public static comparePasswords(password: string, hash: string) {
+        return compareSync(password, hash);
+    };
+
     /**
      * Perform an asynchronous HTTP (Ajax) request.
      * @param {string} url A string containing the URL to which the request is sent.

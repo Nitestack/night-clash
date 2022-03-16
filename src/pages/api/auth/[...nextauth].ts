@@ -29,7 +29,7 @@ export default NextAuth({
                 // (i.e., the request IP address)
                 const response = await Util.Axios.post("/api/user/authorize", {
                     email: credentials?.email,
-                    password: credentials?.password
+                    hash: credentials?.hash
                 });
                 const user = response.data;
                 // If no error and we have user data, return it
