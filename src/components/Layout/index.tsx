@@ -1,10 +1,11 @@
 import type { FC } from "react";
 import Head from "next/head";
 import Footer from "@components/Layout/Footer";
-import Navbar from "src/components/Navbar/Navbar";
+import Navbar from "@components/Layout/Navbar/Navbar";
 import Script from "next/script";
 import Util from "src/configuration/Util/index";
 import Banner from "@components/Banner";
+import { ToastContainer } from "react-toastify";
 
 export interface LayoutProps {
     title?: string;
@@ -17,6 +18,7 @@ export interface LayoutProps {
 };
 
 const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts, meta }) => {
+    const mode = Util.StateManagement.useSelector(state => state.mode);
     return (
         <>
             <Head>
@@ -33,6 +35,19 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 desktopText="This website is currently in BETA! Help us by giving feedback, reporting bugs or suggesting features!"
                 mobileText="This website is in BETA!"/>
                 <Navbar/>
+                <ToastContainer
+                    className="z-50"
+                    theme={mode}
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable={false}
+                    pauseOnHover
+                />
                 <main>
                     {/*JQUERY*/}
                     <Script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossOrigin="anonymous"/>
