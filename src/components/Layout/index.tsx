@@ -18,7 +18,6 @@ export interface LayoutProps {
 };
 
 const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts, meta }) => {
-    const mode = Util.StateManagement.useSelector(state => state.mode);
     return (
         <>
             <Head>
@@ -37,7 +36,6 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                 <Navbar/>
                 <ToastContainer
                     className="z-50"
-                    theme={mode}
                     position="top-right"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -47,6 +45,9 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                     pauseOnFocusLoss
                     draggable={false}
                     pauseOnHover
+                    bodyClassName="bg-lightmodeprimary dark:bg-darkmodeprimary font-coc"
+                    toastClassName="bg-lightmodeprimary dark:bg-darkmodeprimary"
+                    limit={Util.isMobile() ? 1 : 3}
                 />
                 <main>
                     {/*JQUERY*/}
