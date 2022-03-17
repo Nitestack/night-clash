@@ -1,6 +1,7 @@
 import ms from "ms";
 import prettyMS from "pretty-ms";
 import humanizer from "humanize-duration";
+import { camelCase, camelCaseTransformMerge } from "camel-case";
 
 export function convertNumber(number: number) {
     if (number < 1000) return number.toString();
@@ -29,5 +30,7 @@ export function convertMilliseconds(timeInMilliseconds: number, short?: boolean,
 };
 
 export function toCamelCase(name: string) {
-    return `${name[0].toLowerCase()}${name.slice(1).replace(/ /g, "").replace(/-/g, "_").replace(/\./g, "").replace(/'/g, "")}`;
+    return camelCase(name, {
+        transform: camelCaseTransformMerge
+    });
 };
