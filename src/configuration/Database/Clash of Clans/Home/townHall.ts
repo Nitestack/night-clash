@@ -960,7 +960,7 @@ export const townHall: Array<{
         amount: 1,
         maxLevel: 3  
     },
-    x_Bow: { 
+    xBow: { 
         amount: 2,
         maxLevel: 3 
     },
@@ -1196,7 +1196,7 @@ export const townHall: Array<{
         amount: 2,
         maxLevel: 4 
     },
-    x_Bow: { 
+    xBow: { 
         amount: 3,
         maxLevel: 4 
     },
@@ -1456,7 +1456,7 @@ export const townHall: Array<{
         amount: 2,
         maxLevel: 6 
     },
-    x_Bow: { 
+    xBow: { 
         amount: 4,
         maxLevel: 5 
     },
@@ -1740,7 +1740,7 @@ export const townHall: Array<{
         amount: 2,
         maxLevel: 7 
     },
-    x_Bow: { 
+    xBow: { 
         amount: 4,
         maxLevel: 6 
     },
@@ -2053,7 +2053,7 @@ export const townHall: Array<{
         amount: 2,
         maxLevel: 8 
     },
-    x_Bow: { 
+    xBow: { 
         amount: 4,
         maxLevel: 8 
     },
@@ -2402,7 +2402,7 @@ export const townHall: Array<{
         amount: 2,
         maxLevel: 9 
     },
-    x_Bow: { 
+    xBow: { 
         amount: 4,
         maxLevel: 9
     },
