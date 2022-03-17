@@ -15,23 +15,6 @@ export default class ClashOfClansUpgradeTracker {
         return !!hall[toCamelCase(item)];
     };
     /**
-     * Gets the levels of one item type
-     * @param {string} item The item 
-     */
-    public static getLevelArray(item: string, village: { [key: string]: string }, player: APIPlayer) {
-        const numberArray: Array<number> = []; 
-        for (const key of Object.keys(village)) { 
-            if (item.includes("Giga")) {
-                //@ts-ignore
-                numberArray.push(player.townHallWeaponLevel); 
-                break; 
-            };
-            if (key.toLowerCase().includes("xbow") && item.toLowerCase() == "x-bow") numberArray.push(parseInt(village[key])); 
-            else if (key.slice(0, -1).replace(/([A-Z]+)/g, ' $1').trim().toLowerCase() == item.replace(/'/g, "").toLowerCase()) numberArray.push(parseInt(village[key])); 
-        };
-        return numberArray;
-    };
-    /**
     * Creates an edited village structure object
     * @param {object} structures The structures
     * @param {Player} player The player
@@ -47,7 +30,7 @@ export default class ClashOfClansUpgradeTracker {
                 if (!player.spells) return structures;
                 for (let i = Coc.homeNormalSpellsArray.length - 1; i >= 0; i--) {
                     if (player.spells.find(spell => spell.name.toLowerCase() == Coc.homeNormalSpellsArray[i].toLowerCase())) {
-                        structures["SpellFactory1"] = `${i + 1}`;
+                        structures.spellFactory["1"] = i + 1;
                         break;
                     };
                 };
@@ -57,7 +40,7 @@ export default class ClashOfClansUpgradeTracker {
                 if (!(player.spells.filter(unit => Coc.homeDarkSpellsArray.includes(unit.name)) || []).length) return structures;
                 for (let i = Coc.homeDarkSpellsArray.length - 1; i >= 0; i--) {
                     if (player.spells.find(spell => spell.name.toLowerCase() == Coc.homeDarkSpellsArray[i].toLowerCase())) {
-                        structures["DarkSpellFactory1"] = `${i + 1}`;
+                        structures.darkSpellFactory["1"] = i + 1;
                         break;
                     };
                 };
@@ -67,7 +50,7 @@ export default class ClashOfClansUpgradeTracker {
                 if (!(player.troops.filter(unit => Coc.homeSiegeMachinesArray.includes(unit.name)) || []).length) return structures;
                 for (let i = Coc.homeSiegeMachinesArray.length - 1; i >= 0; i--) {
                     if (player.troops.find(siegeMachine => siegeMachine.name.toLowerCase() == Coc.homeSiegeMachinesArray[i].toLowerCase())) {
-                        structures["Workshop1"] = `${i + 1}`;
+                        structures.workshop["1"] = i + 1;
                         break;
                     };
                 };
@@ -77,55 +60,45 @@ export default class ClashOfClansUpgradeTracker {
                 if (!(player.troops.filter(unit => Coc.homePetsArray.includes(unit.name)) || []).length) return structures;
                 for (let i = Coc.homePetsArray.length - 1; i >= 0; i--) {
                     if (player.troops.find(pet => pet.name.toLowerCase() == Coc.homePetsArray[i].toLowerCase())) {
-                        structures["PetHouse1"] = `${i + 1}`;
+                        structures.petHouse["1"] = i + 1;
                         break;
                     };
                 };
             };
             if (player.townHallLevel >= 14) {
-                if (parseInt(structures["Builder"] as string) < 5) {
-                    structures["BuildersHut5"] = "0";
-                    if (parseInt(structures["Builder"] as string) < 4) {
-                        structures["BuildersHut4"] = "0";
-                        if (parseInt(structures["Builder"] as string) < 3) structures["BuildersHut3"] = "0";
+                if (Object.keys(structures.builder).length < 5) {
+                    structures.builders["5"] = 0;
+                    if (Object.keys(structures.builder).length < 4) {
+                        structures.builders["4"] = 0;
+                        if (Object.keys(structures.builder).length < 3) structures.builder["3"] = 0;
                     };
                 };
-                if (structures["BuildersHut1"] == "0") structures["BuildersHut1"] = "1";
-                if (structures["BuildersHut2"] == "0") structures["BuildersHut2"] = "1";
+                if (structures.builder["1"] == 0) structures.builder["1"] = 1;
+                if (structures.builder["2"] == 0) structures.builder["2"] = 1;
             };
         } else {
             //Troops are unlocked immediately at BH1
             for (let i = Coc.builderTroopsArray.length - 1; i >= 0; i--) {
                 if (player.troops.find(troop => troop.name.toLowerCase() == Coc.builderTroopsArray[i].toLowerCase() && troop.village == "builderBase")) {
-                    structures["BuilderBarracks1"] = `${i + 1}`;
+                    structures.builderBarracks["1"] = i + 1;
                     break;
                 };
             };
         };
         if (settingUpWalls) {
             const wallObject: {
-                [key: string]: string;
-            } = {};
-            for (const structureKey of Object.keys(structures)) {
-                //If it isn't a Wall level
-                if (!structureKey.includes("Wall")) continue;
-                else if (structures[structureKey] == "0") {
-                    delete structures[structureKey];
-                    continue;
-                };
-                wallObject[structureKey.replace(/Wall/g, "")] = structures[structureKey] as string;
-                delete structures[structureKey];
-            };
+                [key: string]: number;
+            } = structures.walls;
             let wallPieces = 0;
-            for (const amount of Object.values(wallObject)) wallPieces += parseInt(amount as string);
+            for (const amount of Object.values(wallObject)) wallPieces += amount;
             if (village == "home" || (village == "builder" && player.builderHallLevel)) {
                 const totalPossibleWallAmount = townHall[player.townHallLevel - 1].wall.amount;
-                if (wallPieces < totalPossibleWallAmount) wallObject["0"] = `${totalPossibleWallAmount - wallPieces}`;
+                if (wallPieces < totalPossibleWallAmount) wallObject["0"] = totalPossibleWallAmount - wallPieces;
             } else if (village == "builder" && player.builderHallLevel) {
                 const totalPossibleWallAmount = typeof builderHall[player.builderHallLevel - 1].wall == "number" ? builderHall[player.builderHallLevel - 1].wall as number : (builderHall[player.builderHallLevel - 1].wall as { amount: number; maxLevel: number; }).amount;
-                if (wallPieces < totalPossibleWallAmount) wallObject["0"] = `${totalPossibleWallAmount - wallPieces}`;
+                if (wallPieces < totalPossibleWallAmount) wallObject["0"] = totalPossibleWallAmount - wallPieces;
             };
-            structures["Walls"] = wallObject;
+            structures.walls = wallObject;
         };
         return structures;
     };
