@@ -171,6 +171,7 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                     setResearchBoost(parseInt(newResearchBoost.replace(/%/g, "")));
                     setSeasonBoostModalLoading(false);
                     closeSeasonBoostModal();
+                    Util.toast.success("Successfully set season boosts!");
                 };
             });
         };
@@ -183,7 +184,10 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                     playerTag: tag,
                     village: village
                 });
-                if (response.status == 200) location.reload();
+                if (response.status == 200) {
+                    Util.toast.success("Successfully updated the player!");
+                    location.reload();
+                };
             });
         };
     };
