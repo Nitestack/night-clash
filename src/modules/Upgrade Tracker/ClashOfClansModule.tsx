@@ -21,10 +21,11 @@ const ClashOfClansModule: FC<{
     type: "Pet" | "Siege Machine" | "Spell" | "Dark Troop",
     playerSchema: ClashOfClansVillage
 }> = ({ type, village, playerSchema }) => {
+    //The array to iterate through the items
     let iterationArray: Array<string>;
     const { player, homeVillage, builderBase } = playerSchema;
     const { townHallLevel, builderHallLevel } = player;
-    const database = (village == "home" ? homeVillage : builderBase) as { [key: string]: string };
+    const database = (village == "home" ? homeVillage : builderBase);
     const { homeDefensesArray, builderDefensesArray, homeTrapsArray, builderTrapsArray, homeResourcesArray, builderResourcesArray, homeArmyArray, builderArmyArray, homeHeroesArray, homePetsArray, homeSpellsArray, homeSiegeMachinesArray, homeTroopsArray, builderTroopsArray, homeDarkTroopsArray, laboratoryArray } = Util.Constants.CoC;
     switch (type) {
         case "Defense":
@@ -62,18 +63,21 @@ const ClashOfClansModule: FC<{
             break;
     };
 
+    //Gets the lowest level and returns a list of prices until max level
     function getPrices(item: string, maxedAmount: number, maxedLevel: number, lowestLevel: number, itemCosts: Base) {
+        //Array that will be mapped and returned (each individual level)
         const prices: Array<JSX.Element> = [];
+        //goes through all levels (Army Camp => buying more Army Camps in the Builder Base increases the cost, maximum level of 1)
         for (let i = 0; i < (village == "builder" && item == "Army Camp" ? maxedAmount :  maxedLevel) - lowestLevel; i++) {
+            //The level
             const elementLevel = itemCosts.levels[lowestLevel + i];
-            //@ts-ignore
+            //If there is an unlock text
             if (elementLevel.text) {
                 prices.push(
                     <div className="col-span-2 md:col-span-3 text-red-600 text-center">{elementLevel.text}</div>
                 );
             } else {
-                //@ts-ignore
-                //If the Laboratory/Star Laboratory is too low for the troop upgrade
+                //@ts-ignore If the Laboratory/Star Laboratory is too low for the troop upgrade
                 if (laboratoryArray.includes(item) && elementLevel.requiredLabLevel > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0)) {
                     prices.push(
                         <Center className="col-span-2 md:col-span-3">
@@ -86,7 +90,7 @@ const ClashOfClansModule: FC<{
                         <>
                             <Center className="whitespace-nowrap justify-self-center col-span-2 md:col-span-1 md:justify-self-start text-xs sm:text-sm md:text-base">{village == "builder" && item == "Army Camp" ? "" : "Lv."} {lowestLevel + i + 1}{village == "builder" && item == "Army Camp" ? "." : ""}</Center>
                             <Center className="justify-self-center">
-                                <div className="text-right text-xs sm:text-sm md:text-base">{item == "Builder's Hut" && lowestLevel + i + 1 == 1 ? (parseInt(database.Builder) == 4 ? "2k" : (parseInt(database.Builder) == 3 ? "1k & 2k" : "500 & 1k & 2k")) : Util.convertNumber(elementLevel.calculateSeasonBoostCosts(playerSchema[laboratoryArray.includes(item) || homePetsArray.includes(item) ? "researchSeasonBoost" : "builderSeasonBoost"]))}</div>
+                                <div className="text-right text-xs sm:text-sm md:text-base">{item == "Builder's Hut" && lowestLevel + i + 1 == 1 ? (Object.keys(database.Builder).length == 4 ? "2k" : (Object.keys(database.Builder).length == 3 ? "1k & 2k" : "500 & 1k & 2k")) : Util.convertNumber(elementLevel.calculateSeasonBoostCosts(playerSchema[laboratoryArray.includes(item) || homePetsArray.includes(item) ? "researchSeasonBoost" : "builderSeasonBoost"]))}</div>
                                 {elementLevel.costType == "builderGoldAndElixir" || elementLevel?.costType == "goldAndElixir" ? 
                                 <img className="w-6" src="/Images/Clash of Clans/Home/Gold and Elixir.png"/> : 
                                 <img className="w-6" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/${Util.toCapitalize(elementLevel?.costType.replace(/([A-Z]+)/g, ' $1').trim())}.png`}/>}
@@ -106,9 +110,13 @@ const ClashOfClansModule: FC<{
         );
     };
 
+    //Gets all levels of the item that the player
     function getLevels(item: string, levels: Array<number>, itemCosts: Base, maxedLevel: number) {
+        //Array that will be mapped and returned (each individual level)
         const levelElements: Array<JSX.Element> = [];
+        //Index indicates the id of the building
         let index = 1;
+        //Loop through all levels
         for (const level of levels) {
             const building = (village == "home" ? playerSchema.homeVillageBuilder : playerSchema.builderBaseBuilder).find(building => building.name.toLowerCase() == item.toLowerCase() && building.id == index + 1);
             const lab = (village == "home" ? playerSchema.homeLab : playerSchema.builderLab).find(unit => unit.name.toLowerCase() == item.toLowerCase());
@@ -132,7 +140,7 @@ const ClashOfClansModule: FC<{
                                     <Center>
                                         <CheckIcon className="w-6 md:w-10"/>
                                     </Center>
-                                </Button> : (laboratoryArray.includes(item) ? (level == 0 || itemCosts.levels[level - 1].requiredLabLevel || 1 > (parseInt(database[village == "home" ? "Laboratory1" : "StarLaboratory1"]) || 0) ? 
+                                </Button> : (laboratoryArray.includes(item) ? (level == 0 || itemCosts.levels[level - 1].requiredLabLevel || 1 > (database[village == "home" ? "laboratory" : "starLaboratory"]["1"] || 0) ? 
                                 <Button disabled className="p-1 bg-red-600 h-10 w-10 sm:w-12 sm:h-12 md:w-16 md:h-16">
                                     <Center>
                                         <LockClosedIcon className="w-6 md:w-10"/>
@@ -177,22 +185,26 @@ const ClashOfClansModule: FC<{
                 //@ts-ignore
                 const maxedLevel: number = village == "builder" && item == "Army Camp" ? 1 : hallItem.maxLevel || player.builderHallLevel;
                 //@ts-ignore
-                const ultimateMaxedLevel: number = maxedHallItem.maxedLevel || builderHall.length;
+                const ultimateMaxedLevel: number = item.toLowerCase().includes("giga") ? maxedLevel : maxedHallItem.maxedLevel || builderHall.length;
+                
                 //Levels of the item (multiple building levels or single troop level)
                 let levels: Array<number> = [];
                 if (["Troop", "Dark Troop", "Spell", "Siege Machine", "Hero", "Pet"].includes(type)) {
                     const unit = player[["Troop", "Dark Troop", "Siege Machine"].includes(type) ? "troops" : (["Hero", "Pet"].includes(type) ? "heroes" : "spells")].find(element => element.name.toLowerCase() == item.toLowerCase() && element.village.toLowerCase().includes(village));
                     if (unit) levels.push(unit.level);
                     else levels.push(0);
+                } else if (item.toLowerCase().includes("giga")) {
+                    //@ts-ignore
+                    levels = [player.townHallWeaponLevel];
                 } else {
-                    levels = Util.CocUpgradeTracker.getLevelArray(item, database as { [key: string]: string }, player);
+                    levels = Object.values(database[Util.toCamelCase(item)] || {});
                     if (levels.length < maxedAmount) for (let i = levels.length; i < maxedAmount; i++) levels.push(0);
                 };
                 const lowestLevel = Util.min(levels);
                 rows.push(
                     <>
                         <Center className="flex-col">   
-                            <p className="text-center text-xs sm:text-lg md:text-xl">{item.includes("Giga") && item.includes("Giga Inferno") ? item.replace(/1/g, "").replace(/2/g, "") : item}</p>
+                            <p className="text-center text-xs sm:text-lg md:text-xl">{item.toLowerCase().includes("giga inferno") ? item.replace(/1/g, "").replace(/2/g, "") : item}</p>
                             <Center>
                                 {!(item == "Army Camp" && village == "builder") ? 
                                 <p className="font-coc-description text-green-500 text-xl whitespace-nowrap text-center">Level {maxedLevel}</p> : undefined}
@@ -206,18 +218,18 @@ const ClashOfClansModule: FC<{
                         </Grid>
                         <Grid className={Util.classNames("md:col-span-2 md:grid-cols-3 w-full gap-1 border-solid border-lightmodetext dark:border-darkmodetext border-r border-b", iterationArray.indexOf(item) == 0 ? "border-t" : "")}>
                             {lowestLevel == maxedLevel ? 
-                            <>
+                            <Center className="md:col-span-3">
                                 {village == "builder" && item == "Army Camp" ? 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">{builderHallLevel || 1 >= 8 ? "Maximum amount of buildings reached" : "Maximum amount of buildings reached for your BH level"}</p>
-                                : ((lowestLevel == maxedLevel && item.includes("Giga")) || lowestLevel == ultimateMaxedLevel ? 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">
+                                    <p className="text-center text-green-500 font-xl font-coc-description">{builderHallLevel || 1 >= 8 ? "Maximum amount of buildings reached" : "Maximum amount of buildings reached for your BH level"}</p>
+                                : (lowestLevel == ultimateMaxedLevel ? 
+                                    <p className="text-center text-green-500 font-xl font-coc-description">
                                         Maximum level reached
                                     </p> : 
-                                    <p className="md:col-span-3 text-center text-green-500 font-xl font-coc-description">
+                                    <p className="text-center text-green-500 font-xl font-coc-description">
                                         Maximum level reached for your {village == "home" ? "T" : "B"}H level!
                                     </p>)
                                 }
-                            </> : 
+                            </Center> : 
                             <>{getPrices(item, maxedAmount, maxedLevel, lowestLevel, itemCosts)}</>}
                         </Grid>
                     </>
