@@ -1,8 +1,8 @@
 import "@styles/fonts.scss";
 import "@styles/brawlstars.scss";
 import "prismjs/themes/prism-okaidia.min.css";
-import "@styles/globals.scss";
 import "react-toastify/dist/ReactToastify.min.css";
+import "@styles/globals.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
 import Layout from "@components/Layout/index";
 import { StrictMode, useEffect, useState } from "react";
@@ -47,7 +47,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         } else if (Component.noAuthenticationRequired) { //If the user wants to login or register
             // If authenticated already, redirect to /account
             if (isUser) {
-                window.location.href = "/account";
+                window.location.href = router.query.callBackUrl ? router.query.callBackUrl as string : "/account";
             } else setDone(true);
         } else handleAuthentication();
     }, Component.queryRequired ? [router, status] : [status]);
