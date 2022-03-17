@@ -18,6 +18,8 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import connectDB from "@util/databaseConnection";
 import { toast } from "react-toastify";
 import { hashSync, compareSync } from "bcryptjs";
+import Emitter from "@util/Emitter";
+
 export default class Util {
     /*Classes*/
     public static ApiHandler = ApiHandler;
@@ -32,6 +34,7 @@ export default class Util {
         useSelector: useSelector,
         ...actions
     };
+    public static Emitter = Emitter;
     /*Methods*/
     public static toast = toast;
     /**
