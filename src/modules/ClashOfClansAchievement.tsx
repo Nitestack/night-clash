@@ -3,14 +3,13 @@ import type { FC } from "react";
 import Grid from "@components/Utilities/Grid";
 import Progress from "@components/Progress";
 import Center from "@components/Utilities/Center";
-import styles from "@modules/ClashOfClansAchievement.module.scss";
 import Util from "@util/index";
 
 const ClashOfClansAchievement: FC<{
     achievement: APIPlayerAchievement
 }> = ({ achievement }) => {
     return (
-        <div className={styles.achievement}>
+        <div className="bg-cocgraybackground mt-3 p-1 lg:p-2 border border-solid border-[#EEEFED] rounded-md min-h-[60px]">
             <Grid className="lg:grid-cols-12 grid-cols-3">
                 <Center>
                     <img className="w-24" src={`/Images/Clash of Clans/Achievement-${achievement.stars}.png`}/>

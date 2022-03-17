@@ -5,7 +5,6 @@ import Grid from "@components/Utilities/Grid";
 import Tabs from "@components/Tabs";
 import Button from "@components/Elements/Button";
 import Util from "@util/index";
-import ClashOfClansAchievementStyles from "@modules/ClashOfClansAchievement.module.scss";
 import ClashOfClansTrophyCount from "./ClashOfClansTrophyCount";
 import ClashOfClansLabels from "./ClashOfClansLabels";
 import Center from "@components/Utilities/Center";
@@ -176,7 +175,7 @@ const ClashOfClansClanMember: FC<{
     const rank = iterationIndex + 1;
     return (
         <a href={`/stats-tracker/clashofclans/players/${member.tag.replace(/#/g, "")}`} target="_blank">
-            <Grid className={Util.classNames(ClashOfClansAchievementStyles.achievement, 
+            <Grid className={Util.classNames("bg-cocgraybackground mt-3 p-1 lg:p-2 border border-solid border-[#EEEFED] rounded-md min-h-[60px]", 
                 village == "home" ? "grid-cols-8" : "grid-cols-12")}>
                 <Center className="justify-self-center">
                     <p className="mr-2">{rank}.</p>
