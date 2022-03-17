@@ -46,7 +46,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${troop}.png')`
                         }} title={troop}/>
-                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / troopSpace[i])}/>
+                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} maxLength={3} min={0} max={Math.floor(300 / troopSpace[i])}/>
                     </div>)}   
                 </Grid> 
             </div>
@@ -57,7 +57,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superTroop}.png')`
                         }} title={superTroop}/>
-                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / superTroopSpace[i])}/>
+                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} maxLength={3} min={0} max={Math.floor(300 / superTroopSpace[i])}/>
                     </div>)}    
                 </Grid>
             </div>
@@ -68,7 +68,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${darkTroop}.png')`
                         }} title={darkTroop}/>
-                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkTroopSpace[i])}/>
+                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} maxLength={3} min={0} max={Math.floor(300 / darkTroopSpace[i])}/>
                     </div>)}    
                 </Grid>
             </div>
@@ -79,7 +79,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Troops/${superDarkTroop}.png')`
                         }} title={superDarkTroop}/>
-                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} min={0} max={Math.floor(300 / darkSuperTroopSpace[i])}/>
+                        <Input onChange={addTroopHousingSpace()} type="number" className="w-[65px]" data-troop defaultValue={0} maxLength={3} min={0} max={Math.floor(300 / darkSuperTroopSpace[i])}/>
                     </div>)}    
                 </Grid>
             </div>
@@ -91,7 +91,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Spells/${spell}.png')`
                         }} title={spell}/>
-                        <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={Math.floor(11 / spellSpace[i])}/>
+                        <Input type="number" className="w-[65px]" defaultValue={0} min={0} maxLength={2} max={Math.floor(11 / spellSpace[i])}/>
                     </div>)}   
                 </Grid> 
             </div>
@@ -103,7 +103,7 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
                         <div className={styles["unit-icon"]} style={{ 
                             backgroundImage: `url('/Images/Clash of Clans/Home/Siege Machines/${siegeMachine}.png')`
                         }} title={siegeMachine}/>
-                        <Input type="number" className="w-[65px]" defaultValue={0} min={0} max={1}/>
+                        <Input type="number" className="w-[65px]" defaultValue={0} min={0} maxLength={1} max={1}/>
                     </div>)}   
                 </Grid> 
             </div>
