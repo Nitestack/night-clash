@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss')} */
 module.exports = {
   content: [
     "./src/pages/**/*.tsx",
@@ -7,6 +8,10 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        cocgraybackground: "-webkit-linear-gradient(top, rgba(194, 198, 201, 0.8) 0%, rgba(176, 181, 187, 0.8) 49%, rgba(161, 168, 176, 0.8) 50%, rgba(157, 165, 176, 0.8) 100%)",
+        cocgreenbackground: "linear-gradient(#7ED430 0%, #8ED838, #38A700 51%, #61BE1E)"
+      },
       colors: {
         //Background of the whole page
         lightmodebackground: "#f1f5f9",
@@ -35,6 +40,7 @@ module.exports = {
         hovertext: "#d1d5db"
       },
       fontFamily: {
+        "coc": ["Supercell-Magic"],
         'coc-description': ["CCBackBeat"],
         'cr-description': ["Clash Text"],
         'bs': ["Lilita One", "cursive"],
