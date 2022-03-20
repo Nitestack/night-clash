@@ -1,9 +1,11 @@
 import Util from "@util/index";
-import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import { forwardRef } from "react";
 
-const Center: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>> = (props) => {
+const Center = forwardRef<HTMLDivElement, DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>>(function(props, ref) {
     return (
-        <div {...props} className={Util.classNames("flex items-center justify-center", props.className)}/>
+        <div {...props} ref={ref} className={Util.classNames("flex items-center justify-center", props.className)}/>
     );
-};
+});
+
 export default Center;

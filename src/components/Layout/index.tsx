@@ -47,7 +47,6 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                     pauseOnHover
                     bodyClassName="bg-lightmodeprimary dark:bg-darkmodeprimary font-coc"
                     toastClassName="bg-lightmodeprimary dark:bg-darkmodeprimary"
-                    limit={Util.isMobile() ? 1 : 3}
                 />
                 <main>
                     {/*JQUERY*/}

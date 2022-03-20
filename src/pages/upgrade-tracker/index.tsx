@@ -7,14 +7,14 @@ const UpgradeTrackerPage: NextPageWithConfiguration = () => {
     return (
         <>
             <Accordion title="Clash of Clans">
-                <Link className="h-56" disablemotion="true" href="/upgrade-tracker/clashofclans">
+                <Link className="h-56" disablemotion href="/upgrade-tracker/clashofclans">
                     <Center>
                         <img className="w-[80vw]" src="/Images/Clash of Clans.png"/>
                     </Center>
                 </Link>
             </Accordion>
             <Accordion title="Boom Beach">
-                <Link className="h-56" disablemotion="true" href="/upgrade-tracker/boombeach">
+                <Link className="h-56" disablemotion href="/upgrade-tracker/boombeach">
                     <Center>
                         <img className="w-[80vw]" src="/Images/Boom Beach.png"/>
                     </Center>

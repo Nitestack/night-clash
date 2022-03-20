@@ -2,12 +2,12 @@ import type { FC } from "react";
 import { motion } from "framer-motion";
 
 export interface MotionProps {
-    disablemotion?: "true" | "false";
-    disablehovermotion?: "true" | "false";
+    disablemotion?: boolean;
+    disablehovermotion?: boolean;
 };
 
 const Motion: FC<MotionProps> = ({ children, disablemotion, disablehovermotion: disableHoverMotion }) => {
-    if (disablemotion == "true") return (
+    if (disablemotion) return (
         <> {children} </>
     );
     return (

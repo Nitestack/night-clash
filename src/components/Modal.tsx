@@ -1,10 +1,9 @@
-import type { FC } from "react";
-import { Fragment } from "react";
+import { Fragment, forwardRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "@components/Elements/Button";
 import Spinner from "@components/Utilities/Spinner";
 
-const Modal: FC<{
+const Modal = forwardRef<HTMLDivElement, {
     title: string;
     description: string;
     onlyDismissButton?: boolean;
@@ -75,10 +74,10 @@ const Modal: FC<{
      * Attribute to indicate whether the loading spinner should be shown on the submit button
      */
     loading?: boolean;
-}> = ({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }) => {
+}>(function({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) {
     return (
         <Transition.Root show={show} as={Fragment}>
-            <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => onModalClose()}>
+            <Dialog ref={ref} as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => onModalClose()}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0" >
                         <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
@@ -118,5 +117,6 @@ const Modal: FC<{
             </Dialog>
         </Transition.Root>
     );
-};
+});
+
 export default Modal;

@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import type { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
+import type { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { forwardRef } from "react";
 
 const Input = forwardRef<HTMLInputElement, DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>>((props, ref) => (

@@ -1,18 +1,11 @@
-import type { FC } from "react";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Tab } from "@headlessui/react";
 import Util from "@util/index";
 
-const Tabs: FC<{
-    tabs: {
-        [key: string]: JSX.Element;
-    };
-    initialTabIndex?: number;
-    onTabChange?: (index: number) => void;
-}> = ({ tabs, initialTabIndex, onTabChange }) => {
+const Tabs = forwardRef<HTMLDivElement, { tabs: { [key: string]: JSX.Element; }; initialTabIndex?: number; onTabChange?: (index: number) => void; }>(function({ tabs, initialTabIndex, onTabChange }, ref) {
     const [tabsState] = useState(tabs);
     return (
-        <div className="w-full sm:p-0 bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg">
+        <div ref={ref} className="w-full sm:p-0 bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg">
             <Tab.Group defaultIndex={initialTabIndex} onChange={(index) => {
                 if (onTabChange) onTabChange(index);
             }}>
@@ -43,6 +36,6 @@ const Tabs: FC<{
             </Tab.Group>
         </div>
     );
-};
+});
 
 export default Tabs;

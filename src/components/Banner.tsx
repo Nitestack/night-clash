@@ -1,15 +1,11 @@
 import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
 import Link from "@components/Elements/Link";
-import type { FC } from "react";
+import { forwardRef } from "react";
 import Center from "@components/Utilities/Center";
 
-const Banner: FC<{
-    desktopText: string;
-    mobileText: string;
-    href?: string;
-}> = ({ desktopText, mobileText, href }) => {
+const Banner = forwardRef<HTMLDivElement, { desktopText: string; mobileText: string; href?: string; }>(function({ desktopText, mobileText, href }, ref) {
     return (
-        <div className="bg-primary">
+        <div ref={ref} className="bg-primary">
             <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
                 <Center className="justify-between flex-wrap">
                     <div className="w-0 flex-1 flex items-center">
@@ -38,5 +34,5 @@ const Banner: FC<{
             </div>
         </div>
     );
-};
+});
 export default Banner;

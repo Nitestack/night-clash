@@ -1,11 +1,8 @@
 import Util from "@util/index";
-import type { FC, ReactNode } from "react";
-import { useState } from "react";
+import type { ReactNode } from "react";
+import { useState, forwardRef } from "react";
 
-const Tooltip: FC<{ 
-    toolTipNode: ReactNode,
-    className?: string;
-}> = ({ children, toolTipNode, className }) => {
+const Tooltip = forwardRef<HTMLDivElement, { toolTipNode: ReactNode, className?: string; }>(function ({ className, toolTipNode, children }, ref) {
     const [toolTip, setToolTip] = useState(false);
     function showToolTip() {
         return () => setToolTip(true);
@@ -20,7 +17,7 @@ const Tooltip: FC<{
             onMouseLeave={hideToolTip()}>
                 {children}
                 {toolTip ? 
-                <div role="tooltip" className="z-20 mb-6 bottom-0 absolute flex flex-col items-center transition duration-150 ease-in-out shadow-lg">      
+                <div ref={ref} role="tooltip" className="z-20 mb-6 bottom-0 absolute flex flex-col items-center transition duration-150 ease-in-out shadow-lg">      
                     <div className="bg-lightmodesecondary dark:bg-darkmodesecondary p-2 rounded">
                         {toolTipNode}
                     </div>
@@ -29,5 +26,6 @@ const Tooltip: FC<{
             </div>
         </>
     );
-};
+});
+
 export default Tooltip;

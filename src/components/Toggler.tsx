@@ -1,15 +1,10 @@
-import { useEffect, useState } from "react";
-import type { FC, Dispatch, SetStateAction } from "react";
+import { useEffect, useState, forwardRef } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import Motion from "@components/Utilities/Motion";
 import { Switch } from "@headlessui/react";
 import Util from "@util/index";
 
-const Toggler: FC<{
-    on: string;
-    off: string;
-    onLoad?: (setChecked: Dispatch<SetStateAction<boolean>>) => void;
-    onChange?: (checked: boolean) => void;
-}> = ({ onLoad, onChange, on, off }) => {
+const Toggler = forwardRef<HTMLButtonElement, { on: string; off: string; onLoad?: (setChecked: Dispatch<SetStateAction<boolean>>) => void; onChange?: (checked: boolean) => void; }>(function({ onLoad, onChange, on, off }, ref) {
     const [checked, setChecked] = useState(false);
     useEffect(() => {
         if (onLoad) onLoad(setChecked);
@@ -27,7 +22,7 @@ const Toggler: FC<{
                     {checked ? on : off}
                 </Switch.Label>
                 <Motion>
-                    <Switch
+                    <Switch ref={ref}
                         checked={checked}
                         onChange={changeSwitch()}
                         className={Util.classNames(checked ? "bg-blue-600" : "bg-gray-200", "relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none")}>
@@ -37,5 +32,6 @@ const Toggler: FC<{
             </div>
         </Switch.Group>
     );
-};
+});
+
 export default Toggler;

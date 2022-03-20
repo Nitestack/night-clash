@@ -1,14 +1,12 @@
 import Util from "@util/index";
-import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
-import omit from "omit";
+import type { DetailedHTMLProps, HTMLAttributes } from "react";
+import { forwardRef } from "react";
 
-const Grid: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-    cols?: number | "auto",
-    rows?: number | "auto"
-}> = (props) => {
-    const { className, cols, rows } = props;
+const Grid = forwardRef<HTMLDivElement, DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>>(function(props, ref) {
+    const { className } = props;
     return (
-        <div {...omit(["cols", "rows"], props)} className={Util.classNames("grid", className)}/>
+        <div {...props} ref={ref} className={Util.classNames("grid", className)}/>
     );
-};
+});
+
 export default Grid;

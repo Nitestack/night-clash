@@ -66,18 +66,18 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                         {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                                 {({ active }) => (
-                                    <Link disablehovermotion="true" href={item.href} className={Util.classNames(active ? "bg-hoverbackground text-hovertext" : "", "block px-4 py-2 text-sm text-lightmodetext dark:text-darkmodetext")}> {item.name} </Link>
+                                    <Link disablehovermotion href={item.href} className={Util.classNames(active ? "bg-hoverbackground text-hovertext" : "", "block px-4 py-2 text-sm text-lightmodetext dark:text-darkmodetext")}> {item.name} </Link>
                                 )}
                             </Menu.Item>
                         ))}
                         {user.role == Util.Constants.ADMIN_ROLE_ID ? <Menu.Item key="Admin">
                             {({ active }) => (
-                                <Link disablehovermotion="true" href="/admin" className={Util.classNames(active ? "bg-hoverbackground text-hovertext" : "", "block px-4 py-2 text-sm text-lightmodetext dark:text-darkmodetext")}> Admin </Link>
+                                <Link disablehovermotion href="/admin" className={Util.classNames(active ? "bg-hoverbackground text-hovertext" : "", "block px-4 py-2 text-sm text-lightmodetext dark:text-darkmodetext")}> Admin </Link>
                             )}
                         </Menu.Item> : undefined}
                         <Menu.Item key="Sign Out">
                             {({ active }) => (
-                                <Link disablehovermotion="true" onClick={logOut()} className={Util.classNames(active ? "bg-hoverbackground" : "", "block px-4 py-2 text-sm text-primary hover:text-indigo-500")}> Sign Out </Link>
+                                <Link disablehovermotion onClick={logOut()} className={Util.classNames(active ? "bg-hoverbackground" : "", "block px-4 py-2 text-sm text-primary hover:text-indigo-500")}> Sign Out </Link>
                             )}
                         </Menu.Item>
                     </Menu.Items>

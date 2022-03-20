@@ -1,15 +1,12 @@
-import type { FC } from "react";
+import { forwardRef } from "react";
 
-const Table: FC<{ 
-    headings: Array<string>,
-    rows: Array<Array<JSX.IntrinsicElements["td"]>>
-}> = ({ headings, rows }) => {
+const Table = forwardRef<HTMLTableElement, { headings: Array<string>, rows: Array<Array<JSX.IntrinsicElements["td"]>> }>(function({ headings, rows }, ref) {
     return (
         <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="overflow-x-auto rounded-md border-2 border-solid border-lightmodetext dark:border-darkmodetext">
-                        <table className="min-w-full">
+                        <table ref={ref} className="min-w-full">
                             <thead className="border-b">
                                 <tr>
                                     {headings.map((heading, index) => 
@@ -31,5 +28,6 @@ const Table: FC<{
             </div>
         </div>
     );
-};
+});
+
 export default Table;

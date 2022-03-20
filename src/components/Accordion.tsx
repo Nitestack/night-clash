@@ -1,11 +1,8 @@
-import { useRef, useState } from "react";
-import type { FC } from "react";
+import { useRef, useState, forwardRef } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Util from "@util/index";
 
-const Accordion: FC<{
-    title: string;
-}> = ({ title, children }) => {
+const Accordion = forwardRef<HTMLDivElement, { title: string }>(function({ title, children }, ref) {
     const [active, setActivity] = useState(false);
     const [height, setHeight] = useState("0px");
     const [rotate, setRotation] = useState("transform duration-500 ease");
@@ -18,7 +15,7 @@ const Accordion: FC<{
         };
     };
     return (
-        <div className="flex flex-col bg-lightmodeprimary dark:bg-darkmodeprimary p-3 rounded-md my-2">
+        <div ref={ref} className="flex flex-col bg-lightmodeprimary dark:bg-darkmodeprimary p-3 rounded-md my-2">
             <button
                 className={Util.classNames("py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between", active ? "border-b-2 border-b-lightmodetext dark:border-b-darkmodetext" : "")}
                 onClick={toggleAccordion()}>
@@ -26,10 +23,10 @@ const Accordion: FC<{
                 <ChevronDownIcon className={Util.classNames(rotate, "inline-block w-6")}/>
             </button>
             <div ref={contentSpace} style={{ maxHeight: `${height}` }} className="overflow-hidden transition-max-height duration-500 ease-in-out">
-                <div className="py-4">{children}</div>
+                <div className="py-4" children={children}/>
             </div>
         </div>
     );
-};
+});
 
 export default Accordion;
