@@ -34,10 +34,11 @@ const Tab: FC<{
 }> = ({ club, backgroundImageName, hash }) => {
     const tabs: { [key: string]: JSX.Element } = {};
     const tracker = backgroundImageName.toLowerCase().replace(/ /g, "");
-    function redirectToTracker(element: string, ref: RefObject<HTMLInputElement>) {
+    const playerTagRef = useRef<HTMLInputElement>(null);
+    function redirectToTracker(element: string) {
         return () => {
-            if (ref.current) {
-                const tag = ref.current.value;
+            if (playerTagRef.current) {
+                const tag = playerTagRef.current.value;
                 if (tag && tag.length < Util.Constants.MAXED_TAG_LENGTH && tag.length >= Util.Constants.MIN_TAG_LENGTH) {
                     window.open(`/stats-tracker/${tracker}/${(element == "clan" ? (club ? "club" : element) : element) + "s"}/${tag.replace(/#/g, "")}${hash ? `#${hash}` : ""}`, "_blank");
                 };
@@ -45,7 +46,6 @@ const Tab: FC<{
         };
     };
     for (const element of ["player", "clan"]) {
-        const playerTagRef = useRef<HTMLInputElement>(null);
         tabs[`Find a ${element == "clan" ? (club ? "club" : element) : element}`] = 
         <>
             <Center>
@@ -53,7 +53,7 @@ const Tab: FC<{
             </Center>
             <Center>
                 <PlayerTagInput ref={playerTagRef} searchButtonProps={{
-                    onClick: redirectToTracker(element, playerTagRef)
+                    onClick: redirectToTracker(element)
                 }} club={club} element={element}/>
             </Center>
         </>;
