@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-const Table = forwardRef<HTMLTableElement, { headings: Array<string>, rows: Array<Array<JSX.IntrinsicElements["td"]>> }>(function({ headings, rows }, ref) {
+const Table = forwardRef<HTMLTableElement, { headings: Array<string>, rows: Array<Array<JSX.IntrinsicElements["td"]>> }>(({ headings, rows }, ref) => {
     return (
         <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">

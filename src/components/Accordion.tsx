@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Util from "@util/index";
 
-const Accordion = forwardRef<HTMLDivElement, PropsWithChildren<{ title: string }>>(function({ title, children }, ref) {
+const Accordion = forwardRef<HTMLDivElement, PropsWithChildren<{ title: string }>>(({ title, children }, ref) => {
     const [active, setActivity] = useState(false);
     const [height, setHeight] = useState("0px");
     const [rotate, setRotation] = useState("transform duration-500 ease");

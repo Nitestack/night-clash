@@ -4,7 +4,7 @@ import Motion from "@components/Utilities/Motion";
 import { Switch } from "@headlessui/react";
 import Util from "@util/index";
 
-const Toggler = forwardRef<HTMLButtonElement, { on: string; off: string; onLoad?: (setChecked: Dispatch<SetStateAction<boolean>>) => void; onChange?: (checked: boolean) => void; }>(function({ onLoad, onChange, on, off }, ref) {
+const Toggler = forwardRef<HTMLButtonElement, { on: string; off: string; onLoad?: (setChecked: Dispatch<SetStateAction<boolean>>) => void; onChange?: (checked: boolean) => void; }>(({ onLoad, onChange, on, off }, ref) => {
     const [checked, setChecked] = useState(false);
     useEffect(() => {
         if (onLoad) onLoad(setChecked);

@@ -3,7 +3,7 @@ import type { DetailedHTMLProps, OptionHTMLAttributes, SelectHTMLAttributes, Pro
 import Util from "@util/index";
 import { forwardRef } from "react";
 
-const Select = forwardRef<HTMLSelectElement, PropsWithChildren<DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & { options: Array<OptionHTMLAttributes<HTMLOptionElement>>; }>>(function(props, ref) {
+const Select = forwardRef<HTMLSelectElement, PropsWithChildren<DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & { options: Array<OptionHTMLAttributes<HTMLOptionElement>>; }>>((props, ref) => {
     return (
         <div className="flex justify-center">
             <div className="mb-3 xl:w-96">

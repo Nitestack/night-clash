@@ -2,7 +2,7 @@ import { useState, forwardRef } from "react";
 import { Tab } from "@headlessui/react";
 import Util from "@util/index";
 
-const Tabs = forwardRef<HTMLDivElement, { tabs: { [key: string]: JSX.Element; }; initialTabIndex?: number; onTabChange?: (index: number) => void; }>(function({ tabs, initialTabIndex, onTabChange }, ref) {
+const Tabs = forwardRef<HTMLDivElement, { tabs: { [key: string]: JSX.Element; }; initialTabIndex?: number; onTabChange?: (index: number) => void; }>(({ tabs, initialTabIndex, onTabChange }, ref) => {
     const [tabsState] = useState(tabs);
     return (
         <div ref={ref} className="w-full sm:p-0 bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg">

@@ -75,7 +75,7 @@ const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
      * Attribute to indicate whether the loading spinner should be shown on the submit button
      */
     loading?: boolean;
-}>>(function({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) {
+}>>(({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) => {
     return (
         <Transition.Root show={show} as={Fragment}>
             <Dialog ref={ref} as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => onModalClose()}>

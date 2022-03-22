@@ -3,7 +3,7 @@ import Link from "@components/Elements/Link";
 import { forwardRef } from "react";
 import Center from "@components/Utilities/Center";
 
-const Banner = forwardRef<HTMLDivElement, { desktopText: string; mobileText: string; href?: string; }>(function({ desktopText, mobileText, href }, ref) {
+const Banner = forwardRef<HTMLDivElement, { desktopText: string; mobileText: string; href?: string; }>(({ desktopText, mobileText, href }, ref) => {
     return (
         <div ref={ref} className="bg-primary">
             <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">

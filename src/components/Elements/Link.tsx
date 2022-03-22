@@ -5,7 +5,7 @@ import Motion from "@components/Utilities/Motion";
 import type { MotionProps } from "@components/Utilities/Motion";
 import { forwardRef } from "react";
 
-const Link = forwardRef<HTMLAnchorElement, PropsWithChildren<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> & MotionProps & { href?: string }>>(function(props, ref) {
+const Link = forwardRef<HTMLAnchorElement, PropsWithChildren<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> & MotionProps & { href?: string }>>((props, ref) => {
     return ( 
         <Motion disablemotion={props.disablemotion} disablehovermotion={props.disablehovermotion}>
             <NextLink href={props.href || "/"}>
