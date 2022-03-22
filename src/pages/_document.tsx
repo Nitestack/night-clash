@@ -15,7 +15,7 @@ class MyDocument extends Document {
                     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet"/>
                     {/*AUDIO*/}
                     <audio id="clickAudio" src="/Audio/click.mp3"/>
-                    <link type="image/x-icon" rel="icon" href="/Images/favicon.ico"/>
+                    <link type="image/x-icon" rel="icon" href="/favicon.ico"/>
                 </Head>
                 <body>
                     <Main/>
