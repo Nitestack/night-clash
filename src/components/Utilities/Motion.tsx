@@ -6,12 +6,12 @@ export interface MotionProps {
     disablehovermotion?: boolean;
 };
 
-const Motion: FC<MotionProps> = ({ children, disablemotion, disablehovermotion: disableHoverMotion }) => {
+const Motion: FC<MotionProps> = ({ children, disablemotion, disablehovermotion }) => {
     if (disablemotion) return (
         <> {children} </>
     );
-    return (
-        <motion.div whileHover={disableHoverMotion ? undefined : { scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+    else return (
+        <motion.div whileHover={disablehovermotion ? undefined : { scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             {children}
         </motion.div>
     );

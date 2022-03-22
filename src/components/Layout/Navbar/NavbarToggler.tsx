@@ -8,8 +8,8 @@ const NavbarToggler: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
         return (checked: boolean) => {
             Util.setCookie("mode", checked ? "dark" : "light", 730, "/");
             dispatch(Util.StateManagement.changeMode());
-            if (checked) $(document.documentElement).addClass("dark");
-            else $(document.documentElement).removeClass("dark");
+            if (checked) document.documentElement.classList.add("dark");
+            else document.documentElement.classList.remove("dark");
         };
     };
     return (

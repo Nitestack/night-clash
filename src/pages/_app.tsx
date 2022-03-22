@@ -1,6 +1,5 @@
 import "@styles/fonts.scss";
 import "@styles/brawlstars.scss";
-import "prismjs/themes/prism-okaidia.min.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import "@styles/globals.scss";
 import { SessionProvider, signIn, useSession } from "next-auth/react";
@@ -11,11 +10,12 @@ import type { ComponentWithConfigurationProps, CustomComponentType } from "@util
 import { useRouter } from "next/router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoadingScreen from "@components/Layout/LoadingScreen";
-import $ from "jquery";
 import Util from "@util/index";
 import { Provider } from "react-redux";
 import { store } from "src/configuration/Actions/index";
 import { parseCookies } from "nookies";
+import { MantineProvider } from "@mantine/core";
+import config from "../../config.json";
 
 const isDevelopment = process.env.NODE_ENV == "development";
 
@@ -34,7 +34,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     const router = useRouter();
     useEffect(() => {
         if (done) return; //Do nothing if everything is done
-        if ($.isEmptyObject(router.query) && Component.queryRequired) return; //If the router params are undefined
+        if (Util.isEmptyObject(router.query) && Component.queryRequired) return; //If the router params are undefined
         if (status == "loading") return; // Do nothing while loading
         if (Component.authenticationRequired) { //If login is required
             if (isUser) handleAuthentication(session);
@@ -53,26 +53,29 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     }, Component.queryRequired ? [router, status] : [status]);
     //Mode
     useEffect(() => {
-        $("img").on("mousedown", function (event) {
-            if (event.button == 2) return;
-        });
-        //Light/Dark Mode
         let mode = Util.getCookie("mode");
         if (!mode || mode == "") {
             Util.setCookie("mode", window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light", 730, "/");
             mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         };
         dispatch(Util.StateManagement.loadMode(mode as "light" | "dark"));
-        if (mode == "dark") $(document.documentElement).addClass("dark");
-        else $(document.documentElement).removeClass("dark");
+        if (mode == "dark") document.documentElement.classList.add("dark");
     }, []);
     //Render
-    return done ? (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
-        <Layout title={Component.title} header={Component.header} description={Component.description}>
-            {/*See at `./configuration/Util/types.ts`*/}
-            <Component {...pageProps} data={data} session={session} />
-        </Layout>
-    ) : <LoadingScreen/>;
+    return (
+        <MantineProvider theme={{
+            fontFamily: "Supercell-Magic",
+            colorScheme: Util.StateManagement.useSelector(state => state.mode),
+            primaryColor: config.primaryColor
+        }}>
+            {done ? (Component.disableLayout ? (<Component {...pageProps} data={data} />) : 
+            <Layout title={Component.title} header={Component.header} description={Component.description}>
+                {/*See at `./configuration/Util/types.ts`*/}
+                <Component {...pageProps} data={data} session={session} />
+            </Layout> ) : 
+            <LoadingScreen/>}
+        </MantineProvider>
+    );
     function handleAuthentication(session?: any | null) {
         //Function that will be executed after handling authentication
         if (Component.afterAuthentication) {

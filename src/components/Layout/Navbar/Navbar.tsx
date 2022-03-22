@@ -87,7 +87,7 @@ const tools: Array<{
 
 const Navbar: FC = () => {
     return ( 
-        <Popover id="navbar" className="z-40 sticky bg-lightmodeprimary dark:bg-darkmodeprimary border-b-2 border-primary transition-[1.4s] top-0">
+        <Popover className="z-40 sticky bg-lightmodeprimary dark:bg-darkmodeprimary border-b-2 border-primary transition-[1.4s] top-0">
             <div className="px-4 sm:px-6">
                 <Center className="justify-between py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">

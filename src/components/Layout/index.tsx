@@ -49,12 +49,6 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                     toastClassName="bg-lightmodeprimary dark:bg-darkmodeprimary"
                 />
                 <main>
-                    {/*JQUERY*/}
-                    <Script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossOrigin="anonymous"/>
-                    {/*PRISM*/}
-                    <Script type="text/javascript" src="/prism/prism.js"/>
-                    {/*MODE VIEWER*/}
-                    <Script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"/>
                     {/*ADDITIONAL SCRIPTS*/}
                     {scripts ? scripts.map((scriptSRC, index) => (
                         <Script key={index} type="text/javascript" src={scriptSRC} crossOrigin="anonymous"/>

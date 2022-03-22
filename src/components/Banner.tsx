@@ -10,10 +10,7 @@ const Banner = forwardRef<HTMLDivElement, { desktopText: string; mobileText: str
                 <Center className="justify-between flex-wrap">
                     <div className="w-0 flex-1 flex items-center">
                         <span className="flex p-2 rounded-lg bg-indigo-800">
-                            <SpeakerphoneIcon
-                                className="h-6 w-6 text-white"
-                                aria-hidden="true"
-                            />
+                            <SpeakerphoneIcon className="h-6 w-6 text-white" aria-hidden="true"/>
                         </span>
                         <p className="ml-3 font-medium text-white truncate">
                             <span className="md:hidden"> {mobileText} </span>

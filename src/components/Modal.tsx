@@ -1,9 +1,10 @@
 import { Fragment, forwardRef } from "react";
+import type { PropsWithChildren } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Button from "@components/Elements/Button";
 import Spinner from "@components/Utilities/Spinner";
 
-const Modal = forwardRef<HTMLDivElement, {
+const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
     title: string;
     description: string;
     onlyDismissButton?: boolean;
@@ -74,7 +75,7 @@ const Modal = forwardRef<HTMLDivElement, {
      * Attribute to indicate whether the loading spinner should be shown on the submit button
      */
     loading?: boolean;
-}>(function({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) {
+}>>(function({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) {
     return (
         <Transition.Root show={show} as={Fragment}>
             <Dialog ref={ref} as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => onModalClose()}>

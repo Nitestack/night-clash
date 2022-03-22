@@ -3,10 +3,9 @@ import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import type { ClashOfClansVillage } from "@models/clashofclans";
 import Modal from "@components/Modal";
-import $ from "jquery";
 import Select from "@components/Elements/Select";
 import type { FC, OptionHTMLAttributes } from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Center from "@components/Utilities/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Elements/Button";
@@ -58,6 +57,8 @@ const CocUpgradeTrackerPlayerVillage: FC<{
     //Season Boost
     const [researchBoost, setResearchBoost] = useState<number>(researchSeasonBoost);
     const [builderBoost, setBuilderBoost] = useState<number>(builderSeasonBoost);
+    const builderBoostRef = useRef<HTMLSelectElement>(null);
+    const researchBoostRef = useRef<HTMLSelectElement>(null);
     const [showSeasonBoostModal, setShowSeasonBoostModal] = useState(false);
     const [seasonBoostModalLoading, setSeasonBoostModalLoading] = useState(false);
     //Tabs
@@ -157,8 +158,8 @@ const CocUpgradeTrackerPlayerVillage: FC<{
 
     function setSeasonBoosts() {
         return async () => {
-            const newBuilderBoost = $("#builderBoost").val() as string;
-            const newResearchBoost = $("#researchBoost").val() as string;
+            const newBuilderBoost = builderBoostRef.current?.value as string;
+            const newResearchBoost = researchBoostRef.current?.value as string;
             setSeasonBoostModalLoading(true);
             await Util.ApiHandler.clientSideErrorHandler(async () => {
                 const response = await Util.Axios.post("/api/upgrade-tracker/clashofclans/seasonboost", {
@@ -264,13 +265,13 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                                     <Center>
                                         <img className="w-20" src="/Images/Clash of Clans/Season Boost Builder.png"/>
                                     </Center>
-                                    <Select id="builderBoost" defaultValue={builderBoost} options={getSeasonBoostPercentages()}/>
+                                    <Select ref={builderBoostRef} defaultValue={builderBoost} options={getSeasonBoostPercentages()}/>
                                 </div>
                                 <div className="justify-center">
                                     <Center>
                                         <img className="w-20" src="/Images/Clash of Clans/Season Boost Research.png"/>
                                     </Center>
-                                    <Select id="researchBoost" defaultValue={researchBoost} options={getSeasonBoostPercentages()}/>
+                                    <Select ref={researchBoostRef} defaultValue={researchBoost} options={getSeasonBoostPercentages()}/>
                                 </div>
                             </div>
                         </Modal>

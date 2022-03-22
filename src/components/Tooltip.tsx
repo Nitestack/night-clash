@@ -1,8 +1,8 @@
 import Util from "@util/index";
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import { useState, forwardRef } from "react";
 
-const Tooltip = forwardRef<HTMLDivElement, { toolTipNode: ReactNode, className?: string; }>(function ({ className, toolTipNode, children }, ref) {
+const Tooltip = forwardRef<HTMLDivElement, PropsWithChildren<undefined>>(function ({ className, toolTipNode, children }, ref) {
     const [toolTip, setToolTip] = useState(false);
     function showToolTip() {
         return () => setToolTip(true);

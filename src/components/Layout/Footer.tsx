@@ -28,7 +28,7 @@ const socialNetworks: Array<{
 
 const Footer: FC = () => {
     return (
-        <footer id="footer" className="relative dark:bg-darkmodeprimary bg-lightmodeprimary pt-24 mt-12">
+        <footer className="relative dark:bg-darkmodeprimary bg-lightmodeprimary pt-24 mt-12">
             <div className=" border-t border-b border-lightmodetext dark:border-darkmodetext py-16">
                 <div className="mx-auto container px-4 xl:px-12 2xl:px-4">
                     <div className="lg:flex">
@@ -73,7 +73,7 @@ const Footer: FC = () => {
             </div>
             <Center className="py-8 flex-col border-b">
                 <Link href="/">
-                    <Image className="rounded-full bg-primary" src="/Images/profile.png" width="150" height="150"></Image>
+                    <Image className="rounded-full bg-primary" src="/Images/favicon.ico" width="150" height="150"></Image>
                 </Link>
                 <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.APPLICATION_NAME}. All rights reserved.</p>
             </Center>

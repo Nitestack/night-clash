@@ -8,7 +8,6 @@ import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
 import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@util/functions";
-import type { SetStateAction, Dispatch } from "react";
 import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";
@@ -47,25 +46,9 @@ export default class Util {
     public static comparePasswords(password: string, hash: string) {
         return compareSync(password, hash);
     };
-
-    /**
-     * Perform an asynchronous HTTP (Ajax) request.
-     * @param {string} url A string containing the URL to which the request is sent.
-     * @param {JQuery.AjaxSettings} settings A set of key/value pairs that configure the Ajax request. All settings are optional. A default can
-     *                 be set for any option with $.ajaxSetup(). See jQuery.ajax( settings ) below for a complete list of all settings.
-     * @param {Dispatch<SetStateAction<string>>} setErrorDescription The setter of the error description state
-     * @param {Dispatch<SetStateAction<boolean>>} setShowErrorModal The setter of the show error modal state
-     * @see \`{@link https://api.jquery.com/jQuery.ajax/ }\`
-     * @since 1.5
-     */
-    public static jqueryAjax(url: string, settings?: JQuery.AjaxSettings, setErrorDescription?: Dispatch<SetStateAction<string>>, setShowErrorModal?: Dispatch<SetStateAction<boolean>>): JQuery.jqXHR {
-        return $.ajax(url, {
-            error: (error) => {
-                Util
-            },
-            method: "POST",
-            ...settings
-        });
+    public static isEmptyObject(obj: object) {
+        for (const prop in obj) if (Object.prototype.hasOwnProperty.call(obj, prop)) return false;
+        return JSON.stringify(obj) == JSON.stringify({});
     };
     /**
      * Validates a tag and returns an resolved tag
