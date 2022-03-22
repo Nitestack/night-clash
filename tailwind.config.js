@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss')} */
+
+const config = require("./config.json");
+
 module.exports = {
   content: [
     "./src/pages/**/*.tsx",
@@ -30,7 +33,7 @@ module.exports = {
         darkmodesecondary: "#1f2937",
 
         //Some global colors regardless of light or dark mode
-        primary: "#4f46e5",
+        primary: config.primaryColor,
 
         //The contrast to the primary color
         primarycontrast: "#22c55e",
