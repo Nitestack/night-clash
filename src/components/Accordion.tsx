@@ -24,7 +24,7 @@ const Accordion = forwardRef<HTMLDivElement, PropsWithChildren<{ title: string }
                 <ChevronDownIcon className={Util.classNames(rotate, "inline-block w-6")}/>
             </button>
             <div ref={contentSpace} style={{ maxHeight: `${height}` }} className="overflow-hidden transition-max-height duration-500 ease-in-out">
-                <div className="py-4" children={children}/>
+                <div className="py-4"> {children} </div>
             </div>
         </div>
     );
