@@ -1,9 +1,9 @@
-import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import type { FC } from "react";
 import Util from "@util/index";
 import styles from "@modules/XP.module.scss";
 import omit from "omit";
 
-const XP: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+const XP: FC<JSX.IntrinsicElements["div"] & {
     cr?: boolean,
     expLevel: number
 }> = (props) => {

@@ -13,7 +13,6 @@ import LoadingScreen from "@components/Layout/LoadingScreen";
 import Util from "@util/index";
 import { Provider } from "react-redux";
 import { store } from "src/configuration/Actions/index";
-import { parseCookies } from "nookies";
 import { MantineProvider } from "@mantine/core";
 import config from "../../config.json";
 
@@ -28,8 +27,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
     const [done, setDone] = useState(!Component.authenticationRequired && !Component.adminRoleRequired && !Component.noAuthenticationRequired && !Component.fetchData ? true : false);
     const [data, setData] = useState<any>(undefined);
     const { data: session, status } = useSession();
-    const cookies = parseCookies();
-    const user = cookies?.user ? JSON.parse(cookies.user) : session?.user ? session?.user : "";
+    const user = session?.user;
     const isUser = !!user;
     const router = useRouter();
     useEffect(() => {
@@ -39,11 +37,6 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         if (Component.authenticationRequired) { //If login is required
             if (isUser) handleAuthentication(session);
             else if (!isUser) signIn(); // If not authenticated, force log in
-        } else if (Component.adminRoleRequired) { //If admin role is required
-            if (!isUser) signIn();
-            else if (user?.role != Util.Constants.ADMIN_ROLE_ID || !isDevelopment) {
-                router.push("/404").then(() => setDone(true));
-            } else handleAuthentication();
         } else if (Component.noAuthenticationRequired) { //If the user wants to login or register
             // If authenticated already, redirect to /account
             if (isUser) {

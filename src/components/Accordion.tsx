@@ -2,15 +2,20 @@ import { useRef, useState, forwardRef } from "react";
 import type { PropsWithChildren } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Util from "@util/index";
+import { useDisclosure } from "@mantine/hooks";
 
-const Accordion = forwardRef<HTMLDivElement, PropsWithChildren<{ title: string }>>(({ title, children }, ref) => {
-    const [active, setActivity] = useState(false);
+type AccordionProps = PropsWithChildren<{
+    title: string;
+}>;
+
+const Accordion = forwardRef<HTMLDivElement, AccordionProps>(({ title, children }, ref) => {
+    const [active, handlers] = useDisclosure(false);
     const [height, setHeight] = useState("0px");
     const [rotate, setRotation] = useState("transform duration-500 ease");
     const contentSpace = useRef<HTMLDivElement>(null);
     function toggleAccordion() {
         return () => {
-            setActivity(active == false ? true : false);
+            handlers.toggle();
             setHeight(active ? "0px" : `${contentSpace.current?.scrollHeight || 0}px`);
             setRotation(active ? "transform duration-500 ease" : "transform duration-500 ease rotate-180");
         };

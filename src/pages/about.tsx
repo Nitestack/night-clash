@@ -1,10 +1,6 @@
 import type { NextPageWithConfiguration } from "@util/types";
 
-interface AboutPageProps {
-    
-};
-
-const AboutPage: NextPageWithConfiguration<AboutPageProps> = () => {
+const AboutPage: NextPageWithConfiguration<> = () => {
     return (<>
     </>);
 };

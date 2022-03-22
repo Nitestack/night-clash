@@ -1,17 +1,19 @@
-import { useEffect, useState, forwardRef } from "react";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, forwardRef } from "react";
+import { useDisclosure } from "@mantine/hooks";
 import Motion from "@components/Utilities/Motion";
 import { Switch } from "@headlessui/react";
 import Util from "@util/index";
 
-const Toggler = forwardRef<HTMLButtonElement, { on: string; off: string; onLoad?: (setChecked: Dispatch<SetStateAction<boolean>>) => void; onChange?: (checked: boolean) => void; }>(({ onLoad, onChange, on, off }, ref) => {
-    const [checked, setChecked] = useState(false);
+
+
+const Toggler = forwardRef<HTMLButtonElement, { on: string; off: string; onLoad?: (handlers: { readonly open: () => void; readonly close: () => void; readonly toggle: () => void; }) => void; onChange?: (checked: boolean) => void; }>(({ onLoad, onChange, on, off }, ref) => {
+    const [checked, handlers] = useDisclosure(false);
     useEffect(() => {
-        if (onLoad) onLoad(setChecked);
+        if (onLoad) onLoad(handlers);
     }, []);
     function changeSwitch() {
         return (checked: boolean) => {
-            setChecked(checked);
+            checked ? handlers.open() : handlers.close();
             if (onChange) onChange(checked);
         };
     };

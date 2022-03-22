@@ -7,7 +7,7 @@ import Util from "src/configuration/Util/index";
 import Banner from "@components/Banner";
 import { ToastContainer } from "react-toastify";
 
-export interface LayoutProps {
+export type LayoutProps = {
     title?: string;
     header?: string;
     description?: string;

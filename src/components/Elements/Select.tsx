@@ -1,9 +1,13 @@
 import omit from "omit";
-import type { DetailedHTMLProps, OptionHTMLAttributes, SelectHTMLAttributes, PropsWithChildren } from "react";
+import type { OptionHTMLAttributes,  PropsWithChildren } from "react";
 import Util from "@util/index";
 import { forwardRef } from "react";
 
-const Select = forwardRef<HTMLSelectElement, PropsWithChildren<DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement> & { options: Array<OptionHTMLAttributes<HTMLOptionElement>>; }>>((props, ref) => (
+type SelectProps = PropsWithChildren<JSX.IntrinsicElements["select"]> & { 
+    options: Array<JSX.IntrinsicElements["option"]>; 
+};
+
+const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => (
     <div className="flex justify-center">
         <div className="mb-3 xl:w-96">
             <select {...omit(["options"], props)} ref={ref}

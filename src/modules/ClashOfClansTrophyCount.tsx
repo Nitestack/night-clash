@@ -1,12 +1,12 @@
-import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import type { FC } from "react";
 import Util from "@util/index";
 import omit from "omit";
 
-const ClashOfClansTrophyCount: FC<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+const ClashOfClansTrophyCount: FC<JSX.IntrinsicElements["div"] & {
     trophyCount?: number,
     village?: "home" | "builder",
     cursed?: boolean,
-    trophyCountProps?: DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement>
+    trophyCountProps?: JSX.IntrinsicElements["p"],
     imgClassName?: string
 }> = (props) => {
     const { trophyCount, village, cursed } = props;

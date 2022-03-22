@@ -17,9 +17,9 @@ const NavbarToggler: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
             <Toggler
                 on="Dark"
                 off="Light"
-                onLoad={(setChecked) => {
+                onLoad={(handlers) => {
                     const mode = Util.getCookie("mode");
-                    setChecked(mode == "dark" ? true : false);
+                    if (mode == "dark") handlers.open();
                 }}
                 onChange={changeMode()}
             ></Toggler>

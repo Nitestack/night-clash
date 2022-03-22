@@ -3,7 +3,13 @@ import Link from "@components/Elements/Link";
 import { forwardRef } from "react";
 import Center from "@components/Utilities/Center";
 
-const Banner = forwardRef<HTMLDivElement, { desktopText: string; mobileText: string; href?: string; }>(({ desktopText, mobileText, href }, ref) => (
+type BannerProps = { 
+    desktopText: string; 
+    mobileText: string; 
+    href?: string; 
+};
+
+const Banner = forwardRef<HTMLDivElement, BannerProps>(({ desktopText, mobileText, href }, ref) => (
     <div ref={ref} className="bg-primary">
         <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
             <Center className="justify-between flex-wrap">

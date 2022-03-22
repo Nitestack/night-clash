@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Button from "@components/Elements/Button";
 import Spinner from "@components/Utilities/Spinner";
 
-const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
+type ModalProps = PropsWithChildren<{
     title: string;
     description: string;
     onlyDismissButton?: boolean;
@@ -14,13 +14,13 @@ const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
      * Example:
      * 
      * ```typescriptreact
-     * import type { FC } from "react";
+     * import { useDisclosure } from "@mantine/hooks";
      * 
      * const ExampleComponent: FC = () => {
-     *     const [open, setOpen] = useState(false); //State for whether the modal should be shown
+     *     const [open, handlers] = useDisclosure(false); //State for whether the modal should be shown
      *     ...
      *     function closeModal() {
-     *         setOpen(false); //Closes the modal
+     *         handlers.close(); //Closes the modal
      *     };
      *     ...
      *     return (
@@ -46,17 +46,17 @@ const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
      * 
      * ```typescriptreact
      * import type { FC } from "react";
-     * import { useState } from "react";
+     * import { useDisclosure } from "@mantine/hooks";
      * 
      * const ExampleComponent: FC = () => {
-     *     const [open, setOpen] = useState(false); //State for whether the modal should be shown
-     *     const [loading, setLoading] = useState(false); //State for the loading spinner on the submit button
+     *     const [open, openHandlers] = useDisclosure(false); //State for whether the modal should be shown
+     *     const [loading, loadingHandlers] = useDisclosure(false); //State for the loading spinner on the submit button
      *     ...
      *     function submitModal() {
-     *         setLoading(true); //Shows the loading spinner
+     *         loadingHandlers.open(); //Shows the loading spinner
      *         ... //Some submit function
-     *         setLoading(false); //Hides the loading spinner after successfully executing the submit function
-     *         setOpen(false); //Closes the modal
+     *         loadingHandlers.close(); //Hides the loading spinner after successfully executing the submit function
+     *         openHandlers.close(); //Closes the modal
      *     };
      *     ...
      *     return (
@@ -75,7 +75,9 @@ const Modal = forwardRef<HTMLDivElement, PropsWithChildren<{
      * Attribute to indicate whether the loading spinner should be shown on the submit button
      */
     loading?: boolean;
-}>>(({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) => (
+}>;
+
+const Modal = forwardRef<HTMLDivElement, ModalProps>(({ title, description, children, onSubmit, onlyDismissButton, show, onModalClose, loading }, ref) => (
     <Transition.Root show={show} as={Fragment}>
         <Dialog ref={ref} as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={() => onModalClose()}>
             <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
