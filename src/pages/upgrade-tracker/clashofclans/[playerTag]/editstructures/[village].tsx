@@ -3,7 +3,7 @@ import Util from "@util/index";
 import Layout from "@components/Layout/index";
 import type { ClashOfClansVillage } from "@database/Models/clashofclans";
 import { useLayoutEffect, useState } from "react";
-import type { FC, ChangeEvent } from "react";
+import type { FC, ChangeEvent, Dispatch, SetStateAction } from "react";
 import Grid from "@components/Utilities/Grid";
 import Center from "@components/Utilities/Center";
 import Input from "@components/Elements/Input";
@@ -35,10 +35,14 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
         return () => {
             //If the Town Hall level is higher than the player's town hall level
             if (universalSelector > (village == "home" ? player.townHallLevel : player.builderHallLevel || 1)) {
-                return Util.toast.error(`Do not exceed the maximum ${village == "home" ? "Town Hall" : "Builder Hall"} level!`);
+                return Util.toast.error(`Do not exceed the maximum ${village == "home" ? "Town Hall" : "Builder Hall"} level!`, {
+                    toastId: "TownHallHigher"
+                });
             //If the Town Hall level is less than 1
             } else if (universalSelector < 1) {
-                return Util.toast.error(`${village == "home" ? "Town Hall" : "Builder Hall"} level must be atleast 1!`);
+                return Util.toast.error(`${village == "home" ? "Town Hall" : "Builder Hall"} level must be atleast 1!`, {
+                    toastId: "TownHallLower"
+                });
             };
             Util.Emitter.emit("MAXED_FOR_VILLAGE", universalSelector);
             Util.toast.success(`Set everything maxed for ${village == "home" ? "Town Hall" : "Builder Hall"} ${universalSelector}!`);
@@ -53,10 +57,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
     };
     //@ts-ignore
     const maxedLevel: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).maxLevel || player.builderHallLevel;
-    const databaseItem = Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village);
     const [totalAmount, setTotalAmount] = useState(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) ? Object.values(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) || {}).reduce((prevValue, currentValue) => prevValue + currentValue) : 0);
-    //@ts-ignore
-    const wallMaxAmount: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
     function displayWallSlider() {
         return (
             <>
@@ -67,59 +68,12 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                     <p> Amount: {totalAmount}</p>
                 </Center>
                 {[...Array(maxedLevel)].map((e, i) => {
-                    const [amount, setAmount] = useInputState(databaseItem && databaseItem[i + 1] ? databaseItem[i + 1] : 0);
-                    //After the DOM is rendered
-                    useLayoutEffect(() => {
-                        //Event Listener to set the building maxed for TH: `universal selector` value
-                        Util.Emitter.on("MAXED_FOR_VILLAGE", (maxedFor) => {
-                            //@ts-ignore 
-                            const maxedAmount: number = Util.getHallItem("Wall", maxedFor, village).amount || Util.getHallItem("Wall", maxedFor, village);
-                            //@ts-ignore
-                            const maxedLevel: number = Util.getHallItem("Wall", maxedFor, village).maxLevel || maxedFor;
-                            if (maxedLevel == i + 1) {
-                                setTotalAmount(maxedAmount);
-                                setAmount(maxedAmount);
-                            //Issue: set Level `0` instead
-                            } else {
-                                setAmount(0);
-                            };
-                        });
-                        //Event Listener to reset all building levels
-                        Util.Emitter.on("RESET", () => {
-                            setTotalAmount(totalAmount - amount);
-                            setAmount(0);
-                        });
-                    }, []);
-                    return (
-                        <Grid className="grid-cols-4 items-center">
-                            <Input name={`Wall_${i + 1}`} type="hidden" value={amount}/>
-                            <img className="max-h-full w-auto h-14 justify-self-center" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/Defenses/Wall/${i + 1}.png`}/>
-                            <Slider required className="col-span-2" value={amount} maxLength={wallMaxAmount.toString().length} min={0} max={wallMaxAmount} onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-                                const newAmount = parseInt(ev.target.value);
-                                const newTotalAmount = (totalAmount - amount) + newAmount;
-                                if (newTotalAmount > wallMaxAmount) return Util.toast.error(`Total amount of Walls for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${wallMaxAmount}`, {
-                                    toastId: "Test"
-                                });
-                                ev.target.value = newAmount.toString();
-                                setTotalAmount(newTotalAmount);
-                                setAmount(newAmount);
-                            }}/>
-                            <Input required className="w-20" value={amount} maxLength={wallMaxAmount.toString().length} type="number" min={0} max={wallMaxAmount} onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-                                if (!ev.target.value) {
-                                    setTotalAmount(totalAmount - amount);
-                                    return setAmount(0);
-                                };
-                                const newAmount = parseInt(ev.target.value);
-                                const newTotalAmount = (totalAmount - amount) + newAmount;
-                                if (newTotalAmount > wallMaxAmount) return Util.toast.error(`Total amount of Walls for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${wallMaxAmount}`, {
-                                    toastId: "Test"
-                                });
-                                ev.target.value = newAmount.toString();
-                                setTotalAmount(newTotalAmount);
-                                setAmount(newAmount);
-                            }}/>
-                        </Grid> 
-                    );
+                    <WallSlider 
+                    databaseItem={Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village)}
+                    index={i}
+                    setTotalAmount={setTotalAmount}
+                    totalAmount={totalAmount}
+                    village={village}/>
                 })}
             </>
         );
@@ -192,49 +146,11 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                                     <p className="text-xl mb-2">{Util.toCapitalize(category)}</p>
                                 </Center>
                                 {iterationArray.map((item) => {
-                                    //@ts-ignore
-                                    const hallItem = Util.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
-                                    //@ts-ignore
-                                    const amount: number = hallItem.amount ? hallItem.amount : hallItem;
-                                    const defenses: Array<JSX.Element> = [];
-                                    //@ts-ignore
-                                    const buildingMaxLevel: number = village == "builder" && item.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? player.townHallLevel : player.builderHallLevel) - 1][Util.toCamelCase(item)].maxLevel || player.builderHallLevel;
-                                    for (let i = 1; i <= amount; i++) {
-                                        defenses.push(
-                                            <SliderGroup buildingName={item} buildingID={i} path={`${Util.toCapitalize(category)}/${item}`} playerSchema={playerSchema} village={village}/>
-                                        );
-                                    };
-                                    const [level, setLevel] = useInputState(Math.min(...(Util.CocUpgradeTracker.getLevels(item, playerSchema, village))));
-                                    function onNumberInput() {
-                                        return (ev: ChangeEvent<HTMLInputElement>) => {
-                                            if (!ev.target.value) return setLevel(0);
-                                            const newLevel = parseInt(ev.target.value);
-                                            if (newLevel > buildingMaxLevel) {
-                                                setLevel(buildingMaxLevel);
-                                                return Util.toast.error(`${item}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`); 
-                                            };
-                                            ev.target.value = newLevel.toString();
-                                            setLevel(newLevel);
-                                            Util.Emitter.emit(item + village, newLevel);
-                                        };
-                                    };
-                                    function onSlider() {
-                                        return (ev: ChangeEvent<HTMLInputElement>) => {
-                                            setLevel(parseInt(ev.target.value));
-                                            Util.Emitter.emit(item + village, parseInt(ev.target.value));
-                                        };
-                                    };
-                                    return (
-                                        <div>
-                                            <p className="text-center"> {item} </p>
-                                            <p className="text-center font-coc-description"> Set all {item}&apos;s to Level </p>
-                                            <Center>
-                                                <Slider required className="col-span-2" value={level} maxLength={buildingMaxLevel.toString().length} min={0} max={buildingMaxLevel} onChange={onSlider()}/>
-                                                <Input required className="w-20" value={level} maxLength={buildingMaxLevel.toString().length} type="number" min={0} max={buildingMaxLevel} onChange={onNumberInput()}/>
-                                            </Center>
-                                            {defenses.map((jsxElement, i) => <div key={i}>{jsxElement}</div>)}
-                                        </div>
-                                    );
+                                    <GlobalSlider
+                                    item={item}
+                                    category={category}
+                                    playerSchema={playerSchema}
+                                    village={village}/>
                                 })}
                             </>
                         );
@@ -251,6 +167,59 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                 </Grid>
             </form>
         </Layout>
+    );
+};
+
+const GlobalSlider: FC<{
+    item: string,
+    playerSchema: ClashOfClansVillage,
+    village: "home" | "builder",
+    category: string
+}> = ({ item, playerSchema, village, category }) => {
+    //@ts-ignore
+    const hallItem = Util.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
+    //@ts-ignore
+    const amount: number = hallItem.amount ? hallItem.amount : hallItem;
+    const defenses: Array<JSX.Element> = [];
+    //@ts-ignore
+    const buildingMaxLevel: number = village == "builder" && item.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? player.townHallLevel : player.builderHallLevel) - 1][Util.toCamelCase(item)].maxLevel || player.builderHallLevel;
+    for (let i = 1; i <= amount; i++) {
+        defenses.push(
+            <SliderGroup buildingName={item} buildingID={i} path={`${Util.toCapitalize(category)}/${item}`} playerSchema={playerSchema} village={village}/>
+        );
+    };
+    const [level, setLevel] = useInputState(Math.min(...(Util.CocUpgradeTracker.getLevels(item, playerSchema, village))));
+    function onNumberInput() {
+        return (ev: ChangeEvent<HTMLInputElement>) => {
+            if (!ev.target.value) return setLevel(0);
+            const newLevel = parseInt(ev.target.value);
+            if (newLevel > buildingMaxLevel) {
+                setLevel(buildingMaxLevel);
+                return Util.toast.error(`${item}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`, {
+                    toastId: item
+                }); 
+            };
+            ev.target.value = newLevel.toString();
+            setLevel(newLevel);
+            Util.Emitter.emit(item + village, newLevel);
+        };
+    };
+    function onSlider() {
+        return (ev: ChangeEvent<HTMLInputElement>) => {
+            setLevel(parseInt(ev.target.value));
+            Util.Emitter.emit(item + village, parseInt(ev.target.value));
+        };
+    };
+    return (
+        <div>
+            <p className="text-center"> {item} </p>
+            <p className="text-center font-coc-description"> Set all {item}&apos;s to Level </p>
+            <Center>
+                <Slider required className="col-span-2" value={level} maxLength={buildingMaxLevel.toString().length} min={0} max={buildingMaxLevel} onChange={onSlider()}/>
+                <Input required className="w-20" value={level} maxLength={buildingMaxLevel.toString().length} type="number" min={0} max={buildingMaxLevel} onChange={onNumberInput()}/>
+            </Center>
+            {defenses.map((jsxElement, i) => <div key={i}>{jsxElement}</div>)}
+        </div>
     );
 };
 
@@ -293,7 +262,9 @@ const SliderGroup: FC<{
             const newLevel = parseInt(ev.target.value);
             if (newLevel > buildingMaxLevel) {
                 setLevel(buildingMaxLevel);
-                return Util.toast.error(`${buildingName}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`); 
+                return Util.toast.error(`${buildingName}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`, {
+                    toastId: buildingName
+                }); 
             };
             ev.target.value = newLevel.toString();
             setLevel(newLevel);
@@ -305,6 +276,72 @@ const SliderGroup: FC<{
             <img className="max-h-full w-auto h-14 justify-self-center" src={staticImagePath ? staticImagePath : `/Images/Clash of Clans/${Util.toCapitalize(village)}/${path}/${level}.png`}/>
             <Slider required className="col-span-2" value={level} maxLength={buildingMaxLevel.toString().length} min={buildingMinLevel} max={buildingMaxLevel} onChange={setLevel}/>
             <Input required className="w-20" value={level} maxLength={buildingMaxLevel.toString().length} type="number" min={buildingMinLevel} max={buildingMaxLevel} onChange={onNumberInput()}/>
+        </Grid> 
+    );
+};
+
+const WallSlider: FC<{
+    totalAmount: number,
+    setTotalAmount: Dispatch<SetStateAction<number>>,
+    databaseItem: {
+        [key: string]: number;
+    },
+    index: number,
+    village: "home" | "builder"
+}> = ({ totalAmount, setTotalAmount, databaseItem, index, village }) => {
+    //@ts-ignore
+    const wallMaxAmount: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
+    const [amount, setAmount] = useInputState(databaseItem && databaseItem[index + 1] ? databaseItem[index + 1] : 0);
+    //After the DOM is rendered
+    useLayoutEffect(() => {
+        //Event Listener to set the building maxed for TH: `universal selector` value
+        Util.Emitter.on("MAXED_FOR_VILLAGE", (maxedFor) => {
+            //@ts-ignore 
+            const maxedAmount: number = Util.getHallItem("Wall", maxedFor, village).amount || Util.getHallItem("Wall", maxedFor, village);
+            //@ts-ignore
+            const maxedLevel: number = Util.getHallItem("Wall", maxedFor, village).maxLevel || maxedFor;
+            if (maxedLevel == index + 1) {
+                setTotalAmount(maxedAmount);
+                setAmount(maxedAmount);
+            //Issue: set Level `0` instead
+            } else {
+                setAmount(0);
+            };
+        });
+        //Event Listener to reset all building levels
+        Util.Emitter.on("RESET", () => {
+            setTotalAmount(totalAmount - amount);
+            setAmount(0);
+        });
+    }, []);
+    return (
+        <Grid className="grid-cols-4 items-center">
+            <Input name={`Wall_${index + 1}`} type="hidden" value={amount}/>
+            <img className="max-h-full w-auto h-14 justify-self-center" src={`/Images/Clash of Clans/${Util.toCapitalize(village)}/Defenses/Wall/${index + 1}.png`}/>
+            <Slider required className="col-span-2" value={amount} maxLength={wallMaxAmount.toString().length} min={0} max={wallMaxAmount} onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+                const newAmount = parseInt(ev.target.value);
+                const newTotalAmount = (totalAmount - amount) + newAmount;
+                if (newTotalAmount > wallMaxAmount) return Util.toast.error(`Total amount of Walls for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${wallMaxAmount}`, {
+                    toastId: "Wall"
+                });
+                ev.target.value = newAmount.toString();
+                setTotalAmount(newTotalAmount);
+                setAmount(newAmount);
+            }}/>
+            <Input required className="w-20" value={amount} maxLength={wallMaxAmount.toString().length} type="number" min={0} max={wallMaxAmount} onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+                if (!ev.target.value) {
+                    setTotalAmount(totalAmount - amount);
+                    return setAmount(0);
+                };
+                const newAmount = parseInt(ev.target.value);
+                const newTotalAmount = (totalAmount - amount) + newAmount;
+                if (newTotalAmount > wallMaxAmount) return Util.toast.error(`Total amount of Walls for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${wallMaxAmount}`, {
+                    toastId: "Wall"
+                });
+                ev.target.value = newAmount.toString();
+                setTotalAmount(newTotalAmount);
+                setAmount(newAmount);
+            }}/>
         </Grid> 
     );
 };
