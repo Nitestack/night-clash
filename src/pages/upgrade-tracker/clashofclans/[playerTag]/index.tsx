@@ -231,9 +231,9 @@ const CocUpgradeTrackerPlayerVillage: FC<{
                 <div>
                     <Button className="bg-green-500" onClick={updatePlayer()}>API Update</Button>
                 </div>
-                <Link>
+                <a style={{ textDecoration: "none" }} href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}/editstructures/${village}`}>
                     <Button className="bg-red-600"> Edit Structures</Button>
-                </Link>
+                </a>
             </Grid>
             {townHallLevel >= 7 ? (
                 <Grid className="grid-cols-2 col-span-3">

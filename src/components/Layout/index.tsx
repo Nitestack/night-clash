@@ -64,13 +64,11 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                                     {description ? description : `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`}
                                 </p>
                             </div>
-                            <div className="mt-10 z-0 mb-0 mx-auto">
-                                {children}
-                            </div>
+                            <div className="mt-10 z-0 mb-0 mx-auto"> {children} </div>
                         </div>
                     </div>
                 </main>
-                <Footer></Footer>
+                <Footer/>
             </div>
         </>
     );

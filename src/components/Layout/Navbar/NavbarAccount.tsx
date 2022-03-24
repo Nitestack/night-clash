@@ -5,7 +5,6 @@ import { Menu, Transition } from "@headlessui/react";
 import Util from "@util/index";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import type { SessionObject } from "@util/types";
 import Motion from "@components/Utilities/Motion";
 
 const userNavigation: Array<{
@@ -19,7 +18,7 @@ const userNavigation: Array<{
 ];
 
 const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
-    const { data: session, status } = useSession() as SessionObject;
+    const { data: session, status } = useSession();
     const user = session?.user;
     function logOut() {
         return () => signOut({ redirect: true, callbackUrl: window.location.pathname })
@@ -29,11 +28,11 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
             <div className="pt-4 pb-3 border-t border-lightmodetext dark:border-darkmodetext">
                 <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                        <Image height="40" width="40" className="rounded-full" src={user.role == Util.Constants.ADMIN_ROLE_ID ? "/Images/admin.png" : "/Images/user.png"}/>
+                        <Image height="40" width="40" className="rounded-full" src="/Images/user.png"/>
                     </div>
                     <div className="ml-3">
                         <div className="text-base font-medium leading-none text-lightmodetext dark:text-darkmodetext">
-                            {user.username}
+                            {user.name}
                         </div>
                         <div className="text-sm font-medium leading-none text-lightmodetext dark:text-darkmodetext font-coc-description">
                             {user.email}
@@ -48,8 +47,6 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                             className="block px-3 py-2 rounded-md text-base font-medium text-lightmodetext dark:text-darkmodetext hover:text-hovertext hover:bg-hoverbackground"
                         > {item.name} </Link>
                     ))}
-                    {user.role == Util.Constants.ADMIN_ROLE_ID ? 
-                    <Link key="Admin" href="/admin" className="block px-3 py-2 rounded-md text-base font-medium text-lightmodetext dark:text-darkmodetext hover:text-hovertext hover:bg-hoverbackground"> Admin </Link> : undefined}
                     <Link key="Logout" onClick={logOut()} className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-hoverbackground"> Sign Out </Link>
                 </div>
             </div>
@@ -58,7 +55,7 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
             <Menu as="div" className="ml-3 relative hidden md:block">
                 <Motion>
                     <Menu.Button className="resize-none max-w-xs rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                        <Image height="32" width="32" className="rounded-full" src={user.role == Util.Constants.ADMIN_ROLE_ID ? "/Images/admin.png" : "/Images/user.png"}/>
+                        <Image height="32" width="32" className="rounded-full" src="/Images/user.png"/>
                     </Menu.Button>
                 </Motion>
                 <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform opacity-0 scale-95" enterTo="transform opacity-100 scale-100" leave="transition ease-in duration-75" leaveFrom="transform opacity-100 scale-100" leaveTo="transform opacity-0 scale-95">
@@ -70,11 +67,6 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                                 )}
                             </Menu.Item>
                         ))}
-                        {user.role == Util.Constants.ADMIN_ROLE_ID ? <Menu.Item key="Admin">
-                            {({ active }) => (
-                                <Link disablehovermotion href="/admin" className={Util.classNames(active ? "bg-hoverbackground text-hovertext" : "", "block px-4 py-2 text-sm text-lightmodetext dark:text-darkmodetext")}> Admin </Link>
-                            )}
-                        </Menu.Item> : undefined}
                         <Menu.Item key="Sign Out">
                             {({ active }) => (
                                 <Link disablehovermotion onClick={logOut()} className={Util.classNames(active ? "bg-hoverbackground" : "", "block px-4 py-2 text-sm text-primary hover:text-indigo-500")}> Sign Out </Link>

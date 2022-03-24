@@ -1,14 +1,20 @@
 import Util from "@util/index";
-import type { PropsWithChildren } from "react";
-import { useState, forwardRef } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
+import { forwardRef } from "react";
+import { useDisclosure } from "@mantine/hooks";
 
-const Tooltip = forwardRef<HTMLDivElement, PropsWithChildren<undefined>>(function ({ className, toolTipNode, children }, ref) {
-    const [toolTip, setToolTip] = useState(false);
+type ToolTipProps = PropsWithChildren<{ 
+    toolTipNode: ReactNode, 
+    className?: string; 
+}>;
+
+const Tooltip = forwardRef<HTMLDivElement, ToolTipProps>(function ({ className, toolTipNode, children }, ref) {
+    const [toolTip, handlers] = useDisclosure(false);
     function showToolTip() {
-        return () => setToolTip(true);
+        return () => handlers.open();
     };
     function hideToolTip() {
-        return () => setToolTip(false);
+        return () => handlers.close();
     };
     return (
         <>
@@ -21,7 +27,7 @@ const Tooltip = forwardRef<HTMLDivElement, PropsWithChildren<undefined>>(functio
                     <div className="bg-lightmodesecondary dark:bg-darkmodesecondary p-2 rounded">
                         {toolTipNode}
                     </div>
-                    <div className="w-3 h-3 -mt-2 rotate-45 bg-lightmodesecondary dark:bg-darkmodesecondary"></div>
+                    <div className="w-3 h-3 -mt-2 rotate-45 bg-lightmodesecondary dark:bg-darkmodesecondary"/>
                 </div> : undefined}
             </div>
         </>

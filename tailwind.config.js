@@ -1,5 +1,3 @@
-/** @type {import('tailwindcss')} */
-
 const config = require("./config.json");
 
 module.exports = {

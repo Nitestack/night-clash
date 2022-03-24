@@ -91,16 +91,16 @@ const Navbar: FC = () => {
             <div className="px-4 sm:px-6">
                 <Center className="justify-between py-6 md:justify-start md:space-x-10">
                     <div className="flex justify-start lg:w-0 lg:flex-1">
-                        <NavbarHeader></NavbarHeader>
+                        <NavbarHeader/>
                     </div>
                     {/*DESKTOP SCREEN*/}
                     <Popover.Group as="nav" className="hidden md:flex">
-                        <NavbarPopover categoryName="Upgrade Tracker" subCategories={upgradeTrackers}></NavbarPopover>
-                        <NavbarPopover categoryName="Stats Tracker" subCategories={statsTrackers}></NavbarPopover>
-                        <NavbarPopover categoryName="Tools" subCategories={tools}></NavbarPopover>
+                        <NavbarPopover categoryName="Upgrade Tracker" subCategories={upgradeTrackers}/>
+                        <NavbarPopover categoryName="Stats Tracker" subCategories={statsTrackers}/>
+                        <NavbarPopover categoryName="Tools" subCategories={tools}/>
                     </Popover.Group>
-                    <NavbarAccount isMobile={false}></NavbarAccount>
-                    <NavbarToggler></NavbarToggler>
+                    <NavbarAccount isMobile={false}/>
+                    <NavbarToggler/>
                     {/*Mobile Dropdown Icon*/}
                     <Motion>
                         <div className="-mr-2 -my-2 md:hidden">
@@ -118,7 +118,7 @@ const Navbar: FC = () => {
                         <div className="pt-5 pb-6 px-5">
                             <Center className="justify-between">
                                 <div>
-                                    <NavbarHeader></NavbarHeader>
+                                    <NavbarHeader/>
                                 </div>
                                 <Motion>
                                     <div className="-mr-2">
@@ -135,9 +135,9 @@ const Navbar: FC = () => {
                                 <NavbarLink href="/stats-tracker"> Stats Tracker </NavbarLink>
                                 <NavbarLink href="/tools"> Tools </NavbarLink>
                             </div>
-                            <NavbarAccount isMobile={true}></NavbarAccount>
+                            <NavbarAccount isMobile={true}/>
                             <div className="border-t border-lightmodetext dark:border-darkmodetext"></div>
-                            <NavbarToggler isMobile={true}></NavbarToggler>
+                            <NavbarToggler isMobile={true}/>
                         </div>
                     </div>
                 </Popover.Panel>
