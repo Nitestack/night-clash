@@ -197,10 +197,10 @@ const ClashOfClansModule: FC<{
                     //@ts-ignore
                     levels = [player.townHallWeaponLevel];
                 } else {
-                    levels = Object.values(database[Util.toCamelCase(item)] || {});
+                    levels = Util.CocUpgradeTracker.getLevels(item, playerSchema, village);
                     if (levels.length < maxedAmount) for (let i = levels.length; i < maxedAmount; i++) levels.push(0);
                 };
-                const lowestLevel = Util.min(levels);
+                const lowestLevel = Math.min(...levels);
                 rows.push(
                     <>
                         <Center className="flex-col">   

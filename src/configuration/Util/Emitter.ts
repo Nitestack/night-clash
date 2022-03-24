@@ -1,6 +1,7 @@
 export interface ConstantsEvents {
     MAXED_FOR_VILLAGE: [maxedFor: number],
-    RESET: []
+    RESET: [],
+    [key: string]: [...args: any]
 };
 
 type Awaitable<T> = T | PromiseLike<T>;
@@ -12,7 +13,7 @@ type Awaitable<T> = T | PromiseLike<T>;
  */
 export default class Emitter {
     static handlers: { [x: string]: any; } = {};
-    static on<K extends keyof ConstantsEvents>(eventName: K, handler: (...args: ConstantsEvents[K]) => Awaitable<void>) {
+    static on<K extends keyof ConstantsEvents, ArgsType extends ConstantsEvents[K] = [...args: any]>(eventName: K, handler: (...args: ArgsType) => Awaitable<void>) {
         if (!this.handlers[eventName]) this.handlers[eventName] = [];
         this.handlers[eventName].push(handler);
     };
@@ -20,7 +21,7 @@ export default class Emitter {
         if (!this.handlers[eventName]) this.handlers[eventName] = [];
         delete this.handlers[eventName];
     };
-    static emit<K extends keyof ConstantsEvents>(eventName: K, ...args: ConstantsEvents[K]) {
+    static emit<K extends keyof ConstantsEvents, ArgsType extends ConstantsEvents[K] = [...args: any]>(eventName: K, ...args: ArgsType) {
         for (const key in this.handlers) if (Object.hasOwnProperty.call(this.handlers, key)) {
             const handles = this.handlers[key];
             for (const hkey in handles) if (Object.hasOwnProperty.call(handles, hkey)) {

@@ -17,17 +17,15 @@ const ClashOfClansWallModule: FC<{
     village: "home" | "builder"
 }> = ({ playerSchema, village }) => {
     const { townHallLevel, builderHallLevel} = playerSchema.player;
-    const lowestWall = Util.min(Object.keys(playerSchema[village == "home" ? "homeVillage" : "builderBase"].walls).map(wallLevel => parseInt(wallLevel)));
-    const levels = [];
-    const hallItem = village == "home" ? townHall[townHallLevel - 1].wall : builderHall[builderHallLevel || 1 - 1].wall;
+    const levels = Object.keys(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village)).map(level => parseInt(level));
+    const hallItem = village == "home" ? townHall[townHallLevel - 1].wall : builderHall[(builderHallLevel || 1) - 1].wall;
     //@ts-ignore
     const maxedLevel = hallItem.maxLevel ? hallItem.maxLevel : builderHallLevel;
-    for (let i = lowestWall; i <= (village == "home" ? maxedLevel : builderHallLevel); i++) levels.push(i);
     const rows: Array<JSX.Element> = [];
     for (const item of levels) {
         //@ts-ignore
         const wallItem: Base = (village == "home" ? home : builder).find(element => element.name == "Wall");
-        const dataBaseItem = playerSchema[village == "home" ? "homeVillage" : "builderBase"].walls;
+        const dataBaseItem = Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village);
         rows.push(
             <>
                 <Center className="justify-self-center flex-col">

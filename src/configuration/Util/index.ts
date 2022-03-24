@@ -218,20 +218,6 @@ export default class Util {
         return `${Math.round(((Date.now() - start) / (end - start)) * 100)}%`;
     };
     /**
-     * Resolves a database name
-     * @param {string} name The name to resolve
-     */
-    public static resolveDatabaseName(name: string) {
-        return name.includes("BuildersHut") ? "Builder's Hut" : (name.includes("XBow") ? "X-Bow" : (isNaN(name.charAt(name.length - 1) as unknown as number) ? name : name.slice(0, -1)).replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2'));
-    };
-    /**
-     * Converts a resolved name into a database name
-     * @param {string} name The resolved name
-     */
-    public static convertToDatabaseName(name: string) {
-        return name.replace(/ /g, "").replace(/-/g, "").replace(/'/g, "");
-    };
-    /**
      * Converts a string into the camel case notation
      * @param {string} name The resolved name
      */
@@ -272,13 +258,6 @@ export default class Util {
      */
     public static convertNumber(number: number) {
         return convertNumber(number);
-    };
-    /**
-     * Gets the the smallest value of 
-     * @param {Array<number>} input The numbers to compare 
-     */
-    public static min(input: Array<number>) {
-        return Math.min.apply(null, input);
     };
     /**
      * Removes duplicated values of an array

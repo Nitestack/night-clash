@@ -8,6 +8,7 @@ Util.connectDB();
 const Village: NextApiHandler = async (req, res) => {
     try {
         const playerTag = req.body.playerTag;
+        const village = req.body.village;
         const { email } = req.body.user;
         //Ensures the player's village is in the database
         const playerSchema = await DatabaseManager.getClashOfClansVillage({ playerTag: playerTag });
@@ -24,12 +25,15 @@ const Village: NextApiHandler = async (req, res) => {
             redirectUrl: "/upgrade-tracker/clashofclans"
         });
         const returnObj: {
-            playerSchema: ClashOfClansVillage
+            playerSchema: ClashOfClansVillage,
+            village?: "home" | "string"
         } = {
-            playerSchema: playerSchema
+            playerSchema: playerSchema,
+            village: village
         };
         Util.ApiHandler.sendSuccess<{
-            playerSchema: ClashOfClansVillage
+            playerSchema: ClashOfClansVillage,
+            village?: "home" | "string"
         }>(res, returnObj);
     } catch (err) {
         console.log(err);
