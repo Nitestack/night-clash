@@ -2,12 +2,17 @@ Everytime updating React
 - Go to node_modules/@types/react/index.d.ts and go to `HTMLAttributes` and add this line of code: "align?: "left" | "right" | "center" | "justify" | "char" | undefined;"
 ---------------------------------
 
-Register Rework
+add more toasters to Input and other submit things
+replace all (village = "home" ? townHall : builder)... with Util.getHallItem()
+add forwardRef() to all components
+
+
+Security
+
+Edit Username min length => Account.tsx, Register.tsx
 
 
 Rework files: api/auth/update.ts, models/user.ts, actions/user
-
-Rework API files: => add try catch blocks
 
 Rework: register.tsx
 

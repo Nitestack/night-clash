@@ -39,3 +39,5 @@ yarn-error.log*
 
 # Custom
 notes.txt
+test-results/
+playwright-report/
