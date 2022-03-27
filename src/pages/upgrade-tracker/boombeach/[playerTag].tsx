@@ -6,10 +6,13 @@ import type { BoomBeachIsland } from "@models/boombeach";
 const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
     island: BoomBeachIsland
 }> = ({ data }) => {
-    const { island } = data;
+    const { name, playerTag } = data.island;
     return (
-        <Layout description={island.playerTag}>
-
+        <Layout 
+        header={`${name} - Island`}
+        title={`${name} - Island - Boom Beach - Upgrade Tracker`}
+        description={playerTag}>
+            
         </Layout>
     );
 };

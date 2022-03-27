@@ -50,6 +50,8 @@ interface ActualUser {
     role: string;
     //The user's Clash of Clans villages
     clashOfClansVillages: Array<string>;
+    //The user's Boom Beach islands
+    boomBeachIslands: Array<string>;
     //Saved stats tracker players
     clashOfClansStatsTrackerPlayers: Array<ClashOfClansPlayerProfile>;
     //Saved stats tracker clans
@@ -92,10 +94,22 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
         required: true,
         default: Util.Constants.USER_ROLE_ID
     },
-    clashOfClansVillages: [{
-        type: String,
-        unique: true
-    }],
+    clashOfClansVillages: {
+        type: [{
+            type: String,
+            unique: true
+        }],
+        required: true,
+        default: []
+    },
+    boomBeachIslands: {
+        type: [{
+            type: String,
+            unique: true
+        }],
+        required: true,
+        default: []
+    },
     resetToken: {
         type: String
     },

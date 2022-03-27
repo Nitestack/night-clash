@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import type { Model, Document } from "mongoose";
+import { VillageType } from "@models/clashofclans";
 
 interface BoomBeachLevels {
-    [key: string]: string;
+    [key: string]: number;
 };
 
 interface BoomBeachAchievement {
@@ -11,14 +12,13 @@ interface BoomBeachAchievement {
     value: number;
     target: number;
     info: string;
-    completionInfo: string | null;
 };
 
 export type BoomBeachIsland = Document & {
     /**
      * Whether the second builder is active
      */
-    secondBuilderActive?: boolean;
+    secondBuilderActive: boolean;
     /**
      * The name of the player
      */
@@ -32,9 +32,13 @@ export type BoomBeachIsland = Document & {
      */
     expLevel: number;
     /**
+     * The HQ level of the player
+     */
+    hqLevel: number;
+    /**
      * The building levels
      */
-    buildings: BoomBeachLevels;
+    buildings: VillageType;
     /**
      * The troop levels
      */
@@ -46,7 +50,20 @@ export type BoomBeachIsland = Document & {
     /**
      * The mine levels
      */
-    mines?: BoomBeachLevels;
+    mines?: {
+        mine: number;
+        boomMine: number;
+        shockMine: number;
+    };
+    /**
+     * The hero levels
+     */
+    heroes?: {
+        sgtBrick: number;
+        drKavan: number;
+        cptEverspark: number;
+        pvtBullit: number;
+    };
     /**
      * The amount of victory points (for the UI)
      */
@@ -56,15 +73,113 @@ export type BoomBeachIsland = Document & {
      */
     achievements?: Array<BoomBeachAchievement>;
     /**
-     * The task force name where the player is currently in (for the UI)
+     * Information about the task force (for the UI)
      */
-    taskForceName?: string;
-    /**
-     * The task force role if the player is in a task force (for the UI)
-     */
-    role?: "member" | "officer" | "coLeader" | "leader";
+    taskForce?: {
+        name: string;
+        role: "leader" | "coLeader" | "officer" | "member"
+    }
 };
 
 export default mongoose.models.boombeachisland as Model<BoomBeachIsland> || mongoose.model<BoomBeachIsland>("boombeachisland", new mongoose.Schema({
-
+    secondBuilderActive: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
+    name: { 
+        type: String,
+        required: true
+    },
+    playerTag: { 
+        type: String,
+        required: true
+    },
+    hqLevel: {
+        type: Number,
+        required: true,
+        default: 1
+    },
+    expLevel: {
+        type: Number,
+        required: true,
+        default: 1
+    },
+    buildings: {
+        type: {},
+        required: true,
+        default: {}
+    },
+    troops: {
+        type: {},
+        required: true,
+        default: {}
+    },
+    gunBoatAbilities: {
+        type: {},
+        required: true,
+        default: {}
+    },
+    mines: {
+        type: {},
+        required: true,
+        default: {
+            mine: 0,
+            boomMine: 0,
+            shockMine: 0
+        }
+    },
+    heroes: {
+        type: {},
+        required: true,
+        default: {
+            sgtBrick: 0,
+            drKavan: 0,
+            cptEverspark: 0,
+            pvtBullit: 0
+        }
+    },
+    victoryPoints: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    achievements: {
+        type: [{
+            name: {
+                type: String,
+                required: true
+            },
+            stars: {
+                type: Number,
+                required: true
+            },
+            value: {
+                type: Number,
+                required: true
+            },
+            target: {
+                type: Number,
+                required: true
+            },
+            info: {
+                type: String,
+                required: true
+            },
+            completionInfo: String
+        }],
+        required: true,
+        default: []
+    },
+    taskForce: {
+        name: {
+            type: String,
+            required: true
+        },
+        role: {
+            type: String,
+            required: true,
+            default: "member"
+        }
+    }
 }));

@@ -1,6 +1,6 @@
 import Coc from "@constants/clashOfClans";
 import type { APIPlayer, APISeason } from "clashofclans.js";
-import type { ClashOfClansVillage, VillageType } from "@models/clashofclans";
+import type { ClashOfClansVillage, ClashOfClansVillageType } from "@models/clashofclans";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { toCamelCase } from "@util/functions";
@@ -27,8 +27,8 @@ export default class ClashOfClansUpgradeTracker {
     * @param {"home" | "builder"} village The village
     * @param {boolean?} newStructureLevels If to update the village object
     */
-    public static createVillageStructureObject(oldStructures: VillageType | { [key: string]: string }, player: APIPlayer, village: "home" | "builder", newStructureLevels?: boolean): VillageType {
-        const structures: VillageType = oldStructures.builder ? oldStructures as VillageType : {
+    public static createVillageStructureObject(oldStructures: ClashOfClansVillageType | { [key: string]: string }, player: APIPlayer, village: "home" | "builder", newStructureLevels?: boolean): ClashOfClansVillageType {
+        const structures: ClashOfClansVillageType = oldStructures.builder ? oldStructures as ClashOfClansVillageType : {
             "walls": {
             },
             "builder": {}

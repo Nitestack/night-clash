@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
-import { Document, Model, SchemaDefinitionProperty, SchemaTypes } from "mongoose";
+import { Document, Model, SchemaDefinitionProperty } from "mongoose";
 import type { APIPlayer } from "clashofclans.js";
 
-export type VillageType = {
-    [key: string]: {
-        [key: string]: number
-    },
+export type ClashOfClansVillageType = VillageType & {
     walls: {
         [key: string]: number
     },
     builder: {
+        [key: string]: number
+    }
+};
+
+export type VillageType = {
+    [key: string]: {
         [key: string]: number
     }
 };
@@ -29,11 +32,11 @@ export type ClashOfClansVillage = Document & {
     /**
      * The Home Village object
      */
-    homeVillage: VillageType;
+    homeVillage: ClashOfClansVillageType;
     /**
      * The Builder Base object
      */
-    builderBase: VillageType;
+    builderBase: ClashOfClansVillageType;
     /**
      * The season builder boost: 0` | `10` | `15` | `20`
      */
