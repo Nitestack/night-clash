@@ -14,6 +14,7 @@ import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { useInputState } from "@mantine/hooks";
 import Link from "@components/Elements/Link";
+import type { APIPlayer } from "clashofclans.js";
 const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
     playerSchema: ClashOfClansVillage,
     village: "home" | "builder"
@@ -74,7 +75,8 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                     index={i}
                     setTotalAmount={setTotalAmount}
                     totalAmount={totalAmount}
-                    village={village}/>
+                    village={village}
+                    player={player}/>
                 ))}
             </>
         );
@@ -289,7 +291,8 @@ const WallSlider: FC<{
         [key: string]: number;
     },
     index: number,
-    village: "home" | "builder"
+    village: "home" | "builder",
+    player: APIPlayer
 }> = ({ totalAmount, setTotalAmount, databaseItem, index, village }) => {
     //@ts-ignore
     const wallMaxAmount: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
