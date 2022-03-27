@@ -293,7 +293,7 @@ const WallSlider: FC<{
     index: number,
     village: "home" | "builder",
     player: APIPlayer
-}> = ({ totalAmount, setTotalAmount, databaseItem, index, village }) => {
+}> = ({ totalAmount, setTotalAmount, databaseItem, index, village, player }) => {
     //@ts-ignore
     const wallMaxAmount: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
     const [amount, setAmount] = useInputState(databaseItem && databaseItem[index + 1] ? databaseItem[index + 1] : 0);
