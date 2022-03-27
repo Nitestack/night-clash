@@ -67,7 +67,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                 <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
                     <p> Amount: {totalAmount}</p>
                 </Center>
-                {[...Array(maxedLevel)].map((e, i) => (
+                {[...Array(maxedLevel)].map((_, i) => (
                     <WallSlider 
                     databaseItem={Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village)}
                     index={i}
