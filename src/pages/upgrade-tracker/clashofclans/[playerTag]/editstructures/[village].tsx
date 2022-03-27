@@ -145,13 +145,13 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                                 <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
                                     <p className="text-xl mb-2">{Util.toCapitalize(category)}</p>
                                 </Center>
-                                {iterationArray.map((item) => {
-                                    <GlobalSlider
+                                {iterationArray.map((item, index) => (
+                                    <GlobalSlider key={index}
                                     item={item}
                                     category={category}
                                     playerSchema={playerSchema}
                                     village={village}/>
-                                })}
+                                ))}
                             </>
                         );
                     })}
@@ -176,6 +176,7 @@ const GlobalSlider: FC<{
     village: "home" | "builder",
     category: string
 }> = ({ item, playerSchema, village, category }) => {
+    const { player } = playerSchema;
     //@ts-ignore
     const hallItem = Util.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
     //@ts-ignore

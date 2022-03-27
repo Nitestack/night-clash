@@ -9,7 +9,6 @@ import { useState, useRef } from "react";
 import Center from "@components/Utilities/Center";
 import Tabs from "@components/Tabs";
 import Button from "@components/Elements/Button";
-import Link from "@components/Elements/Link";
 import Grid from "@components/Utilities/Grid";
 import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/ClashOfClansOverview";
