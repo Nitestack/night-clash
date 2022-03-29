@@ -1,5 +1,3 @@
-import { townHall } from "@database/Clash of Clans/Home/townHall";
-import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
 import getAPI from "@util/api";
@@ -61,9 +59,9 @@ export default class Util {
     };
     /**
      * Converts all class names into one class string
-     * @param {Argument[]} args The class(es)
+     * @param {Array<string | false | null | undefined>} classLists The class(es)
      */
-    public static classNames(...classLists: (string | false | null | undefined)[]) {
+    public static classNames(...classLists: Array<string | false | null | undefined>) {
         return twMerge(...classLists);
     };
     /**
@@ -150,23 +148,6 @@ export default class Util {
         return await getAPI("bs");
     };
     /**
-     * Gets the image of a Town Hall
-     * @param {number} townHallLevel The Town Hall level 
-     * @param {number?} townHallWeaponLevel The Town Hall Weapon level
-     */
-    public static getTownHallImage(townHallLevel: number, townHallWeaponLevel?: number) {
-        return `/Images/Clash of Clans/Home/${townHallLevel >= 12 ? 
-            `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
-            `Town Hall/${townHallLevel}`}.png`;
-    };
-    /**
-     * Gets the image of a Builder Hall
-     * @param {number} builderHallLevel The Builder Hall level
-     */
-    public static getBuilderHallImage(builderHallLevel?: number) {
-        return `/Images/Clash of Clans/Builder/Builder Hall/${builderHallLevel || 0}.png`;
-    };
-    /**
      * Get's the rarity of a Clash Royale card
      * @param {CRCard} card The card
      */
@@ -194,7 +175,7 @@ export default class Util {
      * Shorts the time
      * @param {string} text The text to short
      */
-    public static shortener(text: string) {
+    public static shortTime(text: string) {
         const textArray = text.split(" ");
         for (const textPiece of textArray) if (["0m", "0s", "0ms"].includes(textPiece)) textArray.splice(textArray.indexOf(textPiece), 1);
         if (!text.toLowerCase().includes("d") && !text.toLowerCase().includes("h") && !text.toLowerCase().includes("m")) return "1m";
@@ -223,18 +204,6 @@ export default class Util {
      */
     public static toCamelCase(name: string) {
         return toCamelCase(name);
-    };
-    /**
-     * Get item of hall
-     * @param {string} name The resolved name of the element 
-     * @param {number} hallLevel The level of the hall
-     * @param {"home" | "builder"} village
-     */
-    public static getHallItem(name: string, hallLevel: number, village: "home" | "builder"): {
-        maxLevel: number,
-        amount: number
-    } | number {
-        return (village == "home" ? townHall : builderHall)[hallLevel - 1][this.toCamelCase(name)];
     };
     /**
      * Converts various time formats into seconds

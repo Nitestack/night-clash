@@ -18,8 +18,6 @@ import config from "../../config.json";
 
 const isDevelopment = process.env.NODE_ENV == "development";
 
-const minAnimationTime = isDevelopment ? 0 : 1000;
-
 const queryClient = new QueryClient();
 
 const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = ({ Component, pageProps }) => {
@@ -74,7 +72,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
         if (Component.afterAuthentication) {
             const returnValue = Component.afterAuthentication(session, router);
             //If the return value is `false`, it exits the function
-            if (typeof returnValue == "boolean" && returnValue == false) return setTimeout(() => setDone(true), minAnimationTime);
+            if (typeof returnValue == "boolean" && returnValue == false) return setDone(true);
         };
         //Fetch data for displaying content
         if (Component.fetchData) {
@@ -88,7 +86,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                 Component.fetchData.method == "post" ? config : undefined).then(res => {
                     if (res.status == 200) {
                         setData(res.data);
-                        setTimeout(() => setDone(true), minAnimationTime);
+                        setDone(true);
                     };
                 //Edit the error handler in @utils/apiHandler.ts too
                 }).catch((error) => {
@@ -110,7 +108,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                         Util.toast.error("An error happened on the server! Please try again!");
                     };
                 });  
-        } else setTimeout(() => setDone(true), minAnimationTime);
+        } else setDone(true);
     };
 };
 

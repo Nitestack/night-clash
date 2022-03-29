@@ -57,7 +57,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
         };
     };
     //@ts-ignore
-    const maxedLevel: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).maxLevel || player.builderHallLevel;
+    const maxedLevel: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).maxLevel || player.builderHallLevel;
     const [totalAmount, setTotalAmount] = useState(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) ? Object.values(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) || {}).reduce((prevValue, currentValue) => prevValue + currentValue) : 0);
     function displayWallSlider() {
         return (
@@ -142,7 +142,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                                 builderArmyArray.filter(army => army.toLowerCase() != "builder barracks");
                                 break;
                         };
-                        iterationArray = iterationArray.filter(defense => Util.getHallItem(defense, village == "home" ? player.townHallLevel : player.builderHallLevel || 1, village));
+                        iterationArray = iterationArray.filter(defense => Util.CocUpgradeTracker.getHallItem(defense, village == "home" ? player.townHallLevel : player.builderHallLevel || 1, village));
                         return (
                             <>
                                 <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
@@ -181,7 +181,7 @@ const GlobalSlider: FC<{
 }> = ({ item, playerSchema, village, category }) => {
     const { player } = playerSchema;
     //@ts-ignore
-    const hallItem = Util.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
+    const hallItem = Util.CocUpgradeTracker.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
     //@ts-ignore
     const amount: number = hallItem.amount ? hallItem.amount : hallItem;
     const defenses: Array<JSX.Element> = [];
@@ -247,7 +247,7 @@ const SliderGroup: FC<{
         //Event Listener to set the building maxed for TH: `universal selector` value
         Util.Emitter.on("MAXED_FOR_VILLAGE", (maxedFor) => {
             //@ts-ignore The Hall item
-            const hallItem = Util.getHallItem(buildingName, maxedFor, village);
+            const hallItem = Util.CocUpgradeTracker.getHallItem(buildingName, maxedFor, village);
             //@ts-ignore The amount of buildings (at lower levels you don't have every building, which means, they are undefined or Level `0`)
             const amount: number = hallItem?.amount ? hallItem?.amount : hallItem || 0;
             //@ts-ignore Makes the check of the above mentioned issue
@@ -295,16 +295,16 @@ const WallSlider: FC<{
     player: APIPlayer
 }> = ({ totalAmount, setTotalAmount, databaseItem, index, village, player }) => {
     //@ts-ignore
-    const wallMaxAmount: number = Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
+    const wallMaxAmount: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
     const [amount, setAmount] = useInputState(databaseItem && databaseItem[index + 1] ? databaseItem[index + 1] : 0);
     //After the DOM is rendered
     useLayoutEffect(() => {
         //Event Listener to set the building maxed for TH: `universal selector` value
         Util.Emitter.on("MAXED_FOR_VILLAGE", (maxedFor) => {
             //@ts-ignore 
-            const maxedAmount: number = Util.getHallItem("Wall", maxedFor, village).amount || Util.getHallItem("Wall", maxedFor, village);
+            const maxedAmount: number = Util.CocUpgradeTracker.getHallItem("Wall", maxedFor, village).amount || Util.CocUpgradeTracker.getHallItem("Wall", maxedFor, village);
             //@ts-ignore
-            const maxedLevel: number = Util.getHallItem("Wall", maxedFor, village).maxLevel || maxedFor;
+            const maxedLevel: number = Util.CocUpgradeTracker.getHallItem("Wall", maxedFor, village).maxLevel || maxedFor;
             if (maxedLevel == index + 1) {
                 setTotalAmount(maxedAmount);
                 setAmount(maxedAmount);

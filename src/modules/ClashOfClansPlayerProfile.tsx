@@ -33,7 +33,7 @@ const ClashOfClansPlayerProfile: FC<{
                 <div className="pb-2 lg:pb-0">
                     <p className="whitespace-nowrap flex items-center justify-center mb-2 text-lightmodetext dark:text-darkmodetext font-bold text-center">{village == "home" ? "Town Hall" : "Builder Hall"} Level {village == "home" ? player.townHallLevel : player.builderHallLevel} {player.townHallWeaponLevel && village == "home" ? <span className="flex items-center justify-center"><img className="w-6" src="/Images/Clash of Clans/Achievement Star.png"/>{player.townHallWeaponLevel}</span> : undefined}</p>
                     <Center>
-                        <img className="w-40" src={village == "home" ? Util.getTownHallImage(player.townHallLevel, player.townHallWeaponLevel) : Util.getBuilderHallImage(player.builderHallLevel)}/>
+                        <img className="w-40" src={village == "home" ? Util.CocUpgradeTracker.getTownHallImage(player.townHallLevel, player.townHallWeaponLevel) : Util.CocUpgradeTracker.getBuilderHallImage(player.builderHallLevel)}/>
                     </Center>
                 </div>
                 <div className="pb-2 lg:pb-0">

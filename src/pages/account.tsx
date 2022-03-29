@@ -144,7 +144,7 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
                                 <Link key={village.tag} target="_blank" href={`/upgrade-tracker/clashofclans/${village.tag.replace(/#/g, "")}`}>
                                     <Button className="bg-blue-500 w-full">
                                         <Center>
-                                            <img className="w-12" src={Util.getTownHallImage(village.townHallLevel, village.townHallWeaponLevel)}/>
+                                            <img className="w-12" src={Util.CocUpgradeTracker.getTownHallImage(village.townHallLevel, village.townHallWeaponLevel)}/>
                                             <div>
                                                 <p>{village.name}</p>
                                                 <span>{village.tag}</span>
@@ -161,7 +161,7 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
                                 <Link key={village.tag} target="_blank" href={`/stats-tracker/clashofclans/players/${village.tag.replace(/#/g, "")}`}>
                                     <Button className="bg-blue-500 w-full">
                                         <Center>
-                                            <img className="w-12" src={Util.getTownHallImage(village.townHallLevel, village.townHallWeaponLevel)}/>
+                                            <img className="w-12" src={Util.CocUpgradeTracker.getTownHallImage(village.townHallLevel, village.townHallWeaponLevel)}/>
                                             <div>
                                                 <p>{village.name}</p>
                                                 <span>{village.tag}</span>

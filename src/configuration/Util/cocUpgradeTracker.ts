@@ -140,6 +140,23 @@ export default class ClashOfClansUpgradeTracker {
         return structures;
     };
     /**
+     * Gets the image of a Town Hall
+     * @param {number} townHallLevel The Town Hall level 
+     * @param {number?} townHallWeaponLevel The Town Hall Weapon level
+     */
+    public static getTownHallImage(townHallLevel: number, townHallWeaponLevel?: number) {
+        return `/Images/Clash of Clans/Home/${townHallLevel >= 12 ? 
+            `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
+            `Town Hall/${townHallLevel}`}.png`;
+    };
+    /**
+     * Gets the image of a Builder Hall
+     * @param {number} builderHallLevel The Builder Hall level
+     */
+    public static getBuilderHallImage(builderHallLevel?: number) {
+        return `/Images/Clash of Clans/Builder/Builder Hall/${builderHallLevel || 0}.png`;
+    };
+    /**
      * Converts an API role to an resolved role string
      * @param {string} role The role to convert 
      */
@@ -210,6 +227,18 @@ export default class ClashOfClansUpgradeTracker {
             gems == 0 && timeInSeconds > 0 && (gems = 1)
         };
         return gems < 0 && (gems = 0), gems;
+    };
+    /**
+     * Get item of hall
+     * @param {string} name The resolved name of the element 
+     * @param {number} hallLevel The level of the hall
+     * @param {"home" | "builder"} village
+     */
+    public static getHallItem(name: string, hallLevel: number, village: "home" | "builder"): {
+        maxLevel: number,
+        amount: number
+    } | number {
+        return (village == "home" ? townHall : builderHall)[hallLevel - 1][toCamelCase(name)];
     };
     public static getLeagueSeason(season?: APISeason) {
         if (season) {
