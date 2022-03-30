@@ -2,8 +2,8 @@ import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import Layout from "@components/Layout/index";
 import type { ClashOfClansVillage } from "@database/Models/clashofclans";
-import { useLayoutEffect, useState } from "react";
-import type { FC, ChangeEvent, Dispatch, SetStateAction } from "react";
+import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import type { FC, ChangeEvent, Dispatch, SetStateAction, MouseEventHandler } from "react";
 import Grid from "@components/Utilities/Grid";
 import Center from "@components/Utilities/Center";
 import Input from "@components/Elements/Input";
@@ -15,13 +15,15 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { useInputState } from "@mantine/hooks";
 import Link from "@components/Elements/Link";
 import type { APIPlayer } from "clashofclans.js";
+
 const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
     playerSchema: ClashOfClansVillage,
     village: "home" | "builder"
 }> = ({ data }) => {
     const { playerSchema, village } = data;
     const { player } = playerSchema;
-    const { tag, name } = player;
+    const { tag, name, townHallLevel, builderHallLevel } = player;
+    const formRef = useRef<HTMLFormElement>(null);
 
     const { homeDefensesArray, builderDefensesArray, homeTrapsArray, builderTrapsArray, homeResourcesArray, builderResourcesArray, homeArmyArray, builderArmyArray } = Util.Constants.CoC;
     const [universalSelector, setUniversalSelector] = useState(1);
@@ -35,7 +37,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
     function validateUniversalSelector() {
         return () => {
             //If the Town Hall level is higher than the player's town hall level
-            if (universalSelector > (village == "home" ? player.townHallLevel : player.builderHallLevel || 1)) {
+            if (universalSelector > (village == "home" ? townHallLevel : builderHallLevel || 1)) {
                 return Util.toast.error(`Do not exceed the maximum ${village == "home" ? "Town Hall" : "Builder Hall"} level!`, {
                     toastId: "TownHallHigher"
                 });
@@ -56,9 +58,29 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
             Util.Emitter.emit("RESET");
         };
     };
+    function onSubmit() {
+        return () => {
+            if (!formRef.current) return;
+            const formData = new FormData(formRef.current);
+            const data: {
+                [key: string]: FormDataEntryValue;
+            } = {};
+            formData.forEach((value, key) => data[key] = value);
+            data.playerTag = tag;
+            data.village = village;
+            Util.ApiHandler.clientSideErrorHandler(async () => {
+                const response = await Util.Axios.post("/api/upgrade-tracker/clashofclans/editstructures", data);
+                if (response.status == 200) {
+                    Util.toast.success(`Successfully edited ${village == "home" ? "Town Hall" : "Builder Hall"}!`);
+                    window.open(`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}\#${village}`, "_self");
+                };
+            });
+        };
+    };
+    const wallDatabase = Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village);
     //@ts-ignore
-    const maxedLevel: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).maxLevel || player.builderHallLevel;
-    const [totalAmount, setTotalAmount] = useState(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) ? Object.values(Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village) || {}).reduce((prevValue, currentValue) => prevValue + currentValue) : 0);
+    const maxedLevel: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? townHallLevel : builderHallLevel, village).maxLevel || builderHallLevel;
+    const [totalAmount, setTotalAmount] = useState(wallDatabase ? Object.values(wallDatabase || {}).reduce((prevValue, currentValue) => prevValue + currentValue) : 0);
     function displayWallSlider() {
         return (
             <>
@@ -71,7 +93,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                 {[...Array(maxedLevel)].map((_, i) => (
                     <WallSlider 
                     key={i}
-                    databaseItem={Util.CocUpgradeTracker.getDatabaseItem("Walls", playerSchema, village)}
+                    initialAmount={wallDatabase ? wallDatabase[i + 1] : undefined}
                     index={i}
                     setTotalAmount={setTotalAmount}
                     totalAmount={totalAmount}
@@ -85,9 +107,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
         <Layout 
         title={`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures - Clash of Clans - Upgrade Tracker`} 
         header={`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures`} description={tag}>
-            <form method="POST" action="/api/upgrade-tracker/clashofclans/editstructures">
-                <Input type="hidden" name="playerTag" value={player.tag}/>
-                <Input type="hidden" name="village" value={village}/>
+            <form ref={formRef} method="POST" action="/api/upgrade-tracker/clashofclans/editstructures">
                 <Grid className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg p-1 sm:p-2 md:p-3">
                     <div className="sm:col-span-2 md:col-span-3 lg:col-span-4">
                         <Center>
@@ -98,7 +118,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                                         <p className="text-center">Set everything for {village == "home" ? "Town Hall" : "Builder Hall"}</p>
                                     </Center>
                                     <Center className="justify-self-center sm:justify-self-start">
-                                        <Input defaultValue={universalSelector} className="sm:ml-2 w-16" onChange={saveUniversalSelector()} type="number" maxLength={2} min={1} max={village == "home" ? player.townHallLevel : player.builderHallLevel || 1}/>
+                                        <Input defaultValue={universalSelector} className="sm:ml-2 w-16" onChange={saveUniversalSelector()} type="number" maxLength={2} min={1} max={village == "home" ? townHallLevel : builderHallLevel || 1}/>
                                         <Button type="button" onClick={validateUniversalSelector()} className="bg-green-500 p-2 w-13 h-13">
                                             <CheckIcon className="w-5"/>
                                         </Button>
@@ -112,14 +132,7 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                             <p className="text-xl mb-2">Builder&apos;s Hut </p>
                         </Center> : undefined}
                     </div>
-                    <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 justify-self-center">
-                        <Center>
-                            <Link href={`/upgrade-tracker/clashofclans/${player.tag.replace(/#/g, "")}#${village}`}>
-                                <Button className="bg-red-600" type="button"> Cancel </Button>
-                            </Link>
-                            <Button className="bg-green-500" type="submit"> Proceed </Button>
-                        </Center>
-                    </div>
+                    <OperationButtons village={village} tag={tag} submitFunction={onSubmit()}/>
                     {["defenses", "traps", "resources", "army"].map(category => {
                         let iterationArray: Array<string> = [];
                         switch (category.toLowerCase()) {
@@ -142,82 +155,78 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
                                 builderArmyArray.filter(army => army.toLowerCase() != "builder barracks");
                                 break;
                         };
-                        iterationArray = iterationArray.filter(defense => Util.CocUpgradeTracker.getHallItem(defense, village == "home" ? player.townHallLevel : player.builderHallLevel || 1, village));
+                        iterationArray = iterationArray.filter(defense => Util.CocUpgradeTracker.getHallItem(defense, village == "home" ? townHallLevel : builderHallLevel || 1, village));
                         return (
-                            <>
+                            <Fragment key={category}>
                                 <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
                                     <p className="text-xl mb-2">{Util.toCapitalize(category)}</p>
                                 </Center>
                                 {iterationArray.map((item, index) => (
                                     <GlobalSlider key={index}
-                                    item={item}
+                                    building={item}
                                     category={category}
                                     playerSchema={playerSchema}
                                     village={village}/>
                                 ))}
-                            </>
+                            </Fragment>
                         );
                     })}
                     {displayWallSlider()}
-                    <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 justify-self-center">
-                        <Center>
-                            <Link href={`/upgrade-tracker/clashofclans/${player.tag.replace(/#/g, "")}#${village}`}>
-                                <Button className="bg-red-600" type="button"> Cancel </Button>
-                            </Link>
-                            <Button className="bg-green-500" type="submit"> Proceed </Button>
-                        </Center>
-                    </div>
+                    <OperationButtons tag={tag} village={village} submitFunction={onSubmit()}/>
                 </Grid>
             </form>
         </Layout>
     );
 };
 
+
+
 const GlobalSlider: FC<{
-    item: string,
+    building: string,
     playerSchema: ClashOfClansVillage,
     village: "home" | "builder",
     category: string
-}> = ({ item, playerSchema, village, category }) => {
+}> = ({ building, playerSchema, village, category }) => {
     const { player } = playerSchema;
+    const { townHallLevel, builderHallLevel } = player;
     //@ts-ignore
-    const hallItem = Util.CocUpgradeTracker.getHallItem(item, village == "home" ? player.townHallLevel : player.builderHallLevel, village);
+    const hallItem = Util.CocUpgradeTracker.getHallItem(building, village == "home" ? townHallLevel : builderHallLevel, village);
     //@ts-ignore
     const amount: number = hallItem.amount ? hallItem.amount : hallItem;
     const defenses: Array<JSX.Element> = [];
     //@ts-ignore
-    const buildingMaxLevel: number = village == "builder" && item.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? player.townHallLevel : player.builderHallLevel) - 1][Util.toCamelCase(item)].maxLevel || player.builderHallLevel;
+    const buildingMaxLevel: number = village == "builder" && building.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? townHallLevel : builderHallLevel) - 1][Util.toCamelCase(building)].maxLevel || builderHallLevel;
     for (let i = 1; i <= amount; i++) {
         defenses.push(
-            <SliderGroup buildingName={item} buildingID={i} path={`${Util.toCapitalize(category)}/${item}`} playerSchema={playerSchema} village={village}/>
+            <SliderGroup buildingName={building} buildingID={i} path={`${Util.toCapitalize(category)}/${building}`} playerSchema={playerSchema} village={village}/>
         );
     };
-    const [level, setLevel] = useInputState(Math.min(...(Util.CocUpgradeTracker.getLevels(item, playerSchema, village))));
+    const [level, setLevel] = useInputState(Math.min(...(Util.CocUpgradeTracker.getLevels(building, playerSchema, village))));
     function onNumberInput() {
         return (ev: ChangeEvent<HTMLInputElement>) => {
             if (!ev.target.value) return setLevel(0);
             const newLevel = parseInt(ev.target.value);
             if (newLevel > buildingMaxLevel) {
                 setLevel(buildingMaxLevel);
-                return Util.toast.error(`${item}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`, {
-                    toastId: item
+                return Util.toast.error(`${building}'s maximum level for your ${village == "home" ? "Town Hall" : "Builder Hall"} level: ${buildingMaxLevel}`, {
+                    toastId: building
                 }); 
             };
             ev.target.value = newLevel.toString();
             setLevel(newLevel);
-            Util.Emitter.emit(item + village, newLevel);
+            Util.Emitter.emit(building + village, newLevel);
         };
     };
     function onSlider() {
         return (ev: ChangeEvent<HTMLInputElement>) => {
             setLevel(parseInt(ev.target.value));
-            Util.Emitter.emit(item + village, parseInt(ev.target.value));
+            Util.Emitter.emit(building + village, parseInt(ev.target.value));
         };
     };
     return (
         <div>
-            <p className="text-center"> {item} </p>
-            <p className="text-center font-coc-description"> Set all {item}&apos;s to Level </p>
+            <p className="text-center"> {building} </p>
+            <p className="text-center font-coc-description"> Set all {building}&apos;s to Level </p>
             <Center>
                 <Slider required className="col-span-2" value={level} maxLength={buildingMaxLevel.toString().length} min={0} max={buildingMaxLevel} onChange={onSlider()}/>
                 <Input required className="w-20" value={level} maxLength={buildingMaxLevel.toString().length} type="number" min={0} max={buildingMaxLevel} onChange={onNumberInput()}/>
@@ -236,11 +245,12 @@ const SliderGroup: FC<{
     playerSchema: ClashOfClansVillage,
     staticImagePath?: string
 }> = ({ buildingName, buildingID, buildingMinLevel, village, playerSchema, path, staticImagePath }) => {
-    if (!buildingMinLevel) buildingMinLevel = 0;
     const { player } = playerSchema;
+    const { townHallLevel, builderHallLevel } = player;
+    if (!buildingMinLevel) buildingMinLevel = 0;
     const databaseBuilding = Util.CocUpgradeTracker.getDatabaseItem(buildingName, playerSchema, village);
     //@ts-ignore
-    const buildingMaxLevel: number = village == "builder" && buildingName.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? player.townHallLevel : player.builderHallLevel) - 1][Util.toCamelCase(buildingName)].maxLevel || player.builderHallLevel; 
+    const buildingMaxLevel: number = village == "builder" && buildingName.toLowerCase() == "army camp" ? 1 : (village == "home" ? townHall : builderHall)[(village == "home" ? townHallLevel : builderHallLevel) - 1][Util.toCamelCase(buildingName)].maxLevel || builderHallLevel; 
     const [level, setLevel] = useInputState(databaseBuilding && databaseBuilding[buildingID] ? databaseBuilding[buildingID] : 0);
     //After the DOM is rendered
     useLayoutEffect(() => {
@@ -287,16 +297,15 @@ const SliderGroup: FC<{
 const WallSlider: FC<{
     totalAmount: number,
     setTotalAmount: Dispatch<SetStateAction<number>>,
-    databaseItem: {
-        [key: string]: number;
-    },
+    initialAmount?: number,
     index: number,
     village: "home" | "builder",
     player: APIPlayer
-}> = ({ totalAmount, setTotalAmount, databaseItem, index, village, player }) => {
+}> = ({ totalAmount, setTotalAmount, index, village, initialAmount, player }) => {
+    const { townHallLevel, builderHallLevel } = player;
     //@ts-ignore
-    const wallMaxAmount: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village).amount || Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? player.townHallLevel : player.builderHallLevel, village);
-    const [amount, setAmount] = useInputState(databaseItem && databaseItem[index + 1] ? databaseItem[index + 1] : 0);
+    const wallMaxAmount: number = Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? townHallLevel : builderHallLevel, village).amount || Util.CocUpgradeTracker.getHallItem("Wall", village == "home" ? townHallLevel : builderHallLevel, village);
+    const [amount, setAmount] = useInputState(initialAmount ? initialAmount : 0);
     //After the DOM is rendered
     useLayoutEffect(() => {
         //Event Listener to set the building maxed for TH: `universal selector` value
@@ -379,4 +388,21 @@ ClashOfClansEditStructuresPage.fetchData = {
     method: "post"
 };
 
+const OperationButtons: FC<{
+    village: "home" | "builder",
+    tag: string,
+    submitFunction?: MouseEventHandler<HTMLButtonElement>
+}> = ({ village, tag, submitFunction }) => {
+    return (
+        <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 justify-self-center">
+            <Center>
+                <Link href={`/upgrade-tracker/clashofclans/${tag.replace(/#/g, "")}#${village}`}>
+                    <Button className="bg-red-600" type="button"> Cancel </Button>
+                </Link>
+                <Button className="bg-green-500" type="button" onClick={submitFunction}> Proceed </Button>
+            </Center>
+        </div>
+    );
+};
+  
 export default ClashOfClansEditStructuresPage;

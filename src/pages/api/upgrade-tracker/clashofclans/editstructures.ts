@@ -15,7 +15,9 @@ const EditStructures: NextApiHandler = async (req, res) => {
         delete items.village;
     try {
         const playerSchema = await DatabaseManager.getClashOfClansVillage({ playerTag: playerTag });
-        if (!playerSchema) return res.redirect(`/upgrade-tracker/clashofclans/${playerTag.replace(/#/g, "")}\#${village}`);
+        if (!playerSchema) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Error finding player!"
+        });
         const { player, homeVillage, builderBase } = playerSchema;
         const newPlayerSchema = await DatabaseManager.ClashOfClansVillage.findOneAndUpdate({ playerTag: playerTag }, {
             homeVillage: village == "home" ? Util.CocUpgradeTracker.createVillageStructureObject(items, player, village, true) : homeVillage,
@@ -24,11 +26,15 @@ const EditStructures: NextApiHandler = async (req, res) => {
             upsert: false,
             new: true
         });
-        if (!newPlayerSchema) return res.redirect(`/upgrade-tracker/clashofclans/${playerTag.replace(/#/g, "")}\#${village}`);
+        if (!newPlayerSchema) return Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Couldn't save the new village structure levels!"
+        });
         res.redirect(`/upgrade-tracker/clashofclans/${playerTag.replace(/#/g, "")}\#${village}`);
     } catch (err) {
         console.log(err);
-        res.redirect(`/upgrade-tracker/clashofclans/${playerTag.replace(/#/g, "")}\#${village}`);
+        Util.ApiHandler.sendError(res, 1, {
+            errorMessage: "Coudn't save the new village structure levels!"
+        });
     };
 };
 

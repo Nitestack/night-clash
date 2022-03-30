@@ -16,8 +16,6 @@ import { store } from "src/configuration/Actions/index";
 import { MantineProvider } from "@mantine/core";
 import config from "../../config.json";
 
-const isDevelopment = process.env.NODE_ENV == "development";
-
 const queryClient = new QueryClient();
 
 const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = ({ Component, pageProps }) => {
@@ -41,7 +39,7 @@ const CustomProvider: FC<{ Component: CustomComponentType; pageProps: any; }> = 
                 window.location.href = router.query.callBackUrl ? router.query.callBackUrl as string : "/account";
             } else setDone(true);
         } else handleAuthentication();
-    }, Component.queryRequired ? [router, status] : [status]);
+    }, Component.queryRequired ? [router.query, status] : [status]);
     //Mode
     useEffect(() => {
         let mode = Util.getCookie("mode");
