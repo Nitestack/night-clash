@@ -20,13 +20,8 @@ const userNavigation: Array<{
 const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
     const { user, logout } = useAuth();
     function logOut() {
-        return () => {
-            logout().then(() => {
-                console.log("Logged out");
-                setTimeout(() => {
-                    window.open("/", "_self");
-                }, 10000);
-            });
+        return async () => {
+            await logout();
         };
     };
     if (user) {
@@ -86,15 +81,15 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
         <div
             className={ isMobile ? undefined : "hidden md:flex items-center justify-end md:flex-1 lg:w-0" }>
             {isMobile ? (<>
-                <Link href="/register" className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-indigo-700"> Sign up </Link>
+                <Link href="/auth" className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-indigo-700"> Sign up </Link>
                 <p className="mt-6 text-center text-base font-medium text-lightmodetext dark:text-darkmodetext">
                     Got an account already?
-                    <Link href="/login" className="text-primary hover:text-indigo-500"> Sign in </Link>
+                    <Link href="/auth" className="text-primary hover:text-indigo-500"> Sign in </Link>
                 </p>
             </>
             ) : (<>
-                <Link href="/login" className="whitespace-nowrap text-base font-medium text-lightmodetext dark:text-darkmodetext"> Sign in </Link>
-                <Link href="/register" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-indigo-700"> Sign up </Link>
+                <Link href="/auth" className="whitespace-nowrap text-base font-medium text-lightmodetext dark:text-darkmodetext"> Sign in </Link>
+                <Link href="/auth" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-indigo-700"> Sign up </Link>
             </>
             )}
         </div>
