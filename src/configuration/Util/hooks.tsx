@@ -30,7 +30,7 @@ export function useNextPageFetchData<DataProps = any>(NextPage: FC<{ data: DataP
     url: string,
     method: "get",
     config?: AxiosRequestConfig
-}) {
+}): NextPageWithConfiguration<{ data: DataProps }> {
     const nextPage: NextPageWithConfiguration<{ data: DataProps }> = () => {
         const router = useRouter();
         const { user } = useAuth();
