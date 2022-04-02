@@ -10,8 +10,7 @@ const BrawlStarsStatsTracker: NextApiHandler = async (req, res) => {
         if (element == "players") {
             const player = await client.player(tag);
             if (!player) return Util.ApiHandler.sendError(res, 0, {
-                errorMessage: "Couldn't find the player!",
-                redirectUrl: "/stats-tracker#brawlstars"
+                errorMessage: "Couldn't find the player!"
             });
             Util.ApiHandler.sendSuccess<{
                 player: BSProfile
@@ -21,8 +20,7 @@ const BrawlStarsStatsTracker: NextApiHandler = async (req, res) => {
         } else {
             const clan = await client.club(tag);
             if (!clan) return Util.ApiHandler.sendError(res, 0, {
-                errorMessage: "Couldn't find the club!",
-                redirectUrl: "/stats-tracker#brawlstars"
+                errorMessage: "Couldn't find the club!"
             });
             Util.ApiHandler.sendSuccess<{
                 clan: BSClan
@@ -32,9 +30,7 @@ const BrawlStarsStatsTracker: NextApiHandler = async (req, res) => {
         };
     } catch (err) {
         console.log(err);
-        Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/stats-tracker#brawlstars"
-        });
+        Util.ApiHandler.sendError(res, 1);
     };
 };
 

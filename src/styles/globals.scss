@@ -32,6 +32,23 @@ body {
     font-family: "Supercell-Magic";
 }
 
+/*Firebase Authentication Container Styles*/
+.firebaseui-container {
+    @apply bg-darkmodeprimary font-coc rounded-lg;
+}
+.firebaseui-title {
+    @apply text-darkmodetext;
+}
+.mdl-textfield__input {
+    @apply font-coc-description text-lg;
+}
+.mdl-button {
+    @apply font-coc;
+}
+.firebaseui-input-floating-button {
+    @apply top-8;
+}
+
 /*Fonts*/
 .font-coc-description, .font-cr-description {
     text-shadow: none;

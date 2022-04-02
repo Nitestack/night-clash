@@ -3,9 +3,9 @@ import Link from "@components/Elements/Link";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Util from "@util/index";
-import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Motion from "@components/Utilities/Motion";
+import { useAuth } from "@components/AuthProvider";
 
 const userNavigation: Array<{
     name: string,
@@ -18,10 +18,16 @@ const userNavigation: Array<{
 ];
 
 const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
-    const { data: session, status } = useSession();
-    const user = session?.user;
+    const { user, logout } = useAuth();
     function logOut() {
-        return () => signOut({ redirect: true, callbackUrl: window.location.pathname })
+        return () => {
+            logout().then(() => {
+                console.log("Logged out");
+                setTimeout(() => {
+                    window.open("/", "_self");
+                }, 10000);
+            });
+        };
     };
     if (user) {
         if (isMobile) return (
@@ -32,7 +38,7 @@ const NavbarComponent: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
                     </div>
                     <div className="ml-3">
                         <div className="text-base font-medium leading-none text-lightmodetext dark:text-darkmodetext">
-                            {user.name}
+                            {user.displayName}
                         </div>
                         <div className="text-sm font-medium leading-none text-lightmodetext dark:text-darkmodetext font-coc-description">
                             {user.email}

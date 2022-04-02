@@ -287,7 +287,7 @@ const CocUpgradeTrackerPlayerVillage: FC<{
 CocUpgradeTrackerPlayerVillagePage.disableLayout = true;
 CocUpgradeTrackerPlayerVillagePage.authenticationRequired = true;
 CocUpgradeTrackerPlayerVillagePage.queryRequired = true;
-CocUpgradeTrackerPlayerVillagePage.afterAuthentication = function (session, router) {
+CocUpgradeTrackerPlayerVillagePage.afterAuthentication = function (router, user) {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
     if (!playerTag) {

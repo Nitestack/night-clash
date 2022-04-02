@@ -1,11 +1,10 @@
 import type { NextPageContext, NextComponentType, NextPage } from "next";
 import type { AppInitialProps, AppProps } from "next/app";
-import type { Session } from "next-auth";
 import type { LayoutProps } from "@components/Layout";
 import type axios from "axios";
-import type { AxiosRequestConfig } from "axios";
 import type { NextRouter } from "next/router";
 import { store } from "@actions/index";
+import type { User } from "firebase/auth";
 
 /* REDUX */
 
@@ -42,51 +41,21 @@ export interface ComponentConfiguration extends LayoutProps {
      */
     disableLayout?: boolean;
     /**
-     * If given, it will call the {@link axios} API to request data
-     */
-    fetchData?: {
-        /**
-         * The url 
-         */
-        url: string,
-        /**
-         * A configuration object
-         */
-        config?: AxiosRequestConfig<any>,
-        /**
-         * The request method
-         */
-        method: "post" | "get",
-        /**
-         * Data passed to a `POST` or `PUT` request
-         * 
-         * Will be ignored if `method` isn't `POST`
-         * @param {object} data Data that can be accessed to parse into the body
-         */
-        data?: (router: NextRouter, user?: any) => any
-    };
-    /**
      * A function that will be called after authentication
      * 
      * This function will be ignored if {@link authenticationRequired} is `false` or `undefined`
      */
-    afterAuthentication?: (session: Session, router: NextRouter) => void;
-    /**
-     * If this is true, the loading screen will remain until the `query` object has properties
-     * 
-     * Will be ignored if {@link afterAuthentication} isn't defined
-     */
-    queryRequired?: boolean;
+    afterAuthentication?: (router: NextRouter, user?: User) => void;
 };
 
-export type CustomComponentType<InitialProps = {}, Props = {}, DataType = any> = NextComponentType<NextPageContext, InitialProps, Props & { data: DataType, session?: Session }> & ComponentConfiguration;
+export type CustomComponentType<InitialProps = {}, Props = {}> = NextComponentType<NextPageContext, InitialProps, Props> & ComponentConfiguration;
 
 /**
  * A component with configuration
  * 
  * Almost same as {@link NextPage}, so update if needed
  */
-export type NextPageWithConfiguration<Props = {}, InitialProps = Props, DataType = any> = CustomComponentType<InitialProps, Props, DataType> & {
+export type NextPageWithConfiguration<Props = {}, InitialProps = Props> = CustomComponentType<InitialProps, Props> & {
     getInitialProps?(context: NextPageContext): InitialProps | Promise<InitialProps>;
 };
 
@@ -103,4 +72,8 @@ export type ComponentWithConfigurationProps<Props = {}> = AppInitialProps & {
 
 export interface NextApiCustomHandlerProps {
     success: boolean;
+};
+
+export interface NextApiError {
+    errorMessage: string
 };

@@ -41,11 +41,9 @@ export type BrawlStarsClubProfile = {
     tag: string
 };
 
-interface ActualUser {
-    //The user's name
-    name: string;
-    //The user's email
-    email: string;
+export type UserDocument = Document & {
+    //The user's id in the Firebase Database
+    uid: string;
     //The user's role: `user` | `admin`
     role: string;
     //The user's Clash of Clans villages
@@ -59,35 +57,18 @@ interface ActualUser {
     //Saved stats tracker players
     clashRoyaleStatsTrackerPlayers: Array<ClashRoyalePlayerProfile>;
     //Saved stats tracker clans
-    clashRoyaleStatsTrackerClans: Array<ClashRoyaleClanProfile>//Saved stats tracker players
+    clashRoyaleStatsTrackerClans: Array<ClashRoyaleClanProfile>
+    //Saved stats tracker players
     brawlStarsStatsTrackerPlayers: Array<BrawlStarsPlayerProfile>;
     //Saved stats tracker clans
-    brawlStarsStatsTrackerClans: Array<BrawlStarsClubProfile>
-};
-
-export type UserDocument = Document & ActualUser & { 
-    //The user's password encrypted
-    hash: string; 
-    //
-    resetToken?: string;
-    //
-    updates?: string;
+    brawlStarsStatsTrackerClans: Array<BrawlStarsClubProfile>;
 };
 
 export default mongoose.models.user as Model<UserDocument> || mongoose.model<UserDocument>("user", new mongoose.Schema({
-    name: {
+    uid: {
         type: String,
         required: true,
         unique: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    hash: {
-        type: String,
-        required: true
     },
     role: {
         type: String,
@@ -95,87 +76,57 @@ export default mongoose.models.user as Model<UserDocument> || mongoose.model<Use
         default: Util.Constants.USER_ROLE_ID
     },
     clashOfClansVillages: {
-        type: [{
-            type: String,
-            unique: true
-        }],
+        type: [String],
         required: true,
         default: []
     },
     boomBeachIslands: {
-        type: [{
-            type: String,
-            unique: true
-        }],
+        type: [String],
         required: true,
         default: []
     },
-    resetToken: {
-        type: String
-    },
-    updates: {
-        type: String
-    },
     clashOfClansStatsTrackerClans: [{
-        type: {
+        name: String,
+        tag: String,
+        iconUrl: String
+    }],
+    clashOfClansStatsTrackerPlayers: [{
+        name: String,
+        tag: String,
+        townHallLevel: Number,
+        townHallWeaponLevel: Number,
+        clan: {
             name: String,
             tag: String,
             iconUrl: String
-        },
-        unique: true
-    }],
-    clashOfClansStatsTrackerPlayers: [{
-        type: {
-            name: String,
-            tag: String,
-            townHallLevel: Number,
-            townHallWeaponLevel: Number,
-            clan: {
-                name: String,
-                tag: String,
-                iconUrl: String
-            }
-        },
-        unique: true
+        }
     }],
     clashRoyaleStatsTrackerClans: [{
-        type: {
-            name: String,
-            tag: String,
-            badgeId: String
-        },
-        unique: true
+        name: String,
+        tag: String,
+        badgeId: String
     }],
     clashRoyaleStatsTrackerPlayers: [{
-        type: {
+        name: String,
+        tag: String,
+        expLevel: Number,
+        clan: {
             name: String,
             tag: String,
-            expLevel: Number,
-            clan: {
-                name: String,
-                tag: String,
-                badgeId: Number
-            }
-        },
-        unique: true
+            badgeId: Number
+        }
     }],
     brawlStarsStatsTrackerClans: [{
-        type: {
-            name: String,
-            tag: String
-        },
-        unique: true
+        name: String,
+        tag: String
     }],
     brawlStarsStatsTrackerPlayers: [{
-        type: {
+        name: String,
+        tag: String,
+        iconId: Number,
+        club: {
             name: String,
-            tag: String,
-            iconId: Number,
-            club: {
-                name: String,
-                tag: String
-            }
-        },
-        unique: true
+            tag: String
+        }
     }]
 }));

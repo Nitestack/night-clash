@@ -1,5 +1,6 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import Link from "@components/Elements/Link";
+import Button from "@components/Elements/Button";
 
 const Custom404Page: NextPageWithConfiguration = () => {
     return (
@@ -21,10 +22,10 @@ const Custom404Page: NextPageWithConfiguration = () => {
                     Sorry about that! Please visit our hompage to get where you
                     need to go.
                 </p>
-                <Link href="/">
-                    <button className="w-full lg:w-auto my-4 border rounded-md px-1 sm:px-16 py-5 bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
+                <Link href="/" disablemotion>
+                    <Button className="bg-primary w-full lg:w-auto my-4 border rounded-md px-1 sm:px-16 py-5 text-white">
                         Go back to Homepage
-                    </button>
+                    </Button>
                 </Link>
             </div>
         </div>

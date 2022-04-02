@@ -10,8 +10,7 @@ const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
         if (element == "players") {
             const response = await client.rest.getPlayer(tag);
             if (!response.ok) return Util.ApiHandler.sendError(res, 0, {
-                errorMessage: "Couldn't find the player!",
-                redirectUrl: "/stats-tracker#clashofclans"
+                errorMessage: "Couldn't find the player!"
             });
             Util.ApiHandler.sendSuccess<{
                 player: APIPlayer
@@ -21,8 +20,7 @@ const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
         } else {
             const response = await client.rest.getClan(tag);
             if (!response.ok) return Util.ApiHandler.sendError(res, 0, {
-                errorMessage: "Couldn't find the clan!",
-                redirectUrl: "/stats-tracker#clashofclans"
+                errorMessage: "Couldn't find the clan!"
             });
             Util.ApiHandler.sendSuccess<{
                 clan: APIClan
@@ -32,9 +30,7 @@ const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
         };
     } catch (err) {
         console.log(err);
-        Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/stats-tracker#clashofclans"
-        });
+        Util.ApiHandler.sendError(res, 1);
     };
 };
 

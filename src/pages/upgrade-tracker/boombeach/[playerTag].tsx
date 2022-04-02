@@ -19,7 +19,7 @@ const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
 BBUpgradeTrackerPlayer.disableLayout = true;
 BBUpgradeTrackerPlayer.authenticationRequired = true;
 BBUpgradeTrackerPlayer.queryRequired = true;
-BBUpgradeTrackerPlayer.afterAuthentication = function (session, router) {
+BBUpgradeTrackerPlayer.afterAuthentication = function (router, user) {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
     if (!playerTag) {

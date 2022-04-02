@@ -1,5 +1,3 @@
-import type { NextPageWithConfiguration } from "@util/types";
-import { useSession } from "next-auth/react";
 import Link from "@components/Elements/Link";
 import Button from "@components/Elements/Button";
 import Grid from "@components/Utilities/Grid";
@@ -8,11 +6,13 @@ import Util from "@util/index";
 import { ClashOfClansPlayerProfile, ClashOfClansClanProfile, ClashRoyaleClanProfile, ClashRoyalePlayerProfile, BrawlStarsClubProfile, BrawlStarsPlayerProfile } from "@models/user";
 import XP from "@modules/XP";
 import { PencilIcon, CheckIcon } from "@heroicons/react/outline";
-import { ChangeEvent, useState } from "react";
+import { useState, useRef } from "react";
 import Input from "@components/Elements/Input";
 import validator from "validator";
+import { useAuth } from "@components/AuthProvider";
+import { useNextPageFetchData} from "@util/hooks";
 
-const AccountPage: NextPageWithConfiguration<{}, {}, {
+type DataType = {
     clashOfClansVillages: Array<ClashOfClansPlayerProfile>,
     clashOfClansStatsTrackerPlayers: Array<ClashOfClansPlayerProfile>,
     clashOfClansStatsTrackerClans: Array<ClashOfClansClanProfile>,
@@ -20,14 +20,23 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
     clashRoyaleStatsTrackerClans: Array<ClashRoyaleClanProfile>,
     brawlStarsStatsTrackerPlayers: Array<BrawlStarsPlayerProfile>,
     brawlStarsStatsTrackerClans: Array<BrawlStarsClubProfile>
-}> = ({ data }) => {
-    const { data: session } = useSession();
+};
+const AccountPage = useNextPageFetchData<DataType>(({ data }) => {
+    //User Data
+    const { user, editUser } = useAuth();
+    //State variables for editing user credentials
     //@ts-ignore
-    const [username, setUsername] = useState<string>(session?.user?.name);
+    const [username, setUsername] = useState<string>(user?.displayName);
     //@ts-ignore
-    const [email, setEmail] = useState<string>(session?.user?.email);
+    const [email, setEmail] = useState<string>(user.email);
+    //Mode: view mode and set mode
     const [editUsernameMode, setEditUsernameMode] = useState(false);
     const [editEmailMode, setEditEmailMode] = useState(false);
+    //Refs
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+
+    //Data of the user
     const { clashOfClansVillages, clashOfClansStatsTrackerClans, clashOfClansStatsTrackerPlayers, clashRoyaleStatsTrackerClans, clashRoyaleStatsTrackerPlayers, brawlStarsStatsTrackerClans, brawlStarsStatsTrackerPlayers } = data;
     
     //Clash of Clans
@@ -57,20 +66,20 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
     };
     function saveUsername() {
         return async () => {
-            const newUsername = $<HTMLInputElement>("#usernameEdit");
-            if (!newUsername.val()) return Util.toast.error("Please enter a new username!");
-            if (newUsername.val() == username) return setEditUsernameMode(false);
-            await Util.ApiHandler.clientSideErrorHandler(async () => {
-                const response = await Util.Axios.post("/api/user/editusername", {
-                    username: newUsername.val(),
-                    email: email
+            if (usernameRef.current) {
+                const newUsername = usernameRef.current.value;
+                if (!newUsername) return Util.toast.error("Please enter a new username!");
+                if (newUsername == username) return setEditUsernameMode(false);
+                await Util.ApiHandler.clientSideErrorHandler(async () => {
+                    editUser({
+                        name: newUsername
+                    }).then(() => {
+                        Util.toast.success(`Successfully changed username to: ${newUsername}!`);
+                        setUsername(newUsername);
+                        setEditUsernameMode(false);
+                    });
                 });
-                if (response.status == 200) {
-                    Util.toast.success(`Successfully changed username to: ${newUsername.val()}!`);
-                    setUsername(newUsername.val() as string);
-                    setEditUsernameMode(false);
-                };
-            });
+            };
         };
     };
     //Email
@@ -80,12 +89,19 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
         };
     };
     function saveEmail() {
-        return () => {
-            const newEmail = $<HTMLInputElement>("#emailEdit");
-            if (!newEmail.val()) return Util.toast.error("Please enter a new email!");
-            if (!validator.isEmail(newEmail.val() as string)) return Util.toast.error("Please enter a valid email!");
-            setEmail(newEmail.val() as string);
-            setEditEmailMode(false);
+        return async () => {
+            if (emailRef.current) {
+                const newEmail = emailRef.current.value;
+                if (!newEmail) return Util.toast.error("Please enter a new email!");
+                if (!validator.isEmail(newEmail)) return Util.toast.error("Please enter a valid email!");
+                editUser({
+                    email: newEmail
+                }).then(() => {
+                    Util.toast.success(`Successfully changed E-Mail to: ${newEmail}!`);
+                    setEmail(newEmail);
+                    setEditEmailMode(false);
+                });
+            };
         };
     };
     return (
@@ -106,7 +122,7 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
                             </div>
                             {editUsernameMode ? 
                             <Center className="justify-start sm:col-span-2">
-                                <Input type="text" defaultValue={username} id="usernameEdit"/>
+                                <Input type="text" defaultValue={username} ref={usernameRef}/>
                                 <Button className="bg-green-500 p-2 w-7" onClick={saveUsername()}>
                                     <CheckIcon className="w-5"/>
                                 </Button>
@@ -122,7 +138,7 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
                             </div>
                             {editEmailMode ? 
                             <Center className="justify-start sm:col-span-2">
-                                <Input type="text" defaultValue={email} id="emailEdit"/>
+                                <Input type="text" defaultValue={email} ref={emailRef}/>
                                 <Button className="bg-green-500 p-2 w-7" onClick={saveEmail()}>
                                     <CheckIcon className="w-5"/>
                                 </Button>
@@ -276,20 +292,20 @@ const AccountPage: NextPageWithConfiguration<{}, {}, {
             </div>
         </>
     );
-};
+}, {
+    key: "key",
+    method: "post",
+    url: "/api/user/profile",
+    setData: (router, user) => {
+        return {
+            uid: user?.uid
+        }
+    }
+});
 
 AccountPage.title = "Account";
 AccountPage.header = "My Account";
 AccountPage.description = "Access your saved data or edit your credentials!";
 AccountPage.authenticationRequired = true;
-AccountPage.fetchData = {
-    method: "post",
-    url: "/api/user/profile",
-    data: (router, user) => {
-        return {
-            email: user.email
-        }
-    }
-};
 
 export default AccountPage;

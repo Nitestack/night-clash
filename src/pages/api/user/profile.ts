@@ -6,9 +6,9 @@ import { ClashOfClansClanProfile, ClashOfClansPlayerProfile, ClashRoyalePlayerPr
 Util.connectDB();
 
 const UserProfile: NextApiHandler = async (req, res) => {
-    const { email } = req.body;
+    const { uid } = req.body;
     try {
-        const user = await DatabaseManager.User.findOne({ email: email });
+        const user = await DatabaseManager.User.findOne({ uid: uid });
         if (!user) return Util.ApiHandler.sendError(res, 0, { errorMessage: "User not found!" });
         const villages: Array<ClashOfClansPlayerProfile> = [];
         for (const clashOfClansVillage of user.clashOfClansVillages) {

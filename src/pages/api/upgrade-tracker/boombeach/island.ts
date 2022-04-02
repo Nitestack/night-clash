@@ -13,16 +13,16 @@ const Island: NextApiHandler = async (req, res) => {
         //Ensures the player's island is in the database
         const newBoomBeachIsland = await DatabaseManager.getBoomBeachIsland({ playerTag: playerTag });
         if (!newBoomBeachIsland) return Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/upgrade-tracker/boombeach"
+            errorMessage: "Couldn't find the island in the database!"
         });
         //Fetch user's data
         const user = await DatabaseManager.getUser({ email: email });
         if (!user) return Util.ApiHandler.sendError(res, 0, {
-            redirectUrl: "/upgrade-tracker/boombeach"
+            errorMessage: "Couldn't verify island!"
         });
         //Ensures the island is from the session user
         if (!user.boomBeachIslands.includes(newBoomBeachIsland.id)) return Util.ApiHandler.sendError(res, 0, {
-            redirectUrl: "/upgrade-tracker/boombeach"
+            errorMessage: "You don't have permission to view this island!"
         });
         const returnObj: {
             island: BoomBeachIsland
@@ -34,9 +34,7 @@ const Island: NextApiHandler = async (req, res) => {
         }>(res, returnObj);
     } catch (err) {
         console.log(err);
-        Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/upgrade-tracker/boombeach"
-        });
+        Util.ApiHandler.sendError(res, 1);
     };
 };
 

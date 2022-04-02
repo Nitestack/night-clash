@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
 import connectDB from "@util/databaseConnection";
 import { toast } from "react-toastify";
-import { hashSync, compareSync } from "bcryptjs";
 import Emitter from "@util/Emitter";
 
 export default class Util {
@@ -34,16 +33,6 @@ export default class Util {
     public static Emitter = Emitter;
     /*Methods*/
     public static toast = toast;
-    /**
-     * Encryptes a password
-     * @param {string} password The password 
-     */
-    public static encryptPassword(password: string) {
-        return hashSync(password, 8);
-    };
-    public static comparePasswords(password: string, hash: string) {
-        return compareSync(password, hash);
-    };
     public static isEmptyObject(obj: object) {
         for (const prop in obj) if (Object.prototype.hasOwnProperty.call(obj, prop)) return false;
         return JSON.stringify(obj) == JSON.stringify({});

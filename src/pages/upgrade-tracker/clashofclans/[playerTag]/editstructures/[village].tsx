@@ -363,7 +363,7 @@ const WallSlider: FC<{
 ClashOfClansEditStructuresPage.disableLayout = true;
 ClashOfClansEditStructuresPage.authenticationRequired = true;
 ClashOfClansEditStructuresPage.queryRequired = true;
-ClashOfClansEditStructuresPage.afterAuthentication = function (session, router) {
+ClashOfClansEditStructuresPage.afterAuthentication = function (router, user) {
     const playerTag = router.query.playerTag as string;
     const village = router.query.village as string;
     //Ensures the player tag parameter was given

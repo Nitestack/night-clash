@@ -13,16 +13,16 @@ const Village: NextApiHandler = async (req, res) => {
         //Ensures the player's village is in the database
         const playerSchema = await DatabaseManager.getClashOfClansVillage({ playerTag: playerTag });
         if (!playerSchema) return Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/upgrade-tracker/clashofclans"
+            errorMessage: "Couldn't find the village in the database!"
         });
         //Fetch user's data
         const user = await DatabaseManager.getUser({ email: email });
         if (!user) return Util.ApiHandler.sendError(res, 0, {
-            redirectUrl: "/upgrade-tracker/clashofclans"
+            errorMessage: "Couldn't verify village!"
         });
         //Ensures the village is from the session user
         if (!user.clashOfClansVillages.includes(playerSchema.id)) return Util.ApiHandler.sendError(res, 0, {
-            redirectUrl: "/upgrade-tracker/clashofclans"
+            errorMessage: "You don't have permission to view this village!"
         });
         const returnObj: {
             playerSchema: ClashOfClansVillage,
@@ -37,9 +37,7 @@ const Village: NextApiHandler = async (req, res) => {
         }>(res, returnObj);
     } catch (err) {
         console.log(err);
-        Util.ApiHandler.sendError(res, 1, {
-            redirectUrl: "/upgrade-tracker/clashofclans"
-        });
+        Util.ApiHandler.sendError(res, 1);
     };
 };
 

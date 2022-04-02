@@ -1,6 +1,6 @@
 import type { NextPageWithConfiguration } from "@util/types";
 
-const AboutPage: NextPageWithConfiguration<> = () => {
+const AboutPage: NextPageWithConfiguration = () => {
     return (<>
     </>);
 };
