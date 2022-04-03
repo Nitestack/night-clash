@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@components/Elements/Image";
 import Link from "@components/Elements/Link";
 import type { FC } from "react";
 import Util from "@util/index";
@@ -73,7 +73,7 @@ const Footer: FC = () => {
             </div>
             <Center className="py-8 flex-col border-b">
                 <Link href="/">
-                    <Image className="rounded-full bg-transparent" src="/favicon.ico" width="150" height="150"></Image>
+                    <Image className="rounded-full bg-lightmodetext dark:bg-darkmodetext w-36 h-36" src="/favicon.ico"></Image>
                 </Link>
                 <p className="mt-6 text-xs lg:text-sm leading-none text-lightmodetext dark:text-darkmodetext">&copy; {new Date().getUTCFullYear()} {Util.Constants.APPLICATION_NAME}. All rights reserved.</p>
             </Center>

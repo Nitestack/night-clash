@@ -1,24 +1,30 @@
-import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
-import Layout from "@components/Layout/index";
 import type { BoomBeachIsland } from "@models/boombeach";
+import { useNextPageFetchData } from "@util/hooks";
+import { useDescription, useTitle, useHeader } from "@util/hooks";
 
-const BBUpgradeTrackerPlayer: NextPageWithConfiguration<{}, {}, {
+const BBUpgradeTrackerPlayer = useNextPageFetchData<{
     island: BoomBeachIsland
-}> = ({ data }) => {
+}>(({ data }) => {
     const { name, playerTag } = data.island;
+    //Layout hooks
+    useTitle(`${name} - Island - Boom Beach - Upgrade Tracker`);
+    useDescription(playerTag);
+    useHeader(name);
     return (
-        <Layout 
-        header={`${name} - Island`}
-        title={`${name} - Island - Boom Beach - Upgrade Tracker`}
-        description={playerTag}>
-            
-        </Layout>
+        <></>
     );
-};
-BBUpgradeTrackerPlayer.disableLayout = true;
+}, {
+    key: "bb-upgrade-tracker-player",
+    url: "/api/upgrade-tracker/boombeach/island",
+    method: "post",
+    setData: (router, user) => {
+        return {
+            playerTag: Util.validateTag(router.query.playerTag as string)
+        };
+    }
+});
 BBUpgradeTrackerPlayer.authenticationRequired = true;
-BBUpgradeTrackerPlayer.queryRequired = true;
 BBUpgradeTrackerPlayer.afterAuthentication = function (router, user) {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
@@ -26,16 +32,6 @@ BBUpgradeTrackerPlayer.afterAuthentication = function (router, user) {
         router.push("/upgrade-tracker/boombeach");
         return false;
     };
-};
-BBUpgradeTrackerPlayer.fetchData = {
-    url: "/api/upgrade-tracker/boombeach/island",
-    data: (router, user) => {
-        return {
-            playerTag: Util.validateTag(router.query.playerTag as string),
-            user: user
-        };
-    },
-    method: "post"
 };
 
 export default BBUpgradeTrackerPlayer;

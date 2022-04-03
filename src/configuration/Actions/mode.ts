@@ -14,5 +14,3 @@ const modeSlice = createSlice({
 });
 
 export default modeSlice;
-
-export const { loadMode, changeMode } = modeSlice.actions;

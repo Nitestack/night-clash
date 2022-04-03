@@ -1,5 +1,4 @@
 import Layout from "@components/Layout/index";
-import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
 import type { ClashOfClansVillage } from "@models/clashofclans";
 import Modal from "@components/Modal";
@@ -14,10 +13,11 @@ import PlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import Overview from "@modules/ClashOfClansOverview";
 import ClashOfClansModule from "@modules/Upgrade Tracker/ClashOfClansModule";
 import ClashOfClansWallModule from "@modules/Upgrade Tracker/ClashOfClansWallModule";
+import { useNextPageFetchData, useTitle, useDescription, useHeader } from "@util/hooks";
 
-const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
+const CocUpgradeTrackerPlayerVillagePage = useNextPageFetchData<{
     playerSchema: ClashOfClansVillage
-}> = ({ data }) => {
+}>(({ data }) => {
     //Player Data
     const { playerSchema } = data;
     const { player } = playerSchema;
@@ -26,8 +26,10 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
     const villages = ["home", "builder"];
     if (!villages.includes(location.hash.replace(/#/g, ""))) location.hash = `#${villages[0]}`;
     const initialVillage = location.hash.replace(/#/g, "");
-    const [header, setHeader] = useState(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
-    const [title, setTitle] = useState(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+    //Layout hooks
+    useDescription(tag);
+    const { setHeader } = useHeader(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
+    const { setTitle } = useTitle(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
     //Village Tabs
     const villageTabs: {
         [key: string]: JSX.Element;
@@ -41,12 +43,20 @@ const CocUpgradeTrackerPlayerVillagePage: NextPageWithConfiguration<{}, {}, {
         location.href = `#${villages[index]}`;
     };
     return (
-        <Layout header={header} description={tag} title={title}>
-            <Tabs tabs={villageTabs} initialTabIndex={villages.indexOf(initialVillage)} 
-            onTabChange={(index) => changeVillage(index)}/>
-        </Layout>
+        <Tabs tabs={villageTabs} initialTabIndex={villages.indexOf(initialVillage)} onTabChange={(index) => changeVillage(index)}/>
     );
-};
+}, {
+    key: "coc-upgrade-tracker-player-village",
+    url: "/api/upgrade-tracker/clashofclans/village",
+    setData: (router, user) => {
+        return {
+            playerTag: Util.validateTag(router.query.playerTag as string),
+            user: user
+        };
+    },
+    method: "post"
+});
+
 const CocUpgradeTrackerPlayerVillage: FC<{
     village: "home" | "builder",
     playerSchema: ClashOfClansVillage
@@ -283,27 +293,14 @@ const CocUpgradeTrackerPlayerVillage: FC<{
         </Grid>
     );
 };
-
-CocUpgradeTrackerPlayerVillagePage.disableLayout = true;
 CocUpgradeTrackerPlayerVillagePage.authenticationRequired = true;
-CocUpgradeTrackerPlayerVillagePage.queryRequired = true;
-CocUpgradeTrackerPlayerVillagePage.afterAuthentication = function (router, user) {
+CocUpgradeTrackerPlayerVillagePage.afterAuthentication = (router, user) => {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
     if (!playerTag) {
         router.push("/upgrade-tracker/clashofclans");
         return false;
     };
-};
-CocUpgradeTrackerPlayerVillagePage.fetchData = {
-    url: "/api/upgrade-tracker/clashofclans/village",
-    data: (router, user) => {
-        return {
-            playerTag: Util.validateTag(router.query.playerTag as string),
-            user: user
-        };
-    },
-    method: "post"
 };
 
 export default CocUpgradeTrackerPlayerVillagePage;

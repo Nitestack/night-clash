@@ -9,7 +9,7 @@ import { PencilIcon, CheckIcon } from "@heroicons/react/outline";
 import { useState, useRef } from "react";
 import Input from "@components/Elements/Input";
 import validator from "validator";
-import { useAuth } from "@components/AuthProvider";
+import { useAuth } from "@util/hooks";
 import { useNextPageFetchData} from "@util/hooks";
 
 type DataType = {

@@ -5,7 +5,7 @@ import type { NextRouter } from "next/router";
 import type { User } from "firebase/auth";
 import type { AxiosRequestConfig } from "axios";
 import type { FC } from "react";
-import { useAuth } from "@components/AuthProvider";
+import { useAuth as useAuthentication } from "@components/AuthProvider";
 import type { NextApiError, NextPageWithConfiguration } from "@util/types";
 import Spinner from "@components/Utilities/Spinner";
 import Center from "@components/Utilities/Center";
@@ -13,6 +13,9 @@ import type axios from "axios";
 import type { AxiosError } from "axios";
 import Link from "@components/Elements/Link";
 import Button from "@components/Elements/Button";
+import type { MetaProps } from "@components/Layout";
+
+export const useAuth = useAuthentication;
 
 /**
  * Fetches data and handles errors/loading state/successful state (with {@link axios} and {@link useQuery})
@@ -60,4 +63,49 @@ export function useNextPageFetchData<DataProps = any>(NextPage: FC<{ data: DataP
         );
     };
     return nextPage;
+};
+
+export function useTitle() {
+    const { title } = Util.StateManagement.useSelector(state => state.layout);
+    const dispatch = Util.StateManagement.useDispatch();
+    function setTitle(title: string) {
+        dispatch(Util.StateManagement.setTitle(title));
+    };
+    return { title, setTitle };
+};
+
+export function useDescription() {
+    const { description } = Util.StateManagement.useSelector(state => state.layout);
+    const dispatch = Util.StateManagement.useDispatch();
+    function setDescription(description: string) {
+        dispatch(Util.StateManagement.setDescription(description));
+    };
+    return { description, setDescription };
+};
+
+export function useHeader() {
+    const { header } = Util.StateManagement.useSelector(state => state.layout);
+    const dispatch = Util.StateManagement.useDispatch();
+    function setHeader(header: string) {
+        dispatch(Util.StateManagement.setHeader(header));
+    };
+    return { header, setHeader };
+};
+
+export function useScripts() {
+    const { scripts } = Util.StateManagement.useSelector(state => state.layout);
+    const dispatch = Util.StateManagement.useDispatch();
+    function setScripts(scripts: string[]) {
+        dispatch(Util.StateManagement.setScripts(scripts));
+    };
+    return { scripts, setScripts };
+};
+
+export function useMeta() {
+    const { meta } = Util.StateManagement.useSelector(state => state.layout);
+    const dispatch = Util.StateManagement.useDispatch();
+    function setMeta(meta: MetaProps) {
+        dispatch(Util.StateManagement.setMeta(meta));
+    };
+    return { meta, setMeta };
 };

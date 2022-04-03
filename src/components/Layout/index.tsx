@@ -1,23 +1,27 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import Head from "next/head";
 import Footer from "@components/Layout/Footer";
 import Navbar from "@components/Layout/Navbar/Navbar";
 import Script from "next/script";
-import Util from "src/configuration/Util/index";
+import Util from "@util/index";
 import Banner from "@components/Banner";
 import { ToastContainer } from "react-toastify";
 
 export type LayoutProps = {
-    title?: string;
+    title: string;
     header?: string;
-    description?: string;
+    description: string;
     scripts?: Array<string>;
-    meta?: {
-        keywords?: string
-    }
+    meta?: MetaProps
 };
 
-const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts, meta }) => {
+export type MetaProps = {
+    keywords?: string;
+};
+
+const Layout: FC = ({ children }) => {
+    //Page info states
+    const { title, header, description, scripts, meta } = Util.StateManagement.useSelector(state => state.layout);
     return (
         <>
             <Head>
@@ -61,7 +65,7 @@ const Layout: FC<LayoutProps> = ({ title, header, description, children, scripts
                                     {header ? header : title}
                                 </p>
                                 <p className="mt-4 text-3xl text-gray-700 lg:mx-auto font-coc-description">
-                                    {description ? description : `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`}
+                                    {description}
                                 </p>
                             </div>
                             <div className="mt-10 z-0 mb-0 mx-auto"> {children} </div>

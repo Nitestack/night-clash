@@ -19,7 +19,7 @@ export type AppDispatch = typeof store.dispatch;
 /**
  * Extra utility configurations for Next pages
  */ 
-export interface ComponentConfiguration extends LayoutProps {
+export interface ComponentConfiguration extends Partial<LayoutProps> {
     /**
      * Whether authentication is required to view the content of the website or not
      */
@@ -34,12 +34,6 @@ export interface ComponentConfiguration extends LayoutProps {
      * Just allows admins to view the page
      */
     adminRoleRequired?: boolean;
-    /**
-     * If true, you need to import the `Layout` component manually
-     * 
-     * Configurations {@link title}, {@link header}, {@link description} will be ignored
-     */
-    disableLayout?: boolean;
     /**
      * A function that will be called after authentication
      * 

@@ -13,7 +13,7 @@ const NavbarToggler: FC<{ isMobile?: boolean }> = ({ isMobile }) => {
         };
     };
     return (
-        <div className={isMobile ? "" : "hidden md:block md:flex-1"}>
+        <div className={isMobile ? "" : "hidden lg:block justify-self-end"}>
             <Toggler
                 on="Dark"
                 off="Light"

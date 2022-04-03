@@ -1,16 +1,19 @@
-import { createContext, useContext, useState } from "react";
-import type { FC } from "react";
-import { auth } from "@util/firebase";
-import { signOut, updateEmail, updateProfile, updatePassword, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import type { User, UserCredential } from "@firebase/auth";
 import Util from "@util/index";
+import { createContext, useContext, useState } from "react";
+import { auth } from "@util/firebase";
+import { signOut, updateEmail, updateProfile, updatePassword } from "firebase/auth";
+//Type imports
+import type { User } from "@firebase/auth";
+import type { FC } from "react";
 
 type AuthContext = {
+    //The user object
     user?: User | null,
+    //If the authentication process is in progress
     loading: boolean,
+    //Logs the user out
     logout: () => Promise<void>,
-    login: (email: string, password: string) => Promise<UserCredential | undefined>,
-    register: (email: string, username: string, password: string) => Promise<void>,
+    //Updates the user's credentials
     editUser: (newUser: {
         email?: string;
         password?: string;
@@ -18,27 +21,24 @@ type AuthContext = {
     }) => Promise<void>
 };
 
+//Create a new context
 const AuthContext = createContext<AuthContext>({} as AuthContext);
 
+//export a hook that returns the context
 export const useAuth = () => useContext<AuthContext>(AuthContext);
 
-const AuthProvider: FC = ({ children }) => {
+//Context Provider
+const FirebaseAuthenticationProvider: FC = ({ children }) => {
+    //State variables
     const [user, setUser] = useState<User | null | undefined>(null);
     const [loading, setLoading] = useState(true);
-    onAuthStateChanged(auth, (user) => {
+    //Event Listener for authentication state changes
+    auth.onAuthStateChanged(user => {
         if (user) setUser(user);
         else setUser(null);
         setLoading(false);
     });
-    async function login(email: string, password: string) {
-        try {
-            const user = await signInWithEmailAndPassword(auth, email, password);
-            return user;
-        } catch (err) {
-            console.log(err);
-            Util.toast.error("An error happened while signing in! Please try again later!");
-        };
-    };
+    //Logs the user out
     async function logout() {
         try {
             await signOut(auth);
@@ -47,29 +47,7 @@ const AuthProvider: FC = ({ children }) => {
             Util.toast.error("An error happened while signing out! Please try again later!");
         };
     };
-    async function register(email: string, name: string, password: string) {
-        try {
-            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-            if (userCredentials) {
-                console.log("Created user on Firebase!");
-                //Register the user in the database with additional information
-                const response = await Util.Axios.post("/api/user/register", {
-                    uid: userCredentials.user.uid,
-                    name: name
-                });
-                console.log("Operation successful!");
-                //If the registration was successful
-                if (response.status == 200) {
-                    console.log("Created user on MongoDB!");
-                    Util.toast.success("Successfully registered!");
-                    window.open("/account", "_self");
-                };
-            };
-        } catch (err) {
-            console.log(err); 
-            Util.toast.error("An error happened while registering! Please try again later!");
-        };
-    };
+    //Updates the user's credentials
     async function editUser(newUser: {
         email?: string,
         password?: string,
@@ -86,10 +64,10 @@ const AuthProvider: FC = ({ children }) => {
         };
     };
     return (
-        <AuthContext.Provider value={{ loading, user, register, login, editUser, logout }}>
+        <AuthContext.Provider value={{ loading, user, editUser, logout }}>
             {loading ? null : children}
         </AuthContext.Provider>
     );
 };
 
-export default AuthProvider;
+export default FirebaseAuthenticationProvider;

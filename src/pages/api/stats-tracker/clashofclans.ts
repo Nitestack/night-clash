@@ -5,8 +5,8 @@ import type { APIClan, APIPlayer } from "clashofclans.js";
 const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
     const tag = Util.validateTag(req.body.tag);
     const element = req.body.element as "clans" | "players";
-    const client = await Util.getCoCAPI();
     try {
+        const client = await Util.getCoCAPI();
         if (element == "players") {
             const response = await client.rest.getPlayer(tag);
             if (!response.ok) return Util.ApiHandler.sendError(res, 0, {

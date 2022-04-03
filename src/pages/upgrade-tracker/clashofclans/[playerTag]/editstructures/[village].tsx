@@ -1,6 +1,4 @@
-import type { NextPageWithConfiguration } from "@util/types";
 import Util from "@util/index";
-import Layout from "@components/Layout/index";
 import type { ClashOfClansVillage } from "@database/Models/clashofclans";
 import { Fragment, useLayoutEffect, useRef, useState } from "react";
 import type { FC, ChangeEvent, Dispatch, SetStateAction, MouseEventHandler } from "react";
@@ -15,15 +13,21 @@ import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { useInputState } from "@mantine/hooks";
 import Link from "@components/Elements/Link";
 import type { APIPlayer } from "clashofclans.js";
+import { useNextPageFetchData, useTitle, useDescription, useHeader } from "@util/hooks";
 
-const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
+const ClashOfClansEditStructuresPage = useNextPageFetchData<{
     playerSchema: ClashOfClansVillage,
     village: "home" | "builder"
-}> = ({ data }) => {
+}>(({ data }) => {
     const { playerSchema, village } = data;
     const { player } = playerSchema;
     const { tag, name, townHallLevel, builderHallLevel } = player;
     const formRef = useRef<HTMLFormElement>(null);
+
+    //Layout hooks
+    useTitle(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures - Clash of Clans - Upgrade Tracker`);
+    useDescription(tag);
+    useHeader(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures`);
 
     const { homeDefensesArray, builderDefensesArray, homeTrapsArray, builderTrapsArray, homeResourcesArray, builderResourcesArray, homeArmyArray, builderArmyArray } = Util.Constants.CoC;
     const [universalSelector, setUniversalSelector] = useState(1);
@@ -104,82 +108,87 @@ const ClashOfClansEditStructuresPage: NextPageWithConfiguration<{}, {}, {
         );
     };
     return (
-        <Layout 
-        title={`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures - Clash of Clans - Upgrade Tracker`} 
-        header={`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures`} description={tag}>
-            <form ref={formRef} method="POST" action="/api/upgrade-tracker/clashofclans/editstructures">
-                <Grid className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg p-1 sm:p-2 md:p-3">
-                    <div className="sm:col-span-2 md:col-span-3 lg:col-span-4">
-                        <Center>
-                            <div>
-                                <Center><p className="text-xl mb-2">Options</p></Center>
-                                <Grid className="grid-cols-1 sm:grid-cols-2 items-center">
-                                    <Center className="justify-self-center sm:justify-self-end">
-                                        <p className="text-center">Set everything for {village == "home" ? "Town Hall" : "Builder Hall"}</p>
-                                    </Center>
-                                    <Center className="justify-self-center sm:justify-self-start">
-                                        <Input defaultValue={universalSelector} className="sm:ml-2 w-16" onChange={saveUniversalSelector()} type="number" maxLength={2} min={1} max={village == "home" ? townHallLevel : builderHallLevel || 1}/>
-                                        <Button type="button" onClick={validateUniversalSelector()} className="bg-green-500 p-2 w-13 h-13">
-                                            <CheckIcon className="w-5"/>
-                                        </Button>
-                                        <Button type="button" onClick={resetUniversalSelector()} className="bg-red-600">Reset</Button>
-                                    </Center>
-                                </Grid>
-                            </div>
-                        </Center>
-                        {village == "home" ? 
-                        <Center className="mt-2">
-                            <p className="text-xl mb-2">Builder&apos;s Hut </p>
-                        </Center> : undefined}
-                    </div>
-                    <OperationButtons village={village} tag={tag} submitFunction={onSubmit()}/>
-                    {["defenses", "traps", "resources", "army"].map(category => {
-                        let iterationArray: Array<string> = [];
-                        switch (category.toLowerCase()) {
-                            case "defenses":
-                                iterationArray = village == "home" ? 
-                                homeDefensesArray.filter(defense => !defense.toLowerCase().includes("giga") 
-                                && !defense.toLowerCase().includes("builder")) : builderDefensesArray;
-                                break;
-                            case "traps": 
-                                iterationArray = village == "home" ? homeTrapsArray : builderTrapsArray;
-                                break;
-                            case "resources": 
-                                iterationArray = village == "home" ? homeResourcesArray : builderResourcesArray;
-                                break;
-                            case "army": 
-                                iterationArray = village == "home" ? 
-                                homeArmyArray.filter(army => !army.toLowerCase().includes("spell") 
-                                && army.toLowerCase() != "workshop"
-                                && army.toLowerCase() != "pet house") : 
-                                builderArmyArray.filter(army => army.toLowerCase() != "builder barracks");
-                                break;
-                        };
-                        iterationArray = iterationArray.filter(defense => Util.CocUpgradeTracker.getHallItem(defense, village == "home" ? townHallLevel : builderHallLevel || 1, village));
-                        return (
-                            <Fragment key={category}>
-                                <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
-                                    <p className="text-xl mb-2">{Util.toCapitalize(category)}</p>
+        <form ref={formRef} method="POST" action="/api/upgrade-tracker/clashofclans/editstructures">
+            <Grid className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full bg-lightmodeprimary dark:bg-darkmodeprimary rounded-lg p-1 sm:p-2 md:p-3">
+                <div className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+                    <Center>
+                        <div>
+                            <Center><p className="text-xl mb-2">Options</p></Center>
+                            <Grid className="grid-cols-1 sm:grid-cols-2 items-center">
+                                <Center className="justify-self-center sm:justify-self-end">
+                                    <p className="text-center">Set everything for {village == "home" ? "Town Hall" : "Builder Hall"}</p>
                                 </Center>
-                                {iterationArray.map((item, index) => (
-                                    <GlobalSlider key={index}
-                                    building={item}
-                                    category={category}
-                                    playerSchema={playerSchema}
-                                    village={village}/>
-                                ))}
-                            </Fragment>
-                        );
-                    })}
-                    {displayWallSlider()}
-                    <OperationButtons tag={tag} village={village} submitFunction={onSubmit()}/>
-                </Grid>
-            </form>
-        </Layout>
+                                <Center className="justify-self-center sm:justify-self-start">
+                                    <Input defaultValue={universalSelector} className="sm:ml-2 w-16" onChange={saveUniversalSelector()} type="number" maxLength={2} min={1} max={village == "home" ? townHallLevel : builderHallLevel || 1}/>
+                                    <Button type="button" onClick={validateUniversalSelector()} className="bg-green-500 p-2 w-13 h-13">
+                                        <CheckIcon className="w-5"/>
+                                    </Button>
+                                    <Button type="button" onClick={resetUniversalSelector()} className="bg-red-600">Reset</Button>
+                                </Center>
+                            </Grid>
+                        </div>
+                    </Center>
+                    {village == "home" ? 
+                    <Center className="mt-2">
+                        <p className="text-xl mb-2">Builder&apos;s Hut </p>
+                    </Center> : undefined}
+                </div>
+                <OperationButtons village={village} tag={tag} submitFunction={onSubmit()}/>
+                {["defenses", "traps", "resources", "army"].map(category => {
+                    let iterationArray: Array<string> = [];
+                    switch (category.toLowerCase()) {
+                        case "defenses":
+                            iterationArray = village == "home" ? 
+                            homeDefensesArray.filter(defense => !defense.toLowerCase().includes("giga") 
+                            && !defense.toLowerCase().includes("builder")) : builderDefensesArray;
+                            break;
+                        case "traps": 
+                            iterationArray = village == "home" ? homeTrapsArray : builderTrapsArray;
+                            break;
+                        case "resources": 
+                            iterationArray = village == "home" ? homeResourcesArray : builderResourcesArray;
+                            break;
+                        case "army": 
+                            iterationArray = village == "home" ? 
+                            homeArmyArray.filter(army => !army.toLowerCase().includes("spell") 
+                            && army.toLowerCase() != "workshop"
+                            && army.toLowerCase() != "pet house") : 
+                            builderArmyArray.filter(army => army.toLowerCase() != "builder barracks");
+                            break;
+                    };
+                    iterationArray = iterationArray.filter(defense => Util.CocUpgradeTracker.getHallItem(defense, village == "home" ? townHallLevel : builderHallLevel || 1, village));
+                    return (
+                        <Fragment key={category}>
+                            <Center className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+                                <p className="text-xl mb-2">{Util.toCapitalize(category)}</p>
+                            </Center>
+                            {iterationArray.map((item, index) => (
+                                <GlobalSlider key={index}
+                                building={item}
+                                category={category}
+                                playerSchema={playerSchema}
+                                village={village}/>
+                            ))}
+                        </Fragment>
+                    );
+                })}
+                {displayWallSlider()}
+                <OperationButtons tag={tag} village={village} submitFunction={onSubmit()}/>
+            </Grid>
+        </form>
     );
-};
-
-
+}, {
+    key: "editStructures",
+    url: "/api/upgrade-tracker/clashofclans/village",
+    setData: (router, user) => {
+        return {
+            playerTag: Util.validateTag(router.query.playerTag as string),
+            user: user,
+            village: router.query.village
+        };
+    },
+    method: "post"
+});
 
 const GlobalSlider: FC<{
     building: string,
@@ -359,11 +368,8 @@ const WallSlider: FC<{
         </Grid> 
     );
 };
-
-ClashOfClansEditStructuresPage.disableLayout = true;
 ClashOfClansEditStructuresPage.authenticationRequired = true;
-ClashOfClansEditStructuresPage.queryRequired = true;
-ClashOfClansEditStructuresPage.afterAuthentication = function (router, user) {
+ClashOfClansEditStructuresPage.afterAuthentication = (router, user) => {
     const playerTag = router.query.playerTag as string;
     const village = router.query.village as string;
     //Ensures the player tag parameter was given
@@ -375,17 +381,6 @@ ClashOfClansEditStructuresPage.afterAuthentication = function (router, user) {
         router.push("/upgrade-tracker/clashofclans");
         return false;
     };
-};
-ClashOfClansEditStructuresPage.fetchData = {
-    url: "/api/upgrade-tracker/clashofclans/village",
-    data: (router, user) => {
-        return {
-            playerTag: Util.validateTag(router.query.playerTag as string),
-            user: user,
-            village: router.query.village
-        };
-    },
-    method: "post"
 };
 
 const OperationButtons: FC<{

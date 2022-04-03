@@ -1,11 +1,10 @@
-import Layout from "@components/Layout/index";
 import Util from "@util/index";
 import type { APIClan, APIPlayer } from "clashofclans.js";
 import ClashOfClansPlayerProfile from "@modules/ClashOfClansPlayerProfile";
 import ClashOfClansOverview from "@modules/ClashOfClansOverview";
 import Tabs from "@components/Tabs";
 import ClashOfClansClanProfile from "@modules/ClashOfClansClanProfile";
-import { useNextPageFetchData } from "@util/hooks";
+import { useNextPageFetchData, useTitle, useDescription, useHeader } from "@util/hooks";
 
 const ClashOfClansStatsTracker = useNextPageFetchData<{
     player: APIPlayer,
@@ -16,29 +15,40 @@ const ClashOfClansStatsTracker = useNextPageFetchData<{
     if ((!location.hash || !stats.includes(location.hash.replace(/#/g, "")))&& player) location.hash = `#${stats[0]}`;
     if ((!location.hash || !["info", "stats"].includes(location.hash.replace(/#/g, "")))&& clan) location.hash = `#info`;
     const defaultIndex = stats.indexOf(location.hash.replace(/#/g, ""));
-    if (player) return (
-        <Layout title={`${player.name} - Player - Clash of Clans - Stats Tracker`} description={player.tag} header={player.name}>
+    
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
+    
+    if (player) {
+        setTitle(`${player.name} - Player - Clash of Clans - Stats Tracker`);
+        setDescription(player.tag);
+        setHeader(player.name);
+        return (
             <Tabs 
-            tabs={{
-                "Home Village": <>
-                    <ClashOfClansPlayerProfile player={player} village="home"/>
-                    <ClashOfClansOverview player={player} village="home"/>
-                </>,
-                "Builder Base": <>
-                    <ClashOfClansPlayerProfile player={player} village="builder"/>
-                    <ClashOfClansOverview player={player} village="builder"/>
-                </>
-            }} 
-            initialTabIndex={defaultIndex}
-            onTabChange={(index) => location.hash = `#${stats[index]}`}/>
-        </Layout>
-    );
-    else if (clan) return (
-        <Layout title={`${clan.name} - Clan - Clash of Clans - Stats Tracker`} description={clan.tag} header={clan.name}>
+                tabs={{
+                    "Home Village": <>
+                        <ClashOfClansPlayerProfile player={player} village="home"/>
+                        <ClashOfClansOverview player={player} village="home"/>
+                    </>,
+                    "Builder Base": <>
+                        <ClashOfClansPlayerProfile player={player} village="builder"/>
+                        <ClashOfClansOverview player={player} village="builder"/>
+                    </>
+                }} 
+                initialTabIndex={defaultIndex}
+                onTabChange={(index) => location.hash = `#${stats[index]}`}
+            />
+        );
+    } else if (clan) {
+        setTitle(`${clan.name} - Clan - Clash of Clans - Stats Tracker`);
+        setDescription(clan.tag);
+        setHeader(clan.name);
+        return (
             <ClashOfClansClanProfile clan={clan}/>
-        </Layout>
-    );
-    else return (
+        );
+    } else return (
         <></>
     );
 }, {
@@ -52,7 +62,6 @@ const ClashOfClansStatsTracker = useNextPageFetchData<{
         };
     }
 });
-ClashOfClansStatsTracker.disableLayout = true;
 ClashOfClansStatsTracker.afterAuthentication = (router, user) => {
     const playerTag = router.query.tag as string;
     const element = router.query.element as string;

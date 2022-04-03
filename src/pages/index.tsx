@@ -1,7 +1,8 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import type { ComponentProps } from "react";
-import { AdjustmentsIcon } from "@heroicons/react/outline";
+import { AdjustmentsIcon, ChartBarIcon, CogIcon } from "@heroicons/react/outline";
 import Center from "@components/Utilities/Center";
+import Util from "@util/index";
 
 const features: Array<{
     name: string,
@@ -10,21 +11,18 @@ const features: Array<{
 }> = [
     {
         name: "Upgrade Tracker",
-        description:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+        description: "Track your upgrades and keep track of your progress!",
         icon: AdjustmentsIcon,
     },
     {
-        name: "Transfers are instant",
-        description:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-        icon: AdjustmentsIcon,
+        name: "Stats Tracker",
+        description: "Track stats of a player, a clan or other various stats!",
+        icon: ChartBarIcon,
     },
     {
-        name: "Mobile notifications",
-        description:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-        icon: AdjustmentsIcon,
+        name: "Tools",
+        description: "Utility tools to help you in game!",
+        icon: CogIcon,
     }
 ];
 
@@ -54,5 +52,6 @@ const HomePage: NextPageWithConfiguration = () => {
 };
 
 HomePage.title = "Home";
+HomePage.description = `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`;
 
 export default HomePage;
