@@ -7,10 +7,13 @@ const BBUpgradeTrackerPlayer = useNextPageFetchData<{
     island: BoomBeachIsland
 }>(({ data }) => {
     const { name, playerTag } = data.island;
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
     //Layout hooks
-    useTitle(`${name} - Island - Boom Beach - Upgrade Tracker`);
-    useDescription(playerTag);
-    useHeader(name);
+    setTitle(`${name} - Island - Boom Beach - Upgrade Tracker`);
+    setDescription(playerTag);
+    setHeader(name);
     return (
         <></>
     );
@@ -28,10 +31,7 @@ BBUpgradeTrackerPlayer.authenticationRequired = true;
 BBUpgradeTrackerPlayer.afterAuthentication = function (router, user) {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
-    if (!playerTag) {
-        router.push("/upgrade-tracker/boombeach");
-        return false;
-    };
+    if (!playerTag) return router.push("/upgrade-tracker/boombeach");
 };
 
 export default BBUpgradeTrackerPlayer;

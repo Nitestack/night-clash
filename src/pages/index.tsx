@@ -3,6 +3,7 @@ import type { ComponentProps } from "react";
 import { AdjustmentsIcon, ChartBarIcon, CogIcon } from "@heroicons/react/outline";
 import Center from "@components/Utilities/Center";
 import Util from "@util/index";
+import { useTitle, useDescription } from "@util/hooks";
 
 const features: Array<{
     name: string,
@@ -27,6 +28,12 @@ const features: Array<{
 ];
 
 const HomePage: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    //Page info
+    setTitle("Home", true);
+    setDescription(`${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`);
     return (
         <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 rounded-md p-5 bg-lightmodeprimary dark:bg-darkmodeprimary">
             {features.map((feature) => (
@@ -50,8 +57,5 @@ const HomePage: NextPageWithConfiguration = () => {
         </dl>
     );
 };
-
-HomePage.title = "Home";
-HomePage.description = `${Util.Constants.APPLICATION_NAME} ${Util.Constants.APPLICATION_DESCRIPTION}`;
 
 export default HomePage;

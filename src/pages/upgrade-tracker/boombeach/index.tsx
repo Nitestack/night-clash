@@ -1,8 +1,15 @@
 import Util from "@util/index";
 import type { NextPageWithConfiguration } from "@util/types";
 import Center from "@components/Utilities/Center";
+import { useTitle, useDescription } from "@util/hooks";
 
 const BBUpgradeTrackerPage: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    //Page info
+    setTitle("Upgrade Tracker - Boom Beach", true);
+    setDescription("Track the progress of your upgrades!");
     return (
         <Center className="mx-auto container py-12 px-4 sm:px-6 2xl:px-0">
             <Center className="flex-col lg:flex-row space-y-6 lg:space-y-0">
@@ -35,7 +42,5 @@ const BBUpgradeTrackerPage: NextPageWithConfiguration = () => {
         </Center>
     );
 };
-BBUpgradeTrackerPage.title = "Upgrade Tracker - Boom Beach";
-BBUpgradeTrackerPage.description = "Use the upgrade tracker to keep track of your island, access additional stats and more..."
 
 export default BBUpgradeTrackerPage;

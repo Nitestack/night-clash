@@ -25,9 +25,12 @@ const ClashOfClansEditStructuresPage = useNextPageFetchData<{
     const formRef = useRef<HTMLFormElement>(null);
 
     //Layout hooks
-    useTitle(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures - Clash of Clans - Upgrade Tracker`);
-    useDescription(tag);
-    useHeader(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures`);
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
+    setTitle(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures - Clash of Clans - Upgrade Tracker`);
+    setDescription(tag);
+    setHeader(`${name} - Edit ${village == "home" ? "Home Village" : "Builder Base"} structures`);
 
     const { homeDefensesArray, builderDefensesArray, homeTrapsArray, builderTrapsArray, homeResourcesArray, builderResourcesArray, homeArmyArray, builderArmyArray } = Util.Constants.CoC;
     const [universalSelector, setUniversalSelector] = useState(1);
@@ -373,14 +376,8 @@ ClashOfClansEditStructuresPage.afterAuthentication = (router, user) => {
     const playerTag = router.query.playerTag as string;
     const village = router.query.village as string;
     //Ensures the player tag parameter was given
-    if (!playerTag) {
-        router.push("/upgrade-tracker/clashofclans");
-        return false;
-    };
-    if (!village || !["home", "builder"].includes(village)) {
-        router.push("/upgrade-tracker/clashofclans");
-        return false;
-    };
+    if (!playerTag) return router.push("/upgrade-tracker/clashofclans");
+    if (!village || !["home", "builder"].includes(village)) return router.push("/upgrade-tracker/clashofclans");
 };
 
 const OperationButtons: FC<{

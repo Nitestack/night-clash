@@ -11,6 +11,7 @@ import Input from "@components/Elements/Input";
 import validator from "validator";
 import { useAuth } from "@util/hooks";
 import { useNextPageFetchData} from "@util/hooks";
+import { useTitle, useDescription, useHeader } from "@util/hooks";
 
 type DataType = {
     clashOfClansVillages: Array<ClashOfClansPlayerProfile>,
@@ -25,39 +26,40 @@ const AccountPage = useNextPageFetchData<DataType>(({ data }) => {
     //User Data
     const { user, editUser } = useAuth();
     //State variables for editing user credentials
-    //@ts-ignore
-    const [username, setUsername] = useState<string>(user?.displayName);
-    //@ts-ignore
-    const [email, setEmail] = useState<string>(user.email);
+    const [username, setUsername] = useState<string>(user?.displayName!);
+    const [email, setEmail] = useState<string>(user?.email!);
     //Mode: view mode and set mode
     const [editUsernameMode, setEditUsernameMode] = useState(false);
     const [editEmailMode, setEditEmailMode] = useState(false);
     //Refs
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
-
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
+    //Page Information
+    setTitle("Account");
+    setHeader("My Account");
+    setDescription("Access your saved data or edit your credentials!");
     //Data of the user
     const { clashOfClansVillages, clashOfClansStatsTrackerClans, clashOfClansStatsTrackerPlayers, clashRoyaleStatsTrackerClans, clashRoyaleStatsTrackerPlayers, brawlStarsStatsTrackerClans, brawlStarsStatsTrackerPlayers } = data;
-    
     //Clash of Clans
     for (const player of [...clashOfClansVillages, ...clashOfClansStatsTrackerPlayers]) {
         if (player.clan) clashOfClansStatsTrackerClans.push(player.clan);
     };
     const newClashOfClansStatsTrackerClans: Array<ClashOfClansClanProfile> = Util.removeDuplicates(clashOfClansStatsTrackerClans);
     const newClashOfClansStatsTrackerPlayers: Array<ClashOfClansPlayerProfile> = Util.removeDuplicates([...clashOfClansStatsTrackerPlayers, ...clashOfClansVillages]);
-    
     //Clash Royale
     for (const player of clashRoyaleStatsTrackerPlayers) {
         if (player.clan) clashRoyaleStatsTrackerClans.push(player.clan);
     };
     const newClashRoyaleStatsTrackerClans: Array<ClashRoyaleClanProfile> = Util.removeDuplicates(clashRoyaleStatsTrackerClans);
-
     //Brawl Stars
     for (const player of brawlStarsStatsTrackerPlayers) {
         if (player.club) brawlStarsStatsTrackerClans.push(player.club);
     };
     const newBrawlStarsStatsTrackerClans: Array<BrawlStarsClubProfile> = Util.removeDuplicates(brawlStarsStatsTrackerClans);
-    
     //Username
     function setUsernameEditMode() {
         return () => {
@@ -70,14 +72,12 @@ const AccountPage = useNextPageFetchData<DataType>(({ data }) => {
                 const newUsername = usernameRef.current.value;
                 if (!newUsername) return Util.toast.error("Please enter a new username!");
                 if (newUsername == username) return setEditUsernameMode(false);
-                await Util.ApiHandler.clientSideErrorHandler(async () => {
-                    editUser({
-                        name: newUsername
-                    }).then(() => {
-                        Util.toast.success(`Successfully changed username to: ${newUsername}!`);
-                        setUsername(newUsername);
-                        setEditUsernameMode(false);
-                    });
+                editUser({
+                    name: newUsername
+                }).then(() => {
+                    Util.toast.success(`Successfully changed username to: ${newUsername}!`);
+                    setUsername(newUsername);
+                    setEditUsernameMode(false);
                 });
             };
         };
@@ -302,10 +302,6 @@ const AccountPage = useNextPageFetchData<DataType>(({ data }) => {
         }
     }
 });
-
-AccountPage.title = "Account";
-AccountPage.header = "My Account";
-AccountPage.description = "Access your saved data or edit your credentials!";
 AccountPage.authenticationRequired = true;
 
 export default AccountPage;

@@ -19,7 +19,7 @@ export type AppDispatch = typeof store.dispatch;
 /**
  * Extra utility configurations for Next pages
  */ 
-export interface ComponentConfiguration extends Partial<LayoutProps> {
+export interface ComponentConfiguration {
     /**
      * Whether authentication is required to view the content of the website or not
      */

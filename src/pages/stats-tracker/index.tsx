@@ -5,8 +5,15 @@ import Center from "@components/Utilities/Center";
 import Tabs from "@components/Tabs";
 import Util from "@util/index";
 import PlayerTagInput from "@modules/PlayerTagInput";
+import { useTitle, useDescription } from "@util/hooks";
 
 const StatsTracker: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    //Page info
+    setTitle("Stats Tracker", true);
+    setDescription("Track stats of a player, a clan or other various stats!");
     const tracker = ["clashofclans", "clashroyale", "brawlstars"];
     const [defaultIndex, setDefaultIndex] = useState(0);
     useEffect(() => {
@@ -62,7 +69,5 @@ const Tab: FC<{
         <Tabs tabs={tabs}/>
     );
 };
-
-StatsTracker.title = "Stats Tracker";
 
 export default StatsTracker;

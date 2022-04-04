@@ -2,8 +2,15 @@ import Accordion from "@components/Accordion";
 import Center from "@components/Utilities/Center";
 import Link from "@components/Elements/Link";
 import type { NextPageWithConfiguration } from "@util/types";
+import { useTitle, useDescription } from "@util/hooks";
 
 const UpgradeTrackerPage: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    //Page info
+    setTitle("Upgrade Tracker", true);
+    setDescription("Track the progress of your upgrades!");
     return (
         <>
             <Accordion title="Clash of Clans">
@@ -23,7 +30,5 @@ const UpgradeTrackerPage: NextPageWithConfiguration = () => {
         </>
     );
 };
-UpgradeTrackerPage.title = "Upgrade Tracker - Overview";
-UpgradeTrackerPage.description = "Use the upgrade tracker to keep track of your village, access secret stats and more...";
 
 export default UpgradeTrackerPage;

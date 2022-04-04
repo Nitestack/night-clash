@@ -16,7 +16,7 @@ import { store } from "src/configuration/Actions/index";
 import { MantineProvider } from "@mantine/core";
 import config from "../../config.json";
 import { useRouter } from "next/router";
-import { useTitle, useDescription, useHeader, useMeta, useScripts, useAuth } from "@util/hooks";
+import { useAuth } from "@util/hooks";
 //Type imports
 import type { FC } from "react";
 import type { ComponentWithConfigurationProps, CustomComponentType } from "@util/types";
@@ -33,20 +33,6 @@ const CustomComponent: FC<{ Component: CustomComponentType; pageProps: any; }> =
     //User
     const { user, loading } = useAuth();
     const isLoggedIn = !!user;
-    //Layout Hooks
-    const { setTitle } = useTitle();
-    const { setDescription } = useDescription();
-    const { setHeader } = useHeader();
-    const { setMeta } = useMeta();
-    const { setScripts } = useScripts();
-    //Page Information
-    useEffect(() => {
-        if (Component.title) setTitle(Component.title);
-        if (Component.description) setDescription(Component.description);
-        if (Component.header) setHeader(Component.header);
-        if (Component.scripts) setScripts(Component.scripts);
-        if (Component.meta) setMeta(Component.meta);
-    }, []);
     //Mode
     useEffect(() => {
         let mode = Util.getCookie("mode"); //Get mode from cookie

@@ -1,8 +1,17 @@
 import type { NextPageWithConfiguration } from "@util/types";
 import Link from "@components/Elements/Link";
 import Button from "@components/Elements/Button";
+import { useTitle, useDescription, useHeader } from "@util/hooks";
 
 const Custom404Page: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
+    setTitle("404 - Not Found");
+    //Page Information
+    setDescription("This site does not exist!");
+    setHeader("404");
     return (
         <div className="flex items-center flex-col justify-center lg:flex-row py-28 px-6 md:px-24 md:py-20 lg:py-32 gap-16 lg:gap-28">
             <div className="w-full lg:w-1/2">
@@ -31,8 +40,5 @@ const Custom404Page: NextPageWithConfiguration = () => {
         </div>
     );
 };
-Custom404Page.title = "404 - Not Found";
-Custom404Page.description = "This site does not exist!";
-Custom404Page.header = "404";
 
 export default Custom404Page;

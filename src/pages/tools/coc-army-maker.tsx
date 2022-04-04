@@ -5,10 +5,17 @@ import styles from "@modules/ClashOfClansUnitIcon.module.scss";
 import Input from "@components/Elements/Input";
 import Center from "@components/Utilities/Center";
 import { useState } from "react";
+import { useTitle, useDescription } from "@util/hooks";
 
 const { homeTroopsArray, homeDarkTroopsArray, homeSpellsArray, homeDarkSpellsArray, homeSuperTroopsArray, homeDarkSuperTroopsArray, homeSiegeMachinesArray } = Util.Constants.CoC;
 
 const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
+    //Layout hooks
+    const { setTitle } = useTitle();
+    const { setDescription } = useDescription();
+    //Page info
+    setTitle("Clash of Clans - Army Maker", true);
+    setDescription("Create an army of Clash of Clans units!");
     const [troopHousingSpace, setTroopHousingSpace] = useState(0);
     const [spellHousingSpace, setSpellHousingSpace] = useState(0);
     const [siegeMachineHousingSpace, setSiegeMachineHousingSpace] = useState(0);
@@ -118,7 +125,5 @@ const ClashOfClansArmyMaker: NextPageWithConfiguration = () => {
         </Grid>
     );
 };
-ClashOfClansArmyMaker.title = "Clash of Clans - Army Maker";
-ClashOfClansArmyMaker.description = "Create an army and share it or use it by yourself!";
 
 export default ClashOfClansArmyMaker;

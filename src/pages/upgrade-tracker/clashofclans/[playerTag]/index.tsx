@@ -3,7 +3,7 @@ import Util from "@util/index";
 import type { ClashOfClansVillage } from "@models/clashofclans";
 import Modal from "@components/Modal";
 import Select from "@components/Elements/Select";
-import type { FC, OptionHTMLAttributes } from "react";
+import { FC, OptionHTMLAttributes, useEffect } from "react";
 import { useState, useRef } from "react";
 import Center from "@components/Utilities/Center";
 import Tabs from "@components/Tabs";
@@ -27,9 +27,13 @@ const CocUpgradeTrackerPlayerVillagePage = useNextPageFetchData<{
     if (!villages.includes(location.hash.replace(/#/g, ""))) location.hash = `#${villages[0]}`;
     const initialVillage = location.hash.replace(/#/g, "");
     //Layout hooks
-    useDescription(tag);
-    const { setHeader } = useHeader(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
-    const { setTitle } = useTitle(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+    const { setDescription } = useDescription();
+    const { setHeader } = useHeader();
+    const { setTitle } = useTitle();
+    //Page info
+    setHeader(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"}`);
+    setTitle(`${name} - ${initialVillage == "home" ? "Home Village" : "Builder Base"} - Clash of Clans - Upgrade Tracker`);
+    setDescription(tag);
     //Village Tabs
     const villageTabs: {
         [key: string]: JSX.Element;
@@ -297,10 +301,7 @@ CocUpgradeTrackerPlayerVillagePage.authenticationRequired = true;
 CocUpgradeTrackerPlayerVillagePage.afterAuthentication = (router, user) => {
     const playerTag = router.query.playerTag as string;
     //Ensures the player tag parameter was given
-    if (!playerTag) {
-        router.push("/upgrade-tracker/clashofclans");
-        return false;
-    };
+    if (!playerTag) return router.push("/upgrade-tracker/clashofclans");
 };
 
 export default CocUpgradeTrackerPlayerVillagePage;

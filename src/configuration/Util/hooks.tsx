@@ -5,6 +5,7 @@ import type { NextRouter } from "next/router";
 import type { User } from "firebase/auth";
 import type { AxiosRequestConfig } from "axios";
 import type { FC } from "react";
+import { useEffect } from "react";
 import { useAuth as useAuthentication } from "@components/AuthProvider";
 import type { NextApiError, NextPageWithConfiguration } from "@util/types";
 import Spinner from "@components/Utilities/Spinner";
@@ -68,8 +69,11 @@ export function useNextPageFetchData<DataProps = any>(NextPage: FC<{ data: DataP
 export function useTitle() {
     const { title } = Util.StateManagement.useSelector(state => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
-    function setTitle(title: string) {
-        dispatch(Util.StateManagement.setTitle(title));
+    function setTitle(title: string, sameHeader?: boolean) {
+        useEffect(() => { 
+            dispatch(Util.StateManagement.setTitle(title));
+            if (sameHeader) dispatch(Util.StateManagement.setHeader(title));
+        }, []);
     };
     return { title, setTitle };
 };
@@ -78,7 +82,9 @@ export function useDescription() {
     const { description } = Util.StateManagement.useSelector(state => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setDescription(description: string) {
-        dispatch(Util.StateManagement.setDescription(description));
+        useEffect(() => { 
+            dispatch(Util.StateManagement.setDescription(description));
+        }, []);
     };
     return { description, setDescription };
 };
@@ -87,7 +93,9 @@ export function useHeader() {
     const { header } = Util.StateManagement.useSelector(state => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setHeader(header: string) {
-        dispatch(Util.StateManagement.setHeader(header));
+        useEffect(() => { 
+            dispatch(Util.StateManagement.setHeader(header));
+        }, []);
     };
     return { header, setHeader };
 };
@@ -96,7 +104,9 @@ export function useScripts() {
     const { scripts } = Util.StateManagement.useSelector(state => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setScripts(scripts: string[]) {
-        dispatch(Util.StateManagement.setScripts(scripts));
+        useEffect(() => { 
+            dispatch(Util.StateManagement.setScripts(scripts));
+        }, []);
     };
     return { scripts, setScripts };
 };
@@ -105,7 +115,9 @@ export function useMeta() {
     const { meta } = Util.StateManagement.useSelector(state => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setMeta(meta: MetaProps) {
-        dispatch(Util.StateManagement.setMeta(meta));
+        useEffect(() => { 
+            dispatch(Util.StateManagement.setMeta(meta));
+        }, []);
     };
     return { meta, setMeta };
 };
