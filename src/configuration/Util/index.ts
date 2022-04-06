@@ -1,6 +1,6 @@
 import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
-import getAPI from "@util/api";
+import { cocClient, crClient, bsClient} from "@util/api";
 import type { AppDispatch, RootState } from "@util/types";
 import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
@@ -117,24 +117,6 @@ export default class Util {
      */
     public static connectDB() {
         return connectDB();
-    };
-    /**
-     * Get's the Clash of Clans API Client
-     */
-    public static async getCoCAPI(): Promise<Client> {
-        return await getAPI("coc");
-    };
-    /**
-     * Get's the Clash Royale API Client
-     */
-    public static async getCRAPI() {
-        return await getAPI("cr");
-    };
-    /**
-     * Get's the Brawl Stars API Client
-     */
-    public static async getBSAPI() {
-        return await getAPI("bs");
     };
     /**
      * Get's the rarity of a Clash Royale card
