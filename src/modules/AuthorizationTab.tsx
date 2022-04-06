@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { StyledFirebaseAuth } from "react-firebaseui";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { EmailAuthProvider } from "firebase/auth";
 import { auth } from "@util/firebase";
 

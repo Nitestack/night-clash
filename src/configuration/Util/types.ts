@@ -1,6 +1,5 @@
 import type { NextPageContext, NextComponentType, NextPage } from "next";
 import type { AppInitialProps, AppProps } from "next/app";
-import type { LayoutProps } from "@components/Layout";
 import type axios from "axios";
 import type { NextRouter } from "next/router";
 import { store } from "@actions/index";
