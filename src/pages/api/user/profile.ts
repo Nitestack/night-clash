@@ -20,7 +20,6 @@ const UserProfile: NextApiHandler = async (req, res) => {
                     townHallLevel: village.player.townHallLevel,
                     townHallWeaponLevel: village.player.townHallWeaponLevel
                 };
-                //@ts-ignore
                 if (village.player.clan) pushObject.clan = {
                     name: village.player.clan.name,
                     tag: village.player.clan.tag,
