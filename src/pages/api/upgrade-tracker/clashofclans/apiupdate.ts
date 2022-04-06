@@ -1,14 +1,14 @@
 import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import DatabaseManager from "@util/databaseManager";
-import { cocClient } from "@util/api";
 
 Util.connectDB();
 
 const Example: NextApiHandler = async (req, res) => {
     const { playerTag, village } = req.body;
     try {
-        const restManager = cocClient.rest;
+        const client = await Util.getAPI("coc");
+        const restManager = client.rest;
         const response = await restManager.getPlayer(Util.validateTag(playerTag));
         if (response.status != 200) return Util.ApiHandler.sendError(res, 1, {
             errorMessage: "Couldn't fetch the player in the Clash of Clans API!"

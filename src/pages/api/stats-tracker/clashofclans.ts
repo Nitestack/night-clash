@@ -1,13 +1,13 @@
 import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import type { APIClan, APIPlayer } from "clashofclans.js";
-import { cocClient } from "@util/api";
 
 const ClashOfClansStatsTracker: NextApiHandler = async (req, res) => {
     const tag = Util.validateTag(req.body.tag);
     const element = req.body.element as "clans" | "players";
     try {
-        const restManager = cocClient.rest;
+        const client = await Util.getAPI("coc");
+        const restManager = client.rest;
         if (element == "players") {
             const response = await restManager.getPlayer(tag);
             if (!response.ok) return Util.ApiHandler.sendError(res, 0, {

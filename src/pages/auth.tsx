@@ -1,8 +1,6 @@
 import type { NextPageWithConfiguration } from "@util/types";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { EmailAuthProvider } from "firebase/auth";
-import { auth } from "@util/firebase";
 import { useTitle, useDescription, useHeader } from "@util/hooks";
+import AuthorizationTab from "@modules/AuthorizationTab";
 
 const AuthenticationPage: NextPageWithConfiguration = () => {
     //Layout hooks
@@ -14,14 +12,7 @@ const AuthenticationPage: NextPageWithConfiguration = () => {
     setDescription("Sign in or create an account to access the dashboard!");
     setHeader("Authorize");
     return (
-        <StyledFirebaseAuth uiConfig={{
-            signInFlow: "popup",
-            signInSuccessUrl: "/account",
-            signInOptions: [{
-                provider: EmailAuthProvider.PROVIDER_ID,
-                requireDisplayName: true
-            }]
-        }} firebaseAuth={auth} className="font-coc-description"/>
+        <AuthorizationTab/>
     );
 };
 AuthenticationPage.noAuthenticationRequired = true;

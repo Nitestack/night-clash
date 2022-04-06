@@ -1,11 +1,11 @@
 import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import type { BSClan, BSProfile } from "@interfaces/brawlStars";
-import { bsClient as client } from "@util/api";
 
 const BrawlStarsStatsTracker: NextApiHandler = async (req, res) => {
     const tag = req.body.tag as string;
     const element = req.body.element as "clubs" | "players";
+    const client = await Util.getAPI("bs");
     try {
         if (element == "players") {
             const player = await client.player(tag);

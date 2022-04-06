@@ -2,12 +2,48 @@ import { Client } from "clashofclans.js";
 //@ts-ignore
 import { Token, ClashRoyale, BrawlStars } from "supercell-apis";
 
-const cocClient = new Client();
+const client = new Client();
 
-cocClient.login({ email: process.env.EMAIL as string, password: process.env.PASSWORD as string }).catch(err => console.error(err));
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
+ */
+let cached: {
+    CoCClient: Client;
+    CRClient: any,
+    BSClient: any
+//@ts-ignore
+} = global.api;
 
-const crClient = new ClashRoyale(new Token("clashroyale", process.env.EMAIL, process.env.PASSWORD).init().then((token: string) => token));
+if (!cached) {
+    //@ts-ignore
+    cached = global.api = { CoCClient: null, CRClient: null, BSClient: null };
+};
 
-const bsClient = new BrawlStars(new Token("brawlstars", process.env.EMAIL, process.env.PASSWORD).init().then((token: string) => token));
+export interface APIClients {
+    coc: Client,
+    cr: any,
+    bs: any
+};
 
-export { cocClient, crClient, bsClient };
+async function getAPI<K extends keyof APIClients>(api: K): Promise<APIClients[K]> {
+    if (cached.CoCClient && api == "coc") return cached.CoCClient;
+    else if (cached.CRClient && api == "cr") return cached.CRClient;
+    else if (cached.BSClient && api == "bs") return cached.BSClient;
+    if (api == "coc" && !cached.CoCClient) {
+        await client.login({ email: process.env.EMAIL as string, password: process.env.PASSWORD as string });
+        cached.CoCClient = client;
+    } else if (api == "cr" && !cached.CRClient) {
+        const token = await new Token("clashroyale", process.env.EMAIL, process.env.PASSWORD).init();
+        cached.CRClient = new ClashRoyale(token);
+    } else if (api == "bs" && !cached.BSClient) {
+        const token = await new Token("brawlstars", process.env.EMAIL, process.env.PASSWORD).init();
+        cached.BSClient = new BrawlStars(token);
+    };
+    if (api == "coc") return cached.CoCClient;
+    else if (api == "cr") return cached.CRClient;
+    else if (api == "bs") return cached.BSClient;
+};
+
+export default getAPI;

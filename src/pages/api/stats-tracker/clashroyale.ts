@@ -1,11 +1,11 @@
 import type { NextApiHandler } from "next";
 import Util from "@util/index";
 import type { CRProfile, CRClan } from "@interfaces/clashRoyale";
-import { crClient as client } from "@util/api";
 
 const ClashRoyaleStatsTracker: NextApiHandler = async (req, res) => {
     const tag = req.body.tag as string;
     const element = req.body.element as "clans" | "players";
+    const client = await Util.getAPI("cr");
     try {
         if (element == "players") {
             const player = await client.player(tag);

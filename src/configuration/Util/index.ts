@@ -1,8 +1,6 @@
 import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
-import { cocClient, crClient, bsClient} from "@util/api";
 import type { AppDispatch, RootState } from "@util/types";
-import type { Client } from "clashofclans.js";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
 import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@util/functions";
@@ -12,9 +10,11 @@ import { twMerge } from "tailwind-merge";
 import { actions } from "src/configuration/Actions/index";
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux';
+import type { APIClients } from "@util/api";
 import connectDB from "@util/databaseConnection";
 import { toast } from "react-toastify";
 import Emitter from "@util/Emitter";
+import getAPI from "@util/api";
 
 export default class Util {
     /*Classes*/
@@ -36,6 +36,9 @@ export default class Util {
     public static isEmptyObject(obj: object) {
         for (const prop in obj) if (Object.prototype.hasOwnProperty.call(obj, prop)) return false;
         return JSON.stringify(obj) == JSON.stringify({});
+    };
+    public static getAPI<K extends keyof APIClients>(api: K): Promise<APIClients[K]> {
+        return getAPI(api);
     };
     /**
      * Validates a tag and returns an resolved tag
