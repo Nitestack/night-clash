@@ -11,10 +11,10 @@
       "@util/*": ["src/configuration/Util/*"],
       "@interfaces/*": ["src/configuration/Interfaces/*"],
       "@public/*": ["public/*"],
-      "@audio/*": ["public/Audio/*"],
       "@images/*": ["public/Images/*"],
       "@actions/*": ["src/configuration/Actions/*"],
       "@pages/*": ["src/pages/*"],
+      "@graphql/*": ["src/graphql/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
