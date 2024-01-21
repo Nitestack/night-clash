@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
@@ -7,21 +9,25 @@
       "@constants/*": ["src/constants/*"],
       "@modules/*": ["src/modules/*"],
       "@database/*": ["src/configuration/Database/*"],
-      "@models/*": ["src/configuration/Database/Models/*"],
       "@util/*": ["src/configuration/Util/*"],
       "@interfaces/*": ["src/configuration/Interfaces/*"],
       "@public/*": ["public/*"],
       "@images/*": ["public/Images/*"],
       "@actions/*": ["src/configuration/Actions/*"],
       "@pages/*": ["src/pages/*"],
-      "@graphql/*": ["src/graphql/*"]
+      "@graphql/*": ["graphql/*"]
     },
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es2018",
+    "lib": ["dom", "dom.iterable", "esnext", "es2018", "esnext.asynciterable"],
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -29,7 +35,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "noImplicitAny": true,
+    "removeComments": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

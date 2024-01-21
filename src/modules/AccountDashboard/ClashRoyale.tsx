@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { ClashRoyaleClanProfile, ClashRoyalePlayerProfile } from "@models/user";
+import type { ClashRoyaleClanProfile, ClashRoyalePlayerProfile } from "@graphql/types";
 import Header from "@modules/AccountDashboard/Header";
 import Body from "@modules/AccountDashboard/Body";
 import Grid from "@components/Utilities/Grid";

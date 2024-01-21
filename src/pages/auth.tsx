@@ -1,4 +1,4 @@
-import type { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "types";
 import { useTitle, useDescription, useHeader } from "@util/hooks";
 import AuthorizationTab from "@modules/AuthorizationTab";
 
@@ -11,9 +11,7 @@ const AuthenticationPage: NextPageWithConfiguration = () => {
     setTitle("Authentication");
     setDescription("Sign in or create an account to access the dashboard!");
     setHeader("Authorize");
-    return (
-        <AuthorizationTab/>
-    );
+    return <AuthorizationTab />;
 };
 AuthenticationPage.noAuthenticationRequired = true;
 

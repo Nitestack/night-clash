@@ -1,11 +1,11 @@
 import type { FilterQuery } from "mongoose";
-import userModel from "@models/user";
-import type { UserDocument } from "@models/user";
+import userModel from "prisma/user";
+import type { UserDocument } from "prisma/user";
 import roleModel from "@models/role";
-import cocVillageModel from "@models/clashofclans";
-import boomBeachIslandModel from "@models/boombeach";
-import type { ClashOfClansVillage } from "@models/clashofclans";
-import type { BoomBeachIsland } from "@models/boombeach";
+import cocVillageModel from "prisma/clashofclans";
+import boomBeachIslandModel from "prisma/boombeach";
+import type { ClashOfClansVillage } from "prisma/clashofclans";
+import type { BoomBeachIsland } from "prisma/boombeach";
 
 export default class DatabaseManager {
     public static User = userModel;

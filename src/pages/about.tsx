@@ -1,8 +1,7 @@
-import type { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "types";
 
 const AboutPage: NextPageWithConfiguration = () => {
-    return (<>
-    </>);
+    return <></>;
 };
 
 export default AboutPage;

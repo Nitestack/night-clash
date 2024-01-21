@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import type { ClashOfClansVillage } from "@database/Models/clashofclans";
+import type { ClashOfClansVillage } from "prisma/clashofclans";
 import { Fragment, useLayoutEffect, useRef, useState } from "react";
 import type { FC, ChangeEvent, Dispatch, SetStateAction, MouseEventHandler } from "react";
 import Grid from "@components/Utilities/Grid";

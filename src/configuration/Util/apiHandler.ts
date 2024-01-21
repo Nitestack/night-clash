@@ -1,7 +1,7 @@
 import type { NextApiResponse } from "next";
-import type { NextApiCustomHandlerProps, NextApiError } from "@util/types";
+import type { NextApiCustomHandlerProps, NextApiError } from "types";
 import { toast } from "react-toastify";
-import type { AxiosError } from "axios";
+import { ApolloError } from "@apollo/client";
 
 export default class ApiHandler {
     private static setStatusCode<T = any>(res: NextApiResponse<NextApiCustomHandlerProps & T>, code: number) {
@@ -17,8 +17,8 @@ export default class ApiHandler {
         const returnResponse = ApiHandler.setStatusCode<NextApiError>(res, error == 1 ? 500 : 400);
         const errorMessage = response && response.errorMessage ? response.errorMessage : (error == 1 ? "An error happened on the server! Please try again!" : "Something wrent wrong! Please try again!");
         returnResponse.statusMessage = errorMessage;
-        return returnResponse.json({ 
-            success: false,  
+        return returnResponse.json({
+            success: false,
             errorMessage: errorMessage,
             ...response
         });
@@ -36,22 +36,10 @@ export default class ApiHandler {
     };
     /**
      * Handles errors
-     * @param {AxiosError<NextApiError>} error The error 
+     * @param {ApolloError} error The error 
      */
-    public static errorHandler(error: AxiosError<NextApiError>) {
-        const { response, request }: AxiosError<NextApiError> = error;
-        if (response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            const { errorMessage } = response.data;
-            toast.error(errorMessage);
-        } else if (request) {
-            // Something happened in setting up the request that triggered an Error
-            toast.error("An error happened on the server! Please try again!");
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            toast.error("An error happened on the server! Please try again!");
-        };
+    public static errorHandler(error: ApolloError) {
+        toast.error("An error happened on the server! Please try again!");
     };
     /**
      * Handles errors of requests on the client side

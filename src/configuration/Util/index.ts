@@ -1,17 +1,15 @@
 import type { CRCard } from "@interfaces/clashRoyale";
 import ClashRoyaleConstants from "@constants/clashRoyale";
-import type { AppDispatch, RootState } from "@util/types";
+import type { AppDispatch, RootState } from "types";
 import ApiHandler from "@util/apiHandler";
 import Constants from "@util/constants";
 import { convertMilliseconds, convertNumber, convertTime, toCamelCase } from "@util/functions";
-import getAxiosInstance from "@util/axios";
 import ClashOfClansUpgradeTracker from "@util/cocUpgradeTracker";
 import { twMerge } from "tailwind-merge";
 import { actions } from "src/configuration/Actions/index";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 import type { APIClients } from "@util/api";
-import connectDB from "@util/databaseConnection";
 import { toast } from "react-toastify";
 import Emitter from "@util/Emitter";
 import getAPI from "@util/api";
@@ -20,16 +18,15 @@ export default class Util {
     /*Classes*/
     public static ApiHandler = ApiHandler;
     public static Constants = Constants;
-    public static Axios = getAxiosInstance();
     public static CocUpgradeTracker = ClashOfClansUpgradeTracker;
     public static StateManagement: {
         useDispatch: () => AppDispatch,
-        useSelector: TypedUseSelectorHook<RootState>
+        useSelector: TypedUseSelectorHook<RootState>;
     } & typeof actions = {
-        useDispatch: () => useDispatch<AppDispatch>(),
-        useSelector: useSelector,
-        ...actions
-    };
+            useDispatch: () => useDispatch<AppDispatch>(),
+            useSelector: useSelector,
+            ...actions
+        };
     public static Emitter = Emitter;
     /*Methods*/
     public static toast = toast;
@@ -114,12 +111,6 @@ export default class Util {
         if (Util.getCookie(name)) {
             document.cookie = `${name}=${(path) ? ";path=" + path : ""};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
         };
-    };
-    /**
-     * Connects to the MongoDB database or if there is an active connection it returns the cached connection
-     */
-    public static connectDB() {
-        return connectDB();
     };
     /**
      * Get's the rarity of a Clash Royale card

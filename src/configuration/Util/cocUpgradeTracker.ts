@@ -1,12 +1,11 @@
 import Coc from "@constants/clashOfClans";
-import type { APIPlayer, APISeason } from "clashofclans.js";
-import type { ClashOfClansVillage, ClashOfClansVillageType } from "@models/clashofclans";
+import type { ClashOfClansPlayer, ClashOfClansSeason, ClashOfClansVillage, ClashOfClansVillageType } from "@graphql/types";
 import { townHall } from "@database/Clash of Clans/Home/townHall";
 import { builderHall } from "@database/Clash of Clans/Builder/builderHall";
 import { toCamelCase } from "@util/functions";
 
 export default class ClashOfClansUpgradeTracker {
-    public static isInHall(item: string, hall: { 
+    public static isInHall(item: string, hall: {
         [key: string]: number | {
             amount: number,
             maxLevel: number
@@ -27,7 +26,7 @@ export default class ClashOfClansUpgradeTracker {
     * @param {"home" | "builder"} village The village
     * @param {boolean?} newStructureLevels If to update the village object
     */
-    public static createVillageStructureObject(oldStructures: ClashOfClansVillageType | { [key: string]: string }, player: APIPlayer, village: "home" | "builder", newStructureLevels?: boolean): ClashOfClansVillageType {
+    public static createVillageStructureObject(oldStructures: ClashOfClansVillageType | { [key: string]: string }, player: ClashOfClansPlayer, village: "home" | "builder", newStructureLevels?: boolean): ClashOfClansVillageType {
         const structures: ClashOfClansVillageType = oldStructures.builder ? oldStructures as ClashOfClansVillageType : {
             "walls": {
             },
@@ -44,8 +43,8 @@ export default class ClashOfClansUpgradeTracker {
                         break;
                     };
                 };
-                if (player.spells.find(spell => spell.name.toLowerCase() == Coc.homeNormalSpellsArray[3].toLowerCase()) 
-                && player.spells.find(spell => spell.name.toLowerCase() == Coc.homeNormalSpellsArray[4].toLowerCase())) structures.spellFactory["1"]--;
+                if (player.spells.find(spell => spell.name.toLowerCase() == Coc.homeNormalSpellsArray[3].toLowerCase())
+                    && player.spells.find(spell => spell.name.toLowerCase() == Coc.homeNormalSpellsArray[4].toLowerCase())) structures.spellFactory["1"]--;
             };
             //Dark spells are unlocked at TH8
             if (player.townHallLevel >= 8) {
@@ -145,8 +144,8 @@ export default class ClashOfClansUpgradeTracker {
      * @param {number?} townHallWeaponLevel The Town Hall Weapon level
      */
     public static getTownHallImage(townHallLevel: number, townHallWeaponLevel?: number) {
-        return `/Images/Clash of Clans/Home/${townHallLevel >= 12 ? 
-            `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` : 
+        return `/Images/Clash of Clans/Home/${townHallLevel >= 12 ?
+            `Defenses/${townHallLevel == 12 ? "Giga Tesla" : townHallLevel == 13 ? "Giga Inferno 1" : "Giga Inferno 2"}/${townHallWeaponLevel}` :
             `Town Hall/${townHallLevel}`}.png`;
     };
     /**
@@ -166,7 +165,7 @@ export default class ClashOfClansUpgradeTracker {
             case "coLeader":
                 resolvedRole = "Co-leader";
                 break;
-            case "leader": 
+            case "leader":
                 resolvedRole = "Leader";
                 break;
             case "admin":
@@ -240,7 +239,7 @@ export default class ClashOfClansUpgradeTracker {
     } | number {
         return (village == "home" ? townHall : builderHall)[hallLevel - 1][toCamelCase(name)];
     };
-    public static getLeagueSeason(season?: APISeason) {
+    public static getLeagueSeason(season?: ClashOfClansSeason) {
         if (season) {
             const months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const dateArray = season.id.split("-");

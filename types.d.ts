@@ -1,15 +1,41 @@
 import type { NextPageContext, NextComponentType, NextPage } from "next";
 import type { AppInitialProps, AppProps } from "next/app";
-import type axios from "axios";
 import type { NextRouter } from "next/router";
 import { store } from "@actions/index";
+import type { PrismaClient } from ".prisma/client";
 import type { User } from "firebase/auth";
+import type { APIClients } from "@util/api";
+export * from ".prisma/client";
+export * from "@graphql/types";
+
+//Global declaration
+declare global {
+    var prisma: PrismaClient | undefined;
+    var api: Partial<APIClients>;
+    namespace NodeJS {
+        interface ProcessEnv {
+            //.env.local
+            APOLLO_CLIENT_URL: string;
+            //.env
+            DATABASE_URL: string;
+            PASSWORD: string;
+            EMAIL: string;
+            FIREBASE_API_KEY: string;
+            FIREBASE_AUTH_DOMAIN: string;
+            FIREBASE_PROJECT_ID: string;
+            FIREBASE_STORAGE_BUCKET: string;
+            FIREBASE_MESSAGING_SENDER_ID: string;
+            FIREBASE_APP_ID: string;
+            FIREBASE_MEASUREMENT_ID: string;
+        };
+    };
+};
 
 /* REDUX */
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+// Inferred type
 export type AppDispatch = typeof store.dispatch;
 
 
@@ -35,8 +61,6 @@ export interface ComponentConfiguration {
     adminRoleRequired?: boolean;
     /**
      * A function that will be called after authentication
-     * 
-     * This function will be ignored if {@link authenticationRequired} is `false` or `undefined`
      */
     afterAuthentication?: (router: NextRouter, user?: User) => void;
 };

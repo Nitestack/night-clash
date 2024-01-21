@@ -1,6 +1,6 @@
 import Layout from "@components/Layout/index";
 import Util from "@util/index";
-import type { ClashOfClansVillage } from "@models/clashofclans";
+import type { ClashOfClansVillage } from "prisma/clashofclans";
 import Modal from "@components/Modal";
 import Select from "@components/Elements/Select";
 import { FC, OptionHTMLAttributes, useEffect } from "react";

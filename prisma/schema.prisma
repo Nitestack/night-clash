@@ -1,0 +1,72 @@
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+model User {
+    id                              String                @id @default(auto()) @map("_id") @db.ObjectId
+    uid                             String
+    role                            Role                  @default(USER)
+    clashOfClansVillages            ClashOfClansVillage[] @relation(fields: [clashOfClansVillagesID], references: [id])
+    clashOfClansVillagesID          String[]              @db.ObjectId
+    boomBeachIslands                BoomBeachIsland[]     @relation(fields: [boomBeachIslandsID], references: [id])
+    boomBeachIslandsID              String[]              @db.ObjectId
+    createdAt                       DateTime              @default(now()) @db.Date
+    updatedAt                       DateTime              @updatedAt
+    clashOfClansStatsTrackerPlayers Json[]
+    clashOfClansStatsTrackerClans   Json[]
+    clashRoyaleStatsTrackerPlayers  Json[]
+    clashRoyaleStatsTrackerClans    Json[]
+    brawlStarsStatsTrackerPlayers   Json[]
+    brawlStarsStatsTrackerClans     Json[]
+}
+
+enum Role {
+    ADMIN
+    USER
+}
+
+model ClashOfClansVillage {
+    id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+    users               User[]   @relation(fields: [usersID], references: [id])
+    usersID             String[] @db.ObjectId
+    playerTag           String   @unique
+    player              Json
+    homeVillage         Json
+    builderBase         Json
+    builderSeasonBoost  Int      @default(0)
+    researchSeasonBoost Int      @default(0)
+    homeVillageBuilder  Json[]
+    builderBaseBuilder  Json[]
+    homeLab             Json[]
+    builderLab          Json[]
+    petHouse            Json[]
+    otto                Json
+}
+
+model BoomBeachIsland {
+    id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+    users               User[]   @relation(fields: [usersID], references: [id])
+    usersID             String[] @db.ObjectId
+    secondBuilderActive Boolean  @default(false)
+    name                String
+    playerTag           String
+    expLevel            Int      @default(1)
+    hqLevel             Int      @default(1)
+    buildings           Json
+    troops              Json
+    gunBoatAbilities    Json
+    mines               Json?
+    heroes              Json?
+    victoryPoints       Int?
+    achievements        Json[]
+    taskForce           Json?
+}

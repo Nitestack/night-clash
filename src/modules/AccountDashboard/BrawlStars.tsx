@@ -1,4 +1,4 @@
-import { BrawlStarsPlayerProfile, BrawlStarsClubProfile } from "@database/Models/user";
+import { BrawlStarsPlayerProfile, BrawlStarsClubProfile } from "@graphql/types";
 import type { FC } from "react";
 import Body from "@modules/AccountDashboard/Body";
 import Header from "@modules/AccountDashboard/Header";

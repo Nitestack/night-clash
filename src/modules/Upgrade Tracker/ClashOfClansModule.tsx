@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { ClashOfClansVillage } from "@models/clashofclans";
+import type { ClashOfClansVillage } from "prisma/clashofclans";
 import Util from "@util/index";
 import Grid from "@components/Utilities/Grid";
 import { home } from "@database/Clash of Clans/home";

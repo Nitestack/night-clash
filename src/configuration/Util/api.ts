@@ -2,24 +2,16 @@ import { Client } from "clashofclans.js";
 //@ts-ignore
 import { Token, ClashRoyale, BrawlStars } from "supercell-apis";
 
-const client = new Client();
+export const client = new Client();
 
 /**
  * Global is used here to maintain a cached connection across hot reloads
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached: {
-    CoCClient: Client;
-    CRClient: any,
-    BSClient: any
-//@ts-ignore
-} = global.api;
+let cached = global.api;
 
-if (!cached) {
-    //@ts-ignore
-    cached = global.api = { CoCClient: null, CRClient: null, BSClient: null };
-};
+if (!cached) cached = {  };
 
 export interface APIClients {
     coc: Client,
@@ -28,22 +20,22 @@ export interface APIClients {
 };
 
 async function getAPI<K extends keyof APIClients>(api: K): Promise<APIClients[K]> {
-    if (cached.CoCClient && api == "coc") return cached.CoCClient;
-    else if (cached.CRClient && api == "cr") return cached.CRClient;
-    else if (cached.BSClient && api == "bs") return cached.BSClient;
-    if (api == "coc" && !cached.CoCClient) {
+    if (cached.coc && api == "coc") return cached.coc;
+    else if (cached.cr && api == "cr") return cached.cr;
+    else if (cached.bs && api == "bs") return cached.bs;
+    if (api == "coc" && !cached.coc) {
         await client.login({ email: process.env.EMAIL as string, password: process.env.PASSWORD as string });
-        cached.CoCClient = client;
-    } else if (api == "cr" && !cached.CRClient) {
+        cached.coc = client;
+    } else if (api == "cr" && !cached.cr) {
         const token = await new Token("clashroyale", process.env.EMAIL, process.env.PASSWORD).init();
-        cached.CRClient = new ClashRoyale(token);
-    } else if (api == "bs" && !cached.BSClient) {
+        cached.cr = new ClashRoyale(token);
+    } else if (api == "bs" && !cached.bs) {
         const token = await new Token("brawlstars", process.env.EMAIL, process.env.PASSWORD).init();
-        cached.BSClient = new BrawlStars(token);
+        cached.bs = new BrawlStars(token);
     };
-    if (api == "coc") return cached.CoCClient;
-    else if (api == "cr") return cached.CRClient;
-    else if (api == "bs") return cached.BSClient;
+    if (api == "coc") return cached.coc;
+    else if (api == "cr") return cached.cr;
+    else if (api == "bs") return cached.bs;
 };
 
 export default getAPI;

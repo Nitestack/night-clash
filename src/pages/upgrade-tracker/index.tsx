@@ -1,7 +1,7 @@
 import Accordion from "@components/Accordion";
 import Center from "@components/Utilities/Center";
 import Link from "@components/Elements/Link";
-import type { NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "types";
 import { useTitle, useDescription } from "@util/hooks";
 
 const UpgradeTrackerPage: NextPageWithConfiguration = () => {
@@ -14,16 +14,28 @@ const UpgradeTrackerPage: NextPageWithConfiguration = () => {
     return (
         <>
             <Accordion title="Clash of Clans">
-                <Link className="h-56" disablemotion href="/upgrade-tracker/clashofclans">
+                <Link
+                    className="h-56"
+                    disablemotion
+                    href="/upgrade-tracker/clashofclans">
                     <Center>
-                        <img className="w-[80vw]" src="/Images/Clash of Clans.png"/>
+                        <img
+                            className="w-[80vw]"
+                            src="/Images/Clash of Clans.png"
+                        />
                     </Center>
                 </Link>
             </Accordion>
             <Accordion title="Boom Beach">
-                <Link className="h-56" disablemotion href="/upgrade-tracker/boombeach">
+                <Link
+                    className="h-56"
+                    disablemotion
+                    href="/upgrade-tracker/boombeach">
                     <Center>
-                        <img className="w-[80vw]" src="/Images/Boom Beach.png"/>
+                        <img
+                            className="w-[80vw]"
+                            src="/Images/Boom Beach.png"
+                        />
                     </Center>
                 </Link>
             </Accordion>

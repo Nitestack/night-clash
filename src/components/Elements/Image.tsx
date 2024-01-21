@@ -14,7 +14,7 @@ const Image = forwardRef<HTMLDivElement, ImageProps>((props, ref) => {
     return (
         //Tailwind CSS base styles
         <div className={Util.classNames("relative max-w-full h-auto block align-middle", className)} ref={ref}>
-            <NextImage layout="fill" {...omit("className", props)}/>
+            <NextImage objectFit="fill" layout="fill" {...omit("className", props)}/>
         </div>
     );
 });

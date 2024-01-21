@@ -1,4 +1,4 @@
-import { BoomBeachIsland } from "@database/Models/boombeach";
+import { BoomBeachIsland } from "prisma/boombeach";
 import Util from "@util/index";
 import type { NextApiHandler } from "next";
 import DatabaseManager from "@util/databaseManager";

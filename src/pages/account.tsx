@@ -1,9 +1,9 @@
-import { ClashOfClansPlayerProfile, ClashOfClansClanProfile, ClashRoyaleClanProfile, ClashRoyalePlayerProfile, BrawlStarsClubProfile, BrawlStarsPlayerProfile } from "@models/user";
+import { ClashOfClansPlayerProfile, ClashOfClansClanProfile, ClashRoyaleClanProfile, ClashRoyalePlayerProfile, BrawlStarsClubProfile, BrawlStarsPlayerProfile } from "@graphql/types";
 import { useNextPageFetchData} from "@util/hooks";
 import { useTitle, useDescription, useHeader } from "@util/hooks";
 import AccountDashboard from "@modules/AccountDashboard";
 
-export type AccountPageDataType = {
+export type AccountPageDataType = Readonly<{
     clashOfClansVillages: Array<ClashOfClansPlayerProfile>,
     clashOfClansStatsTrackerPlayers: Array<ClashOfClansPlayerProfile>,
     clashOfClansStatsTrackerClans: Array<ClashOfClansClanProfile>,
@@ -11,10 +11,10 @@ export type AccountPageDataType = {
     clashRoyaleStatsTrackerClans: Array<ClashRoyaleClanProfile>,
     brawlStarsStatsTrackerPlayers: Array<BrawlStarsPlayerProfile>,
     brawlStarsStatsTrackerClans: Array<BrawlStarsClubProfile>
-};
+}>;
 
 
-const AccountPage = useNextPageFetchData<AccountPageDataType>(({ data }) => {
+const AccountPage = useNextPageFetchData<AccountPageDataType, { uid: string }>(({ data }) => {
     //Layout hooks
     const { setTitle } = useTitle();
     const { setDescription } = useDescription();
@@ -27,14 +27,78 @@ const AccountPage = useNextPageFetchData<AccountPageDataType>(({ data }) => {
         <AccountDashboard data={data}/>
     );
 }, {
-    key: "key",
-    method: "post",
-    url: "/api/user/profile",
-    setData: (router, user) => {
-        return {
-            uid: user?.uid
+    setKey: () => "accountGetProfileById",
+    setQuery: (gql) => gql`
+    query($uid: String!) {
+        accountGetProfileById(uid: $uid) {
+            boomBeachIslands {
+                playerTag
+                name
+                expLevel
+            }
+            clashOfClansVillages {
+                name
+                tag
+                townHallLevel
+                townHallWeaponLevel
+                clan {
+                  iconUrl
+                  name
+                  tag
+                }
+            }
+            clashOfClansStatsTrackerPlayers {
+                name
+                tag
+                townHallLevel
+                townHallWeaponLevel
+                clan {
+                    name
+                    tag
+                    iconUrl
+                }
+            }
+            clashOfClansStatsTrackerClans {
+                name
+                tag
+                iconUrl
+            }
+            brawlStarsStatsTrackerClans {
+                name
+                tag
+            }
+            brawlStarsStatsTrackerPlayers {
+                name
+                tag
+                iconId
+                club {
+                    name
+                    tag
+                }
+            }
+            clashRoyaleStatsTrackerPlayers {
+                name
+                tag
+                expLevel
+                clan {
+                    name
+                    tag
+                    badgeId
+                }
+            }
+            clashRoyaleStatsTrackerClans {
+                name
+                tag
+                badgeId
+            }
         }
     }
+    `,
+    setOptions: (router, user) => ({
+        variables: {
+            uid: user.uid
+        }
+    })
 });
 AccountPage.authenticationRequired = true;
 

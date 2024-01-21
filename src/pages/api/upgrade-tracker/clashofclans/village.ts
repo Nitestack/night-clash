@@ -1,4 +1,4 @@
-import type { ClashOfClansVillage } from "@models/clashofclans";
+import type { ClashOfClansVillage } from "prisma/clashofclans";
 import Util from "@util/index";
 import type { NextApiHandler } from "next";
 import DatabaseManager from "@util/databaseManager";

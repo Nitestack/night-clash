@@ -1,5 +1,5 @@
 import Util from "@util/index";
-import type { BoomBeachIsland } from "@models/boombeach";
+import type { BoomBeachIsland } from "prisma/boombeach";
 import { useNextPageFetchData } from "@util/hooks";
 import { useDescription, useTitle, useHeader } from "@util/hooks";
 

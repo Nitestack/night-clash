@@ -1,62 +1,79 @@
-import { useQuery } from "react-query";
 import Util from "@util/index";
-import { useRouter } from "next/router";
-import type { NextRouter } from "next/router";
-import type { User } from "firebase/auth";
-import type { AxiosRequestConfig } from "axios";
+import { NextRouter, useRouter } from "next/router";
 import type { FC } from "react";
 import { useEffect } from "react";
 import { useAuth as useAuthentication } from "@components/AuthProvider";
-import type { NextApiError, NextPageWithConfiguration } from "@util/types";
+import type { NextPageWithConfiguration } from "types";
 import Spinner from "@components/Utilities/Spinner";
 import Center from "@components/Utilities/Center";
-import type axios from "axios";
-import type { AxiosError } from "axios";
 import Link from "@components/Elements/Link";
 import Button from "@components/Elements/Button";
 import type { MetaProps } from "@components/Layout";
+import { useQuery, gql } from "@apollo/client";
+import type ApolloTypes from "@apollo/client";
+import type { User } from "firebase/auth";
 
 export const useAuth = useAuthentication;
 
+type QueryResultType<DataProps> = Record<string, DataProps>;
+
 /**
- * Fetches data and handles errors/loading state/successful state (with {@link axios} and {@link useQuery})
+ * Fetches data and handles errors/loading state/successful state (with Apollo {@link useQuery})
  * @param {FC<{ data: DataProps }>} NextPage The successful page to render
- * @param {object} requestInfo Information about the request
+ *
  */
-export function useNextPageFetchData<DataProps = any>(NextPage: FC<{ data: DataProps }>, requestInfo: {
-    key: string,
-    url: string,
-    method: "post",
-    setData: (router: NextRouter, user?: User) => any,
-    config?: AxiosRequestConfig
-} | {
-    key: string,
-    url: string,
-    method: "get",
-    config?: AxiosRequestConfig
-}): NextPageWithConfiguration<{ data: DataProps }> {
-    const nextPage: NextPageWithConfiguration<{ data: DataProps }> = () => {
+export function useNextPageFetchData<
+    DataProps = any,
+    Variables = ApolloTypes.OperationVariables
+>(
+    NextPage: FC<{ data: DataProps }>,
+    requestInfo: {
+        setKey: (router: NextRouter, user: User) => string;
+        setQuery: (
+            gql: typeof ApolloTypes.gql,
+            router: NextRouter,
+            user: User
+        ) => ReturnType<typeof ApolloTypes.gql>;
+        setOptions?: (
+            router: NextRouter,
+            user: User
+        ) => ApolloTypes.QueryHookOptions<
+            QueryResultType<DataProps>,
+            Variables
+        >;
+    }
+): NextPageWithConfiguration<{ data: Readonly<DataProps> }> {
+    const nextPage: NextPageWithConfiguration<{
+        data: Readonly<DataProps>;
+    }> = () => {
         const router = useRouter();
         const { user } = useAuth();
-        const { url, method, config, key } = requestInfo;
-        const { data, error, isError, isLoading, isSuccess } = useQuery<DataProps, AxiosError<NextApiError>>(key, async () => {
-            const response = method == "get" ? await Util.Axios.get(url, config) : await Util.Axios.post(url, requestInfo.setData(router, user!), config);
-            return response.data;
-        });
-        if (isLoading) return (
-            <Center className="flex-col">
-                <Spinner/>
-            </Center>
-        );
-        if (isSuccess) return (
-            <NextPage data={data}/>
-        );
-        else if (isError) {
+        const { setKey, setQuery, setOptions } = requestInfo;
+        const { data, loading, error } = useQuery<
+            QueryResultType<DataProps>,
+            Variables
+        >(setQuery(gql, router, user!), setOptions?.(router, user!));
+        if (loading)
+            return (
+                <Center className="flex-col">
+                    <Spinner />
+                </Center>
+            );
+        if (error) {
             Util.ApiHandler.errorHandler(error);
-        };
+            return (
+                <Center className="flex-col">
+                    <Spinner />
+                    <Link href="/">
+                        <Button className="bg-primary"> Return Home </Button>
+                    </Link>
+                </Center>
+            );
+        }
+        if (data) return <NextPage data={data[setKey(router, user!)]} />;
         return (
             <Center className="flex-col">
-                <Spinner/>
+                <Spinner />
                 <Link href="/">
                     <Button className="bg-primary"> Return Home </Button>
                 </Link>
@@ -64,60 +81,66 @@ export function useNextPageFetchData<DataProps = any>(NextPage: FC<{ data: DataP
         );
     };
     return nextPage;
-};
+}
 
 export function useTitle() {
-    const { title } = Util.StateManagement.useSelector(state => state.layout);
+    const { title } = Util.StateManagement.useSelector((state) => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setTitle(title: string, sameHeader?: boolean) {
-        useEffect(() => { 
+        useEffect(() => {
             dispatch(Util.StateManagement.setTitle(title));
             if (sameHeader) dispatch(Util.StateManagement.setHeader(title));
         }, []);
-    };
+    }
     return { title, setTitle };
-};
+}
 
 export function useDescription() {
-    const { description } = Util.StateManagement.useSelector(state => state.layout);
+    const { description } = Util.StateManagement.useSelector(
+        (state) => state.layout
+    );
     const dispatch = Util.StateManagement.useDispatch();
     function setDescription(description: string) {
-        useEffect(() => { 
+        useEffect(() => {
             dispatch(Util.StateManagement.setDescription(description));
         }, []);
-    };
+    }
     return { description, setDescription };
-};
+}
 
 export function useHeader() {
-    const { header } = Util.StateManagement.useSelector(state => state.layout);
+    const { header } = Util.StateManagement.useSelector(
+        (state) => state.layout
+    );
     const dispatch = Util.StateManagement.useDispatch();
     function setHeader(header: string) {
-        useEffect(() => { 
+        useEffect(() => {
             dispatch(Util.StateManagement.setHeader(header));
         }, []);
-    };
+    }
     return { header, setHeader };
-};
+}
 
 export function useScripts() {
-    const { scripts } = Util.StateManagement.useSelector(state => state.layout);
+    const { scripts } = Util.StateManagement.useSelector(
+        (state) => state.layout
+    );
     const dispatch = Util.StateManagement.useDispatch();
     function setScripts(scripts: string[]) {
-        useEffect(() => { 
+        useEffect(() => {
             dispatch(Util.StateManagement.setScripts(scripts));
         }, []);
-    };
+    }
     return { scripts, setScripts };
-};
+}
 
 export function useMeta() {
-    const { meta } = Util.StateManagement.useSelector(state => state.layout);
+    const { meta } = Util.StateManagement.useSelector((state) => state.layout);
     const dispatch = Util.StateManagement.useDispatch();
     function setMeta(meta: MetaProps) {
-        useEffect(() => { 
+        useEffect(() => {
             dispatch(Util.StateManagement.setMeta(meta));
         }, []);
-    };
+    }
     return { meta, setMeta };
-};
+}
